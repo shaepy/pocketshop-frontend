@@ -6,7 +6,7 @@ import { signUp } from "../../services/authService";
 const SignUpForm = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -26,7 +26,7 @@ const SignUpForm = () => {
   } = formData;
 
   const handleChange = (e) => {
-    setMessage("");
+    setError("");
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -38,7 +38,7 @@ const SignUpForm = () => {
       setUser(newUser);
       navigate("/");
     } catch (error) {
-      setMessage(error.message);
+      setError(error.message);
     }
   };
 
@@ -57,7 +57,7 @@ const SignUpForm = () => {
     <main>
       <section>
         <h1>Create your account</h1>
-        <p>{message}</p>
+        {error && <p>{error}</p>}
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email">Email</label>

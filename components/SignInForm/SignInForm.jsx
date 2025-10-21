@@ -6,7 +6,7 @@ import { signIn } from "../../services/authService";
 const SignInForm = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,7 +15,7 @@ const SignInForm = () => {
   const { email, password } = formData;
 
   const handleChange = (e) => {
-    setMessage("");
+    setError("");
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -25,8 +25,8 @@ const SignInForm = () => {
       const signedInUser = await signIn(formData);
       setUser(signedInUser);
       navigate("/");
-    } catch (err) {
-      setMessage(err.message);
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -38,7 +38,7 @@ const SignInForm = () => {
     <main>
       <section>
         <h1>Sign in</h1>
-        <p>{message}</p>
+        {error && <p>{error}</p>}
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email">Email</label>

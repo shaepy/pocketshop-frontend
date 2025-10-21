@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 
-const NewShopForm = () => {
+const ShopCreate = () => {
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     email: "",
@@ -35,4 +35,4 @@ const NewShopForm = () => {
   );
 };
 
-export default NewShopForm;
+export default ShopCreate;
