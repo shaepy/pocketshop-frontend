@@ -3,6 +3,18 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
 const NavBar = () => {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
+  const linkToSignIn = () => {
+    navigate("/login");
+  };
+
   return (
     <nav>
       <ul>
@@ -12,6 +24,20 @@ const NavBar = () => {
         <li>
           <Link to="/shops">Shops</Link>
         </li>
+        {user ? (
+          <li>
+            <button onClick={handleSignOut}>Sign Out</button>
+          </li>
+        ) : (
+          <>
+            <li>
+              <Link to="/register">Sign Up</Link>
+            </li>
+            <li>
+              <button onClick={linkToSignIn}>Log In</button>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );
