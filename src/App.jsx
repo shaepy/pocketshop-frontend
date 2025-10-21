@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import { Routes, Route, useNavigate } from "react-router";
+import { Routes, Route } from "react-router";
 import { UserContext } from "../contexts/UserContext";
 import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute";
 import NavBar from "../components/NavBar/NavBar";

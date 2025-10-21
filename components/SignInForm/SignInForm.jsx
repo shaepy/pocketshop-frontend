@@ -23,6 +23,7 @@ const SignInForm = () => {
     evt.preventDefault();
     try {
       const signedInUser = await signIn(formData);
+      console.log("signedInUser:", signedInUser);
       setUser(signedInUser);
       navigate("/");
     } catch (error) {
@@ -48,6 +49,7 @@ const SignInForm = () => {
               value={email}
               name="email"
               onChange={handleChange}
+              required
             />
           </div>
           <div>
@@ -58,6 +60,7 @@ const SignInForm = () => {
               value={password}
               name="password"
               onChange={handleChange}
+              required
             />
           </div>
           <div>

@@ -2,14 +2,13 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
 const LandingPage = () => {
-  // We use the 'user' object in our user useContext.
   const { user } = useContext(UserContext);
-
+  console.log("LANDING PAGE USER:", user);
   return (
     <main>
       {user ? (
         <>
-          <h1>Welcome back, {user.user.username}.</h1>
+          <h1>Welcome back, {user.username}.</h1>
           <p>Your pocketshop is ready.</p>
         </>
       ) : (

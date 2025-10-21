@@ -3,10 +3,10 @@ import axios from "./axiosConfig";
 const BASEURL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/api/shops/`;
 
 // GET all shops
-export const index = async () => {
+export const getShops = async () => {
   try {
     const response = await axios.get(`${BASEURL}`);
-    console.log("from shopApi.index:", response.data);
+    console.log("from shopApi.getShops:", response.data);
 
     if (!response.data) {
       throw new Error("Error fetching all shops", response.data.error);
@@ -14,15 +14,16 @@ export const index = async () => {
 
     return response.data;
   } catch (error) {
+    console.log(error);
     throw new Error(error);
   }
 };
 
 // GET a shop
-export const show = async (shopId) => {
+export const getShop = async (shopId) => {
   try {
     const response = await axios.get(`${BASEURL}${shopId}`);
-    console.log("from shopApi.show:", response.data);
+    console.log("from shopApi.getShop:", response.data);
 
     if (!response.data) {
       throw new Error("Error fetching a shop", response.data.error);
@@ -30,6 +31,24 @@ export const show = async (shopId) => {
 
     return response.data;
   } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// CREATE a shop (POST)
+export const createShop = async (formData) => {
+  try {
+    const response = await axios.post(`${BASEURL}`, formData);
+    console.log("from shopApi.createShop:", response.data);
+
+    if (!response.data) {
+      throw new Error("Error creating the shop", response.data.error);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
     throw new Error(error);
   }
 };

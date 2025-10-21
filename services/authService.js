@@ -1,13 +1,7 @@
 // For /api/auth
 import axios from "axios";
+import keysToSnakeTopLevel from "../utilities/convertToSnake";
 const BASEURL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/api/auth/`;
-
-// helper: camelCase -> snake_case
-const toSnake = (str) => str.replace(/([A-Z])/g, "_$1").toLowerCase();
-
-// convert top-level keys only
-const keysToSnakeTopLevel = (obj = {}) =>
-  Object.fromEntries(Object.entries(obj).map(([k, v]) => [toSnake(k), v]));
 
 // Register new account: /api/auth/register
 export const signUp = async (formData) => {
@@ -20,7 +14,12 @@ export const signUp = async (formData) => {
       throw new Error("Error creating new user", response.data.error);
     }
 
-    return response.data;
+    if (response.data.token) {
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      console.log("response.data.user:", response.data.user);
+      return response.data.user;
+    }
   } catch (error) {
     console.log(error);
     throw new Error(error);
@@ -37,7 +36,12 @@ export const signIn = async (formData) => {
       throw new Error("Error logging user in", response.data.error);
     }
 
-    return response.data;
+    if (response.data.token) {
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      console.log("response.data.user:", response.data.user);
+      return response.data.user;
+    }
   } catch (error) {
     console.log(error);
     throw new Error(error);

@@ -7,7 +7,7 @@ const Shops = () => {
 
   useEffect(() => {
     const fetchShops = async () => {
-      const foundShops = await shopApi.index();
+      const foundShops = await shopApi.getShops();
       console.log("shops", foundShops);
       setShops(foundShops);
     };

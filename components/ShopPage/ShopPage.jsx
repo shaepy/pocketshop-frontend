@@ -8,7 +8,7 @@ const ShopPage = () => {
 
   useEffect(() => {
     const fetchShop = async () => {
-      const foundShop = await shopApi.show(shopId);
+      const foundShop = await shopApi.getShop(shopId);
       console.log("shop found:", foundShop);
       setShop(foundShop);
     };
