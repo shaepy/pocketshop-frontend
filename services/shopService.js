@@ -1,5 +1,5 @@
 // For /api/shops
-import axios from "axios";
+import axios from "./axiosConfig";
 const BASEURL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/api/shops/`;
 
 // GET all shops

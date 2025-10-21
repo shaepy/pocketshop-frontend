@@ -8,6 +8,7 @@ import Shops from "../components/Shops/Shops";
 import ShopPage from "../components/ShopPage/ShopPage";
 import SignUpForm from "../components/SignUpForm/SignUpForm";
 import SignInForm from "../components/SignInForm/SignInForm";
+import NewShopForm from "../components/NewShopForm/NewShopForm";
 import "./App.css";
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/shops" element={<Shops />} />
+        <Route path="/shops/new" element={<NewShopForm />} />
         <Route path="/shops/:shopId" element={<ShopPage />} />
         <Route path="/register" element={<SignUpForm />} />
         <Route path="/login" element={<SignInForm />} />
