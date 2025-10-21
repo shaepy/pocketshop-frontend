@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate, useSearchParams, Link } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import { signUp } from "../../services/authService";
 
@@ -16,8 +16,14 @@ const SignUpForm = () => {
     lastName: "",
   });
 
-  const { username, password, passwordConfirmation, email, firstName, lastName } =
-    formData;
+  const {
+    username,
+    password,
+    passwordConfirmation,
+    email,
+    firstName,
+    lastName,
+  } = formData;
 
   const handleChange = (e) => {
     setMessage("");
@@ -50,7 +56,7 @@ const SignUpForm = () => {
   return (
     <main>
       <section>
-        <h1>Create an Account</h1>
+        <h1>Create your account</h1>
         <p>{message}</p>
         <form onSubmit={handleSubmit}>
           <div>
@@ -120,10 +126,13 @@ const SignUpForm = () => {
             />
           </div>
           <div>
-            <button disabled={isFormInvalid()}>Sign Up</button>
+            <button disabled={isFormInvalid()}>Sign up</button>
             <button onClick={() => navigate("/")}>Cancel</button>
           </div>
         </form>
+        <p>
+          Already have an account? <Link to="/login">Log in here.</Link>
+        </p>
       </section>
     </main>
   );

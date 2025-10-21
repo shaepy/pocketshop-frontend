@@ -30,8 +30,7 @@ export const signUp = async (formData) => {
 // Login to account: /api/auth/login
 export const signIn = async (formData) => {
   try {
-    const payload = keysToSnakeTopLevel(formData);
-    const response = await axios.post(`${BASEURL}login/`, payload);
+    const response = await axios.post(`${BASEURL}login/`, formData);
     console.log("from authService.signIn:", response.data);
 
     if (!response.data) {

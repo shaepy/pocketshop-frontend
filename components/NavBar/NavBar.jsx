@@ -15,6 +15,10 @@ const NavBar = () => {
     navigate("/login");
   };
 
+  const linkToSignUp = () => {
+    navigate("/register");
+  };
+
   return (
     <nav>
       <ul>
@@ -26,15 +30,15 @@ const NavBar = () => {
         </li>
         {user ? (
           <li>
-            <button onClick={handleSignOut}>Sign Out</button>
+            <button onClick={handleSignOut}>Sign out</button>
           </li>
         ) : (
           <>
             <li>
-              <Link to="/register">Sign Up</Link>
+              <button onClick={linkToSignUp}>Register</button>
             </li>
             <li>
-              <button onClick={linkToSignIn}>Log In</button>
+              <button onClick={linkToSignIn}>Sign in</button>
             </li>
           </>
         )}
