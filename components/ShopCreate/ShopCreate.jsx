@@ -3,8 +3,9 @@ import { useNavigate, Link } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import * as shopApi from "../../services/shopService";
 
-// TODO-ST : IN PROGRESS
+// TODO-ST: This route should only show if the user does not already have a SHOP
 const ShopCreate = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -24,7 +25,7 @@ const ShopCreate = () => {
       console.log("submitting a new shop", formData);
       const newShop = await shopApi.createShop(formData);
       console.log("newShop:", newShop);
-      // navigate to shops ?
+      navigate("/shops");
     } catch (err) {
       setError(err.message);
     }
