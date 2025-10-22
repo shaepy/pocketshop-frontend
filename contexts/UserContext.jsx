@@ -1,21 +1,35 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import { getUser } from "../services/userService";
 
 const UserContext = createContext();
 
-const getUserFromToken = () => {
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  console.log("token from getUserFromToken is:", token);
-  console.log("user from getUserFromToken:", user);
-
-  if (!token || !user) return null;
-  return user;
-};
-
 function UserProvider({ children }) {
-  const [user, setUser] = useState(getUserFromToken());
-  const value = { user, setUser };
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+
+      if (token) {
+        try {
+          const userData = await getUser(userId);
+          setUser(userData);
+        } catch (error) {
+          console.error("Error fetching user:", error);
+          setUser(null);
+        }
+      }
+
+      setLoading(false);
+    };
+
+    fetchUser();
+  }, []);
+
+  const value = { user, setUser, loading };
+
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 

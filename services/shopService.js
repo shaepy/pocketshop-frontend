@@ -6,7 +6,6 @@ const BASEURL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/api/shops/`;
 export const getShops = async () => {
   try {
     const response = await axios.get(`${BASEURL}`);
-    console.log("from shopApi.getShops:", response.data);
 
     if (!response.data) {
       throw new Error("Error fetching all shops", response.data.error);
@@ -23,7 +22,6 @@ export const getShops = async () => {
 export const getShop = async (shopId) => {
   try {
     const response = await axios.get(`${BASEURL}${shopId}`);
-    console.log("from shopApi.getShop:", response.data);
 
     if (!response.data) {
       throw new Error("Error fetching a shop", response.data.error);
