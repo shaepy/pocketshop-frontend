@@ -24,7 +24,8 @@ const ShopManage = () => {
     };
     fetchUserShop();
     console.log("isEditMode is currently:", isEditMode);
-  }, [isEditMode]);
+    // ST - added isProductMode to refresh useEffect
+  }, [isEditMode, isProductMode]);
 
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
