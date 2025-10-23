@@ -12,6 +12,7 @@ import SignInForm from "../components/SignInForm/SignInForm";
 import ShopCreate from "../components/ShopCreate/ShopCreate";
 import Products  from "../components/Products/Products";
 import ProductPage  from "../components/ProductPage/ProductPage";
+import Carts from "../components/Carts/Carts";
 import "./App.css";
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/shops/:shopId" element={<ShopPage />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:productId" element={<ProductPage />} />
+        <Route path="/cart" element={<Carts />} />
         <Route path="/register" element={<SignUpForm />} />
         <Route path="/login" element={<SignInForm />} />
         <Route

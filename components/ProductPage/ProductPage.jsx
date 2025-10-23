@@ -31,24 +31,17 @@ const ProductPage = () => {
 
   if (!product) return <p>Loading product...</p>;
 
-  const handleQuantity = (flag) => {
-    if (flag) {
-      setQuantity(quantity - 1);
-    } else {
-      setQuantity(quantity + 1);
-    }
-  };
-
   const handleAddToCart = async () => {
     //Create form data
     formData.product = product.id;
     formData.quantity = quantity;
     try {
-      console.log("submitting a new cart item", formData);
+      //console.log("submitting a new cart item", formData);
       const newCartItem = await cartApi.addProductToCart(formData);
-      console.log("newCartItem :", newCartItem);
+      //console.log("newCartItem :", newCartItem);
       setMessage("Product added to cart");
       setFormData(initialState);
+      setQuantity(1)
     } catch (err) {
       setMessage(err.message);
     }
@@ -63,16 +56,16 @@ const ProductPage = () => {
       <p>{product.product_image}</p>
       <p>${product.price * quantity}</p>
       {product.quantity > 0 ? (
-        <p className="text-green-600 font-medium">
+        <p>
           ✓ In Stock ({product.quantity} available)
         </p>
       ) : (
-        <p className="text-red-600 font-medium">Out of Stock</p>
+        <p>Out of Stock</p>
       )}
       <button
         //disable quantity button because we cannot send negative numbers
         disabled={quantity <= 0 ? true : false}
-        onClick={() => handleQuantity(true)}
+        onClick={() => setQuantity(quantity - 1)}
       >
         -
       </button>
@@ -80,7 +73,7 @@ const ProductPage = () => {
       <button
         // disable quantity button if more than product has
         disabled={quantity >= product.quantity ? true : false}
-        onClick={() => handleQuantity(false)}
+        onClick={() => setQuantity(quantity + 1)}
       >
         +
       </button>

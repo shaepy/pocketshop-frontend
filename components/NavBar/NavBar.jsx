@@ -33,13 +33,18 @@ const NavBar = () => {
         <li>
           <Link to="/shops/new">Create Shop</Link>
         </li>
-          <li>
+        <li>
           <Link to="/products">Products</Link>
         </li>
         {user ? (
-          <li>
-            <button onClick={handleSignOut}>Sign out</button>
-          </li>
+          <>
+            <li>
+              <Link to="/cart">Cart 🛒</Link>
+            </li>
+            <li>
+              <button onClick={handleSignOut}>Sign out</button>
+            </li>
+          </>
         ) : (
           <>
             <li>
