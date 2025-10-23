@@ -10,6 +10,8 @@ import ShopPage from "../components/ShopPage/ShopPage";
 import SignUpForm from "../components/SignUpForm/SignUpForm";
 import SignInForm from "../components/SignInForm/SignInForm";
 import ShopCreate from "../components/ShopCreate/ShopCreate";
+import Products  from "../components/Products/Products";
+import ProductPage  from "../components/ProductPage/ProductPage";
 import "./App.css";
 
 const App = () => {
@@ -30,9 +32,10 @@ const App = () => {
           }
         />
         <Route path="/shops/:shopId" element={<ShopPage />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:productId" element={<ProductPage />} />
         <Route path="/register" element={<SignUpForm />} />
         <Route path="/login" element={<SignInForm />} />
-
         <Route
           path="*"
           element={
