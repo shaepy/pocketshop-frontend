@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router";
+import AddProduct from "../AddProduct/AddProduct";
 import * as shopApi from "../../services/shopService";
 
 // ST: IN PROGRESS (EDIT AND DELETE)
@@ -8,6 +9,7 @@ const ShopManage = () => {
   const navigate = useNavigate();
   const [userShop, setUserShop] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isProductMode, setIsProductMode] = useState(false);
 
   useEffect(() => {
     const fetchUserShop = async () => {
@@ -29,8 +31,9 @@ const ShopManage = () => {
     bio: "",
   });
 
-  const linkToAddProduct = () => {
-    navigate("/dashboard/shop/products/new");
+  // Toggle add product Shop
+  const toggleAddProductMode = () => {
+    setIsProductMode((prev) => !prev);
   };
 
   const handleChange = (e) => {
@@ -106,18 +109,24 @@ const ShopManage = () => {
 
       <section>
         <p>{userShop.products.length} products found.</p>
-        <button onClick={linkToAddProduct}>+ Add Product</button>
-        {userShop.products.map((product) => (
-          <div key={product.id}>
-            <h4>
-              {product.id}. {product.title}
-            </h4>
-            <p>description: {product.description}</p>
-            <p>${product.price}</p>
-            <p>qt: {product.quantity}</p>
-            <p>category: {product.category}</p>
-          </div>
-        ))}
+        <button onClick={toggleAddProductMode}>
+          {isProductMode ? "Close" : "+ Add Product"}
+        </button>
+        {isProductMode ? (
+          <AddProduct  setIsProductMode= {setIsProductMode}/>
+        ) : (
+          userShop.products.map((product) => (
+            <div key={product.id}>
+              <h4>
+                {product.id}. {product.title}
+              </h4>
+              <p>description: {product.description}</p>
+              <p>${product.price}</p>
+              <p>qt: {product.quantity}</p>
+              <p>category: {product.category}</p>
+            </div>
+          ))
+        )}
       </section>
     </main>
   );

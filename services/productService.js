@@ -33,3 +33,19 @@ export const getProduct = async (productId) => {
   }
 };
 
+//POST Add product
+
+export const addProduct = async (formData) => {
+  try {
+    const response = await axios.post(`${BASEURL}`, formData);
+
+    if (!response.data) {
+      throw new Error("Error creating product", response.data.error);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.log("Error", error);
+    throw new Error(error);
+  }
+};
