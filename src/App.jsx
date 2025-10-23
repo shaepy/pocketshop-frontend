@@ -10,6 +10,7 @@ import ShopPage from "../components/ShopPage/ShopPage";
 import SignUpForm from "../components/SignUpForm/SignUpForm";
 import SignInForm from "../components/SignInForm/SignInForm";
 import ShopCreate from "../components/ShopCreate/ShopCreate";
+import { Products } from "../components/Products/Products";
 import "./App.css";
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/shops" element={<Shops />} />
+        <Route path="/products" element={<Products />} />
         <Route
           path="/shops/new"
           element={
