@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router";
-import { UserContext } from "../../contexts/UserContext";
 import * as shopApi from "../../services/shopService";
 
 // ST: IN PROGRESS (EDIT AND DELETE)
@@ -15,28 +14,56 @@ const ShopManage = () => {
       const userShopFound = await shopApi.getUserShop();
       console.log("userShop found:", userShopFound);
       setUserShop(userShopFound);
+      setFormData({
+        name: userShopFound.name ?? "",
+        bio: userShopFound.bio ?? "",
+      });
     };
     fetchUserShop();
     console.log("isEditMode is currently:", isEditMode);
   }, [isEditMode]);
 
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    bio: "",
+  });
+
   const linkToAddProduct = () => {
     navigate("/dashboard/shop/products/new");
   };
 
-  if (!userShop) return <p>Loading your shop...</p>;
+  const handleChange = (e) => {
+    setError("");
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  // Edit Shop
-  // TRUE (EDIT) or FALSE
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      console.log("UPDATING THE SHOP NOW...");
+      const updatedShop = await shopApi.updateShop(formData);
+      console.log("updatedShop:", updatedShop);
+      setIsEditMode(false);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // Toggle Edit Shop
   const toggleEditMode = () => {
     setIsEditMode((prev) => !prev);
   };
 
   // Delete Shop
+  const handleDelete = () => {
+    // IN PROGRESS
+  };
 
+  if (!userShop) return <p>Loading your shop...</p>;
   return (
     <main>
-      <div>
+      <section>
         <h1>Manage Shop</h1>
         <div>
           <button onClick={toggleEditMode}>
@@ -44,15 +71,42 @@ const ShopManage = () => {
           </button>
           <button>Delete Shop</button>
         </div>
-        <h2>{userShop.name}</h2>
-        <div>
-          <button onClick={linkToAddProduct}>+ Add Product</button>
-        </div>
-        <h3>About Shop: {userShop.bio}</h3>
-      </div>
+        {isEditMode ? (
+          <div>
+            {error && <p>{error}</p>}
+            <form onSubmit={handleSubmit}>
+              <label>Shop Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+              <label>About Shop</label>
+              <input
+                type="text"
+                id="bio"
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                required
+              />
+              <button type="submit">Update</button>
+            </form>
+          </div>
+        ) : (
+          <div>
+            <h2>{userShop.name}</h2>
+            <h3>About Shop: {userShop.bio}</h3>
+          </div>
+        )}
+      </section>
 
       <section>
         <p>{userShop.products.length} products found.</p>
+        <button onClick={linkToAddProduct}>+ Add Product</button>
         {userShop.products.map((product) => (
           <div key={product.id}>
             <h4>

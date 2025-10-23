@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
-import { UserContext } from "../../contexts/UserContext";
 import * as shopApi from "../../services/shopService";
 
 // TODO-ST: This route should only show if the user does not already have a SHOP
@@ -19,8 +18,8 @@ const ShopCreate = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       console.log("submitting a new shop", formData);
       const newShop = await shopApi.createShop(formData);
