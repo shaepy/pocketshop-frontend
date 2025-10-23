@@ -47,10 +47,10 @@ const Carts = () => {
     }
   };
 
-   const handleQuantity = async (flag, itemQuantity, itemId) => {
+  const handleQuantity = async (flag, itemQuantity, itemId) => {
     try {
       console.log("item quantity before:", itemQuantity);
-      const newQuantity = flag? itemQuantity + 1 : itemQuantity - 1;
+      const newQuantity = flag ? itemQuantity + 1 : itemQuantity - 1;
       console.log("item after:", newQuantity);
 
       updateRequest.cartItemId = itemId;
@@ -70,15 +70,18 @@ const Carts = () => {
     }
   };
 
-  
-
   return (
     <>
       <h1> Cart</h1>
       <ul>
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
-            <CartItems item ={item} handleDeleteItem={handleDeleteItem} handleQuantity={handleQuantity}/>
+            <CartItems
+              key={item.id}
+              item={item}
+              handleDeleteItem={handleDeleteItem}
+              handleQuantity={handleQuantity}
+            />
           ))
         ) : (
           <h2>No Items in Cart</h2>
