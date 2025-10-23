@@ -56,8 +56,11 @@ const ShopManage = () => {
   };
 
   // Delete Shop (FUTURE IMPROV: Validation before deletion (ASK YES OR NO to confirm))
-  const handleDelete = () => {
-    // IN PROGRESS
+  const handleDeleteShop = async () => {
+    const deletedShop = await shopApi.deleteShop();
+    console.log("deletedShop:", deletedShop);
+    // temporarily moving them elsewhere
+    navigate("/");
   };
 
   if (!userShop) return <p>Loading your shop...</p>;
@@ -69,7 +72,7 @@ const ShopManage = () => {
           <button onClick={toggleEditMode}>
             {isEditMode ? "Close Edit" : "Edit Shop"}
           </button>
-          <button>Delete Shop</button>
+          <button onClick={handleDeleteShop}>Delete Shop</button>
         </div>
         {isEditMode ? (
           <div>

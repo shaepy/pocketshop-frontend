@@ -88,13 +88,12 @@ export const updateShop = async (formData) => {
 export const deleteShop = async () => {
   try {
     const response = await axios.delete(`${BASEURL}owner/`);
-    console.log("from shopService.deleteShop:", response);
 
-    if (!response.data) {
-      throw new Error("Error fetching user's shop", response.data.error);
+    if (response.status != 204) {
+      throw new Error("Error deleting user's shop", response.data.error);
     }
 
-    return response.data;
+    return { success: response.status, message: "Successfully deleted." };
   } catch (error) {
     console.log(error);
     throw new Error(error);
