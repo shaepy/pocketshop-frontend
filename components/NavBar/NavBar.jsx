@@ -28,13 +28,15 @@ const NavBar = () => {
         <li>
           <Link to="/shops">Shops</Link>
         </li>
+        <li>
+          <Link to="/products">Products</Link>
+        </li>
         {/* ST-Todo: We should display based on whether a user has a shop */}
         {/* ex. "Create Shop" if no shop exists. "My Shop" to manage an existing shop */}
         <li>
           <Link to="/shops/new">Create Shop</Link>
         </li>
         <li>
-          <Link to="/products">Products</Link>
           <Link to="/dashboard/shop">Manage Shop</Link>
         </li>
         {user ? (

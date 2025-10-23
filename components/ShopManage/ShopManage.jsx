@@ -55,7 +55,7 @@ const ShopManage = () => {
     setIsEditMode((prev) => !prev);
   };
 
-  // Delete Shop
+  // Delete Shop (FUTURE IMPROV: Validation before deletion (ASK YES OR NO to confirm))
   const handleDelete = () => {
     // IN PROGRESS
   };
