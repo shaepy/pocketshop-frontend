@@ -34,7 +34,24 @@ export const getShop = async (shopId) => {
   }
 };
 
-// GET an owner's shop (requested by the user/owner)
+// CREATE a shop (POST)
+export const createShop = async (formData) => {
+  try {
+    const response = await axios.post(`${BASEURL}`, formData);
+    console.log("from shopApi.createShop:", response.data);
+
+    if (!response.data) {
+      throw new Error("Error creating the shop", response.data.error);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// GET an owner's shop (requested by the user/owner only)
 export const getUserShop = async () => {
   try {
     const response = await axios.get(`${BASEURL}owner/`);
@@ -50,14 +67,31 @@ export const getUserShop = async () => {
   }
 };
 
-// CREATE a shop (POST)
-export const createShop = async (formData) => {
+// UPDATE/PUT owner's shop (requested by the user/owner only)
+export const updateShop = async (formData) => {
   try {
-    const response = await axios.post(`${BASEURL}`, formData);
-    console.log("from shopApi.createShop:", response.data);
+    const response = await axios.put(`${BASEURL}owner/`, formData);
+    console.log("from shopService.updateShop:", response);
 
     if (!response.data) {
-      throw new Error("Error creating the shop", response.data.error);
+      throw new Error("Error fetching user's shop", response.data.error);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// DELETE owner's shop (requested by the user/owner only)
+export const deleteShop = async () => {
+  try {
+    const response = await axios.delete(`${BASEURL}owner/`);
+    console.log("from shopService.deleteShop:", response);
+
+    if (!response.data) {
+      throw new Error("Error fetching user's shop", response.data.error);
     }
 
     return response.data;
