@@ -32,7 +32,7 @@ const ShopPage = () => {
           {shop.products.map((product) => (
             // This should link to the product page
             <h3 key={product.id}>
-              <Link>{product.title}</Link>
+              <Link to={`/products/${product.id}`}>{product.title}</Link>
             </h3>
           ))}
         </div>
