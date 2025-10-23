@@ -35,6 +35,7 @@ const NavBar = () => {
         </li>
         <li>
           <Link to="/products">Products</Link>
+          <Link to="/dashboard/shop">Manage Shop</Link>
         </li>
         {user ? (
           <>
