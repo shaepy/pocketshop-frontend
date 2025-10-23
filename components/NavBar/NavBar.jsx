@@ -33,6 +33,9 @@ const NavBar = () => {
         <li>
           <Link to="/shops/new">Create Shop</Link>
         </li>
+        <li>
+          <Link to="/dashboard/shop">Manage Shop</Link>
+        </li>
         {user ? (
           <li>
             <button onClick={handleSignOut}>Sign out</button>

@@ -18,13 +18,29 @@ export const getShops = async () => {
   }
 };
 
-// GET a shop
+// GET any shop
 export const getShop = async (shopId) => {
   try {
     const response = await axios.get(`${BASEURL}${shopId}`);
 
     if (!response.data) {
       throw new Error("Error fetching a shop", response.data.error);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+// GET an owner's shop (requested by the user/owner)
+export const getUserShop = async () => {
+  try {
+    const response = await axios.get(`${BASEURL}owner/`);
+
+    if (!response.data) {
+      throw new Error("Error fetching user's shop", response.data.error);
     }
 
     return response.data;
