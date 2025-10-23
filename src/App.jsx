@@ -10,6 +10,9 @@ import ShopPage from "../components/ShopPage/ShopPage";
 import SignUpForm from "../components/SignUpForm/SignUpForm";
 import SignInForm from "../components/SignInForm/SignInForm";
 import ShopCreate from "../components/ShopCreate/ShopCreate";
+import Products  from "../components/Products/Products";
+import ProductPage  from "../components/ProductPage/ProductPage";
+import Carts from "../components/Carts/Carts";
 import ShopManage from "../components/ShopManage/ShopManage";
 import "./App.css";
 
@@ -36,6 +39,9 @@ const App = () => {
           }
         />
         <Route path="/shops/:shopId" element={<ShopPage />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:productId" element={<ProductPage />} />
+        <Route path="/cart" element={<Carts />} />
         <Route
           path="/dashboard/shop"
           element={
