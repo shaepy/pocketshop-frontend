@@ -19,10 +19,24 @@ const ShopPage = () => {
 
   return (
     <main>
-      <h1>{shop.name}</h1>
-      <p>{shop.bio}</p>
-      <p>Owner: {shop.owner.username}</p>
-      <p>Image: {shop.shop_image}</p>
+      <div>
+        <h1>{shop.name}</h1>
+        <p>{shop.bio}</p>
+        <p>Owner: {shop.owner.username}</p>
+        <p>Image: {shop.shop_image}</p>
+      </div>
+      <section>
+        <div>
+          <h2>Products</h2>
+          <p>{shop.products.length} products found.</p>
+          {shop.products.map((product) => (
+            // This should link to the product page
+            <h3 key={product.id}>
+              <Link>{product.title}</Link>
+            </h3>
+          ))}
+        </div>
+      </section>
     </main>
   );
 };

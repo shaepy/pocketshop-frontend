@@ -10,7 +10,12 @@ import ShopPage from "../components/ShopPage/ShopPage";
 import SignUpForm from "../components/SignUpForm/SignUpForm";
 import SignInForm from "../components/SignInForm/SignInForm";
 import ShopCreate from "../components/ShopCreate/ShopCreate";
+import ShopManage from "../components/ShopManage/ShopManage";
 import "./App.css";
+
+// dashboard (my shop, my orders)
+// dashboard/shop
+// dashboard/shop/product/
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -30,9 +35,25 @@ const App = () => {
           }
         />
         <Route path="/shops/:shopId" element={<ShopPage />} />
+        <Route
+          path="/dashboard/shop"
+          element={
+            <ProtectedRoute>
+              <ShopManage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/shop/products/new"
+          element={
+            <>
+              <h1>Add New Product</h1>
+              <p>This is the temp page for adding a product.</p>
+            </>
+          }
+        />
         <Route path="/register" element={<SignUpForm />} />
         <Route path="/login" element={<SignInForm />} />
-
         <Route
           path="*"
           element={
