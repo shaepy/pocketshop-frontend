@@ -41,6 +41,9 @@ const NavBar = () => {
         {user && user ? (
           <>
             <li>
+              <Link to="/dashboard/orders">My Orders</Link>
+            </li>
+            <li>
               <Link to="/cart">Cart 🛒</Link>
             </li>
             <li>

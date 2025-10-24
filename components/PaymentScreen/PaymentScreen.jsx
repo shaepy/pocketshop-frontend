@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import { useContext } from "react";
 import * as paymentApi from "../../services/paymentService";
 
-const PaymentScreen = ({ setActivePaymentScreen, handleCreateOrder }) => {
+const PaymentScreen = ({ setActivePaymentScreen, handleCreateOrders }) => {
+  const navigate = useNavigate();
   const initialState = {
     name: "",
     cardNumber: "",
@@ -34,10 +36,13 @@ const PaymentScreen = ({ setActivePaymentScreen, handleCreateOrder }) => {
       console.log("payment created?:", validPayment);
 
       if (validPayment) {
-        handleCreateOrder();
+        // Pass payment.id from validPayment to handleCreateOrder()
+        const orders = await handleCreateOrders(validPayment.id);
+        console.log("order created?:", orders);
+
         setFormData(initialState);
-        setError("Payment successful! Taking you to order invoice...");
-        // setActivePaymentScreen(false);
+        setActivePaymentScreen(false);
+        navigate("/dashboard/orders");
       } else {
         setError("Payment failed. Please try again.");
       }

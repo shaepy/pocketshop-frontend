@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import keysToSnakeTopLevel from "../../utilities/convertToSnake";
 import * as cartApi from "../../services/cartService";
+import * as orderApi from "../../services/orderService";
 import CartItems from "../CartItems/CartItems";
 import PaymentScreen from "../PaymentScreen/PaymentScreen";
 
@@ -25,8 +26,8 @@ const Carts = () => {
   useEffect(() => {
     const fetchCart = async () => {
       const foundCart = await cartApi.getCart();
-      //   console.log("found cart ", foundCart);
-      //console.log("found cart items", foundCart.cart_items);
+      console.log("found cart ", foundCart);
+      console.log("found cart items", foundCart.cart_items);
       setCart(foundCart);
       setCartItems(foundCart.cart_items);
     };
@@ -78,11 +79,26 @@ const Carts = () => {
     }
   };
 
-  // Pass this function to PaymentScreen
-  const handleCreateOrder = async () => {
+  // TODO-ST : Pass this function to PaymentScreen
+  const handleCreateOrders = async (paymentId) => {
     try {
-      // FUNCTION TO CREATE ORDER (USE CART/ITEMS DETAILS TO PASS)
-      console.log("handleCreateOrder called. CREATING ORDER...");
+      // FUNCTION TO CREATE ORDER (For each cart_item, create 1 order)
+      console.log(
+        `handleCreateOrders: CREATING ORDER for paymentId: ${paymentId}`
+      );
+
+      // forEach item in cartItems
+      cartItems.forEach(async (cartItem) => {
+        const orderData = {
+          payment: paymentId,
+          product: cartItem.product.id,
+          status: "Pending",
+          quantity: cartItem.quantity,
+          subtotal: cartItem.quantity * cartItem.product.price,
+        };
+        const order = await orderApi.createOrder(orderData);
+        console.log("order created:", order);
+      });
     } catch (error) {
       console.log("Error", error);
     }
@@ -117,7 +133,7 @@ const Carts = () => {
       {activePaymentScreen && (
         <PaymentScreen
           setActivePaymentScreen={setActivePaymentScreen}
-          handleCreateOrder={handleCreateOrder}
+          handleCreateOrders={handleCreateOrders}
         />
       )}
     </>

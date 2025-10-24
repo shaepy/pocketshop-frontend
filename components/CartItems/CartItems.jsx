@@ -1,9 +1,12 @@
-const CartItems = ({ item , handleDeleteItem, handleQuantity}) => {
-  
+import { Link } from "react-router";
+
+const CartItems = ({ item, handleDeleteItem, handleQuantity }) => {
   return (
     <>
       <li key={item.id}>
-        Title : {item.product.title} / Quantity :
+        Title :{" "}
+        <Link to={`/products/${item.product.id}`}>{item.product.title}</Link> /
+        Quantity :
         <button onClick={() => handleQuantity(true, item.quantity, item.id)}>
           +
         </button>
@@ -18,6 +21,5 @@ const CartItems = ({ item , handleDeleteItem, handleQuantity}) => {
     </>
   );
 };
-
 
 export default CartItems;

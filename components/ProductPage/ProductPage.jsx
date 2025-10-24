@@ -38,10 +38,10 @@ const ProductPage = () => {
     try {
       //console.log("submitting a new cart item", formData);
       const newCartItem = await cartApi.addProductToCart(formData);
-      //console.log("newCartItem :", newCartItem);
+      console.log("newCartItem :", newCartItem);
       setMessage("Product added to cart");
       setFormData(initialState);
-      setQuantity(1)
+      setQuantity(1);
     } catch (err) {
       setMessage(err.message);
     }
@@ -56,33 +56,28 @@ const ProductPage = () => {
       <p>{product.product_image}</p>
       <p>${product.price * quantity}</p>
       {product.quantity > 0 ? (
-        <p>
-          ✓ In Stock ({product.quantity} available)
-        </p>
+        <p>✓ In Stock ({product.quantity} available)</p>
       ) : (
         <p>Out of Stock</p>
       )}
       <button
         //disable quantity button because we cannot send negative numbers
         disabled={quantity <= 0 ? true : false}
-        onClick={() => setQuantity(quantity - 1)}
-      >
+        onClick={() => setQuantity(quantity - 1)}>
         -
       </button>
       <p>Quantity {quantity} </p>
       <button
         // disable quantity button if more than product has
         disabled={quantity >= product.quantity ? true : false}
-        onClick={() => setQuantity(quantity + 1)}
-      >
+        onClick={() => setQuantity(quantity + 1)}>
         +
       </button>
       <p>{message}</p>
       <button
         //disable add to cart if quantity is 0
         disabled={quantity === 0 ? true : false}
-        onClick={() => (user ? handleAddToCart() : navigate("/register"))}
-      >
+        onClick={() => (user ? handleAddToCart() : navigate("/register"))}>
         Add to Cart
       </button>
     </>

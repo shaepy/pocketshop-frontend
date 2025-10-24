@@ -14,6 +14,7 @@ import Products from "../components/Products/Products";
 import ProductPage from "../components/ProductPage/ProductPage";
 import Carts from "../components/Carts/Carts";
 import ShopManage from "../components/ShopManage/ShopManage";
+import MyOrderPage from "../components/MyOrderPage/MyOrderPage";
 import "./App.css";
 
 // dashboard (my shop, my orders)
@@ -47,6 +48,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <ShopManage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/orders"
+          element={
+            <ProtectedRoute>
+              <MyOrderPage />
             </ProtectedRoute>
           }
         />
