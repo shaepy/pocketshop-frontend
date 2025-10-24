@@ -7,7 +7,7 @@ const CartItems = ({ item, handleDeleteItem, handleQuantity }) => {
         Title :{" "}
         <Link to={`/products/${item.product.id}`}>{item.product.title}</Link> /
         {/*showing stock avaliable*/}
-        {<p>{item.product.quantity - item.quantity} remaining in stock</p>}
+        <p>{item.product.quantity - item.quantity} remaining in stock</p>
         Quantity :
         <button
           disabled={item.quantity >= item.product.quantity}
