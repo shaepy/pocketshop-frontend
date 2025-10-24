@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, act } from "react";
+import { useNavigate } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
-import { useContext } from "react";
 import keysToSnakeTopLevel from "../../utilities/convertToSnake";
 import * as cartApi from "../../services/cartService";
 import CartItems from "../CartItems/CartItems";
+import PaymentScreen from "../PaymentScreen/PaymentScreen";
 
 const Carts = () => {
+  const navigate = useNavigate();
   const initialStateDelete = {
     cartItemId: 0,
   };
@@ -16,6 +18,7 @@ const Carts = () => {
   const { user } = useContext(UserContext);
   const [cart, setCart] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [activePaymentScreen, setActivePaymentScreen] = useState(false);
   const [deleteRequest, setDeleteRequest] = useState(initialStateDelete);
   const [updateRequest, setUpdateRequest] = useState(initialStateUpdate);
 
@@ -29,7 +32,12 @@ const Carts = () => {
     };
 
     fetchCart();
-  }, []);
+    console.log("activePaymentScreen is currently:", activePaymentScreen);
+  }, [activePaymentScreen]);
+
+  const toggleActivePaymentScreen = () => {
+    setActivePaymentScreen((prev) => !prev);
+  };
 
   const handleDeleteItem = async (itemId) => {
     try {
@@ -70,6 +78,16 @@ const Carts = () => {
     }
   };
 
+  // Pass this function to PaymentScreen
+  const handleCreateOrder = async () => {
+    try {
+      // FUNCTION TO CREATE ORDER (USE CART/ITEMS DETAILS TO PASS)
+      console.log("handleCreateOrder called. CREATING ORDER...");
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
   return (
     <>
       <h1> Cart</h1>
@@ -90,7 +108,18 @@ const Carts = () => {
       </ul>
 
       {/* This should take you to payment page */}
-      <button disabled={cartItems.length <= 0 && true}>Checkout</button>
+      <button
+        disabled={cartItems.length <= 0 && true}
+        onClick={toggleActivePaymentScreen}>
+        {activePaymentScreen ? "Cancel" : "Proceed to checkout"}
+      </button>
+
+      {activePaymentScreen && (
+        <PaymentScreen
+          setActivePaymentScreen={setActivePaymentScreen}
+          handleCreateOrder={handleCreateOrder}
+        />
+      )}
     </>
   );
 };

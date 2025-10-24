@@ -50,6 +50,3 @@ export const signIn = async (formData) => {
     throw new Error(error);
   }
 };
-
-// USER CONTEXT QUERIES, DONT NEED TO DO IT IN THE LOGIN
-// TODO-ST
