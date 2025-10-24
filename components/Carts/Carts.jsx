@@ -110,7 +110,7 @@ const Carts = () => {
           };
           await productApi.setNewQuantity(cartItem.product.id, newQuantityData);
         }
-      })
+      });
       
       //clear cart items after all orders are created - returns cleared cart
       await clearCart();
