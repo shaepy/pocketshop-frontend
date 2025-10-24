@@ -4,6 +4,7 @@ import { UserContext } from "../../contexts/UserContext";
 import keysToSnakeTopLevel from "../../utilities/convertToSnake";
 import * as cartApi from "../../services/cartService";
 import * as orderApi from "../../services/orderService";
+import * as productApi from "../../services/productService";
 import CartItems from "../CartItems/CartItems";
 import PaymentScreen from "../PaymentScreen/PaymentScreen";
 
@@ -19,6 +20,7 @@ const Carts = () => {
   const { user } = useContext(UserContext);
   const [cart, setCart] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [message, setMessage] = useState("");
   const [activePaymentScreen, setActivePaymentScreen] = useState(false);
   const [deleteRequest, setDeleteRequest] = useState(initialStateDelete);
   const [updateRequest, setUpdateRequest] = useState(initialStateUpdate);
@@ -89,18 +91,42 @@ const Carts = () => {
 
       // forEach item in cartItems
       cartItems.forEach(async (cartItem) => {
-        const orderData = {
-          payment: paymentId,
-          product: cartItem.product.id,
-          status: "Pending",
-          quantity: cartItem.quantity,
-          subtotal: cartItem.quantity * cartItem.product.price,
-        };
-        const order = await orderApi.createOrder(orderData);
-        console.log("order created:", order);
-      });
+        //Checking if the quantity in cart item is enough in product quantity
+        if (cartItem.quantity <= cartItem.product.quantity) {
+          //if there is enough quantity you create the order
+          const orderData = {
+            payment: paymentId,
+            product: cartItem.product.id,
+            status: "Pending",
+            quantity: cartItem.quantity,
+            subtotal: cartItem.quantity * cartItem.product.price,
+          };
+          const order = await orderApi.createOrder(orderData);
+          console.log("order created:", order);
+
+          //Remove quantity from product
+          const newQuantityData = {
+            quantity: cartItem.product.quantity - cartItem.quantity,
+          };
+          await productApi.setNewQuantity(cartItem.product.id, newQuantityData);
+        }
+      })
+      
+      //clear cart items after all orders are created - returns cleared cart
+      await clearCart();
     } catch (error) {
       console.log("Error", error);
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      //clear cart items - returns cleared cart
+      const clearedCart = await cartApi.clearCart();
+      setCart(clearedCart);
+      setCartItems(clearedCart.cart_items);
+    } catch (error) {
+      console.log("Error clearing cart", error);
     }
   };
 
@@ -108,6 +134,12 @@ const Carts = () => {
     <>
       <h1> Cart</h1>
       <ul>
+        <button
+          disabled={cartItems.length <= 0 && true}
+          onClick={() => clearCart()}
+        >
+          Clear cart
+        </button>
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
             <CartItems
@@ -122,11 +154,12 @@ const Carts = () => {
         )}
         <p>Total Cost Of Cart : {cart.total_cost}</p>
       </ul>
-
+  
       {/* This should take you to payment page */}
       <button
         disabled={cartItems.length <= 0 && true}
-        onClick={toggleActivePaymentScreen}>
+        onClick={toggleActivePaymentScreen}
+      >
         {activePaymentScreen ? "Cancel" : "Proceed to checkout"}
       </button>
 
