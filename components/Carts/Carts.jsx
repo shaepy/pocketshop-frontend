@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, act } from "react";
+import { useNavigate } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
-import { useContext } from "react";
 import keysToSnakeTopLevel from "../../utilities/convertToSnake";
 import * as cartApi from "../../services/cartService";
+import * as orderApi from "../../services/orderService";
 import CartItems from "../CartItems/CartItems";
+import PaymentScreen from "../PaymentScreen/PaymentScreen";
 
 const Carts = () => {
+  const navigate = useNavigate();
   const initialStateDelete = {
     cartItemId: 0,
   };
@@ -16,20 +19,26 @@ const Carts = () => {
   const { user } = useContext(UserContext);
   const [cart, setCart] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [activePaymentScreen, setActivePaymentScreen] = useState(false);
   const [deleteRequest, setDeleteRequest] = useState(initialStateDelete);
   const [updateRequest, setUpdateRequest] = useState(initialStateUpdate);
 
   useEffect(() => {
     const fetchCart = async () => {
       const foundCart = await cartApi.getCart();
-      //   console.log("found cart ", foundCart);
-      //console.log("found cart items", foundCart.cart_items);
+      console.log("found cart ", foundCart);
+      console.log("found cart items", foundCart.cart_items);
       setCart(foundCart);
       setCartItems(foundCart.cart_items);
     };
 
     fetchCart();
-  }, []);
+    console.log("activePaymentScreen is currently:", activePaymentScreen);
+  }, [activePaymentScreen]);
+
+  const toggleActivePaymentScreen = () => {
+    setActivePaymentScreen((prev) => !prev);
+  };
 
   const handleDeleteItem = async (itemId) => {
     try {
@@ -70,6 +79,31 @@ const Carts = () => {
     }
   };
 
+  // TODO-ST : Pass this function to PaymentScreen
+  const handleCreateOrders = async (paymentId) => {
+    try {
+      // FUNCTION TO CREATE ORDER (For each cart_item, create 1 order)
+      console.log(
+        `handleCreateOrders: CREATING ORDER for paymentId: ${paymentId}`
+      );
+
+      // forEach item in cartItems
+      cartItems.forEach(async (cartItem) => {
+        const orderData = {
+          payment: paymentId,
+          product: cartItem.product.id,
+          status: "Pending",
+          quantity: cartItem.quantity,
+          subtotal: cartItem.quantity * cartItem.product.price,
+        };
+        const order = await orderApi.createOrder(orderData);
+        console.log("order created:", order);
+      });
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
   return (
     <>
       <h1> Cart</h1>
@@ -90,7 +124,18 @@ const Carts = () => {
       </ul>
 
       {/* This should take you to payment page */}
-      <button disabled={cartItems.length <= 0 && true}>Checkout</button>
+      <button
+        disabled={cartItems.length <= 0 && true}
+        onClick={toggleActivePaymentScreen}>
+        {activePaymentScreen ? "Cancel" : "Proceed to checkout"}
+      </button>
+
+      {activePaymentScreen && (
+        <PaymentScreen
+          setActivePaymentScreen={setActivePaymentScreen}
+          handleCreateOrders={handleCreateOrders}
+        />
+      )}
     </>
   );
 };

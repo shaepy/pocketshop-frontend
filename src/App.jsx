@@ -10,10 +10,11 @@ import ShopPage from "../components/ShopPage/ShopPage";
 import SignUpForm from "../components/SignUpForm/SignUpForm";
 import SignInForm from "../components/SignInForm/SignInForm";
 import ShopCreate from "../components/ShopCreate/ShopCreate";
-import Products  from "../components/Products/Products";
-import ProductPage  from "../components/ProductPage/ProductPage";
+import Products from "../components/Products/Products";
+import ProductPage from "../components/ProductPage/ProductPage";
 import Carts from "../components/Carts/Carts";
 import ShopManage from "../components/ShopManage/ShopManage";
+import MyOrderPage from "../components/MyOrderPage/MyOrderPage";
 import "./App.css";
 
 // dashboard (my shop, my orders)
@@ -51,12 +52,11 @@ const App = () => {
           }
         />
         <Route
-          path="/dashboard/shop/products/new"
+          path="/dashboard/orders"
           element={
-            <>
-              <h1>Add New Product</h1>
-              <p>This is the temp page for adding a product.</p>
-            </>
+            <ProtectedRoute>
+              <MyOrderPage />
+            </ProtectedRoute>
           }
         />
         <Route path="/register" element={<SignUpForm />} />

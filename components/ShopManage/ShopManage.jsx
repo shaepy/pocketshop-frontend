@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router";
 import AddProduct from "../AddProduct/AddProduct";
 import * as shopApi from "../../services/shopService";
+import { getUser } from "../../services/userService";
 
-// ST: IN PROGRESS (EDIT AND DELETE)
-// ST: This route should only show if the user has a SHOP
 const ShopManage = () => {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
   const [userShop, setUserShop] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isProductMode, setIsProductMode] = useState(false);
@@ -23,7 +24,8 @@ const ShopManage = () => {
     };
     fetchUserShop();
     console.log("isEditMode is currently:", isEditMode);
-  }, [isEditMode]);
+    // ST - added isProductMode to refresh useEffect
+  }, [isEditMode, isProductMode]);
 
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
@@ -62,6 +64,10 @@ const ShopManage = () => {
   const handleDeleteShop = async () => {
     const deletedShop = await shopApi.deleteShop();
     console.log("deletedShop:", deletedShop);
+
+    console.log("pulling user again and setting it");
+    setUser(await getUser(user.id));
+
     // temporarily moving them elsewhere
     navigate("/");
   };
@@ -116,7 +122,7 @@ const ShopManage = () => {
           {isProductMode ? "Close" : "+ Add Product"}
         </button>
         {isProductMode ? (
-          <AddProduct  setIsProductMode= {setIsProductMode}/>
+          <AddProduct setIsProductMode={setIsProductMode} />
         ) : (
           userShop.products.map((product) => (
             <div key={product.id}>

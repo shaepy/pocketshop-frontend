@@ -92,8 +92,7 @@ const AddProduct = ({ setIsProductMode }) => {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            required
-          >
+            required>
             <option value="">-- Select an option --</option>
             <option value="PETS">Pet Supplies</option>
             <option value="ART">Art & Crafts</option>
