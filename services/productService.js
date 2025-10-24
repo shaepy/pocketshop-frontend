@@ -50,8 +50,34 @@ export const addProduct = async (formData) => {
   }
 };
 
-//PATCH quantity when order is created 
-export const setNewQuantity = async (productId,formData) => {
+//PATCH quantity when order is created
+export const setNewQuantity = async (productId, formData) => {
+  try {
+    const response = await axios.patch(`${BASEURL}${productId}/`, formData);
+
+    if (!response.data) {
+      throw new Error("Error creating product", response.data.error);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.log("Error", error);
+    throw new Error(error);
+  }
+};
+
+export const deleteProduct = async (productId) => {
+  try {
+    const response = await axios.delete(`${BASEURL}${productId}/`);
+
+    return response.data;
+  } catch (error) {
+    console.log("Error", error);
+    throw new Error(error);
+  }
+};
+
+export const updateProduct = async (productId, formData) => {
   try {
     const response = await axios.patch(`${BASEURL}${productId}/`, formData);
 

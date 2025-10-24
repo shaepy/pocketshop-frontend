@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router";
-import AddProduct from "../AddProduct/AddProduct";
+import ProductForm from "../ProductForm/ProductForm";
 import * as shopApi from "../../services/shopService";
+import * as productApi from "../../services/productService";
 import { getUser } from "../../services/userService";
 
 const ShopManage = () => {
@@ -11,6 +12,8 @@ const ShopManage = () => {
   const [userShop, setUserShop] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [isProductMode, setIsProductMode] = useState(false);
+  const [isEditProductMode, setIsEditProductMode] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const fetchUserShop = async () => {
@@ -25,7 +28,7 @@ const ShopManage = () => {
     fetchUserShop();
     console.log("isEditMode is currently:", isEditMode);
     // ST - added isProductMode to refresh useEffect
-  }, [isEditMode, isProductMode]);
+  }, [isEditMode, isProductMode, isEditProductMode]);
 
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
@@ -70,6 +73,25 @@ const ShopManage = () => {
 
     // temporarily moving them elsewhere
     navigate("/");
+  };
+
+  //Deleting Product
+  const handleDeleteProduct = async (productId) => {
+    try {
+      await productApi.deleteProduct(productId);
+
+      // Refetch the shop to update the products list
+      const userShopFound = await shopApi.getUserShop();
+      setUserShop(userShopFound);
+    } catch (err) {
+      setError(err.message || "Failed to delete product.");
+    }
+  };
+
+  //edit product
+  const toggleEditProductMode = (product = null) => {
+    setSelectedProduct(product);
+    setIsEditProductMode((prev) => !prev);
   };
 
   if (!userShop) return <p>Loading your shop...</p>;
@@ -121,8 +143,14 @@ const ShopManage = () => {
         <button onClick={toggleAddProductMode}>
           {isProductMode ? "Close" : "+ Add Product"}
         </button>
+
         {isProductMode ? (
-          <AddProduct setIsProductMode={setIsProductMode} />
+          <ProductForm product={null} setIsProductMode={setIsProductMode} />
+        ) : isEditProductMode ? (
+          <ProductForm
+            product={selectedProduct}
+            setIsEditProductMode={setIsEditProductMode}
+          />
         ) : (
           userShop.products.map((product) => (
             <div key={product.id}>
@@ -133,6 +161,12 @@ const ShopManage = () => {
               <p>${product.price}</p>
               <p>qt: {product.quantity}</p>
               <p>category: {product.category}</p>
+              <button onClick={() => toggleEditProductMode(product)}>
+                {isEditProductMode ? "Close" : "Edit"}
+              </button>
+              <button onClick={() => handleDeleteProduct(product.id)}>
+                Delete
+              </button>
             </div>
           ))
         )}

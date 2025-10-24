@@ -130,6 +130,8 @@ const Carts = () => {
     }
   };
 
+  if (!cart) return <p>Loading your cart...</p>;
+
   return (
     <>
       <h1> Cart</h1>
