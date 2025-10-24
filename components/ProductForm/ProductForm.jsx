@@ -49,7 +49,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
     <>
       <div>
         {error && <p>{error}</p>}
-        <h1>{setIsProductMode ? "Create New Product" : "Edit Product" }</h1>
+        <h1>{product ? "Edit Product" : "Create New Product" }</h1>
         {setIsEditProductMode && <button onClick={()=>setIsEditProductMode(false)}> Close </button>}  
         <div>
           <form onSubmit={handleSubmit}>
