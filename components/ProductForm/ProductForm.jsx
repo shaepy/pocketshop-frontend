@@ -50,7 +50,16 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
       <div>
         {error && <p>{error}</p>}
         <h1>{product ? "Edit Product" : "Create New Product"}</h1>
-        {setIsEditProductMode && <button onClick={() => setIsEditProductMode(false)}> Close </button>}  
+        {(setIsEditProductMode || setIsProductMode) && (
+          <button
+            onClick={() => {
+              if (setIsEditProductMode) setIsEditProductMode(false);
+              else if (setIsProductMode) setIsProductMode(false);
+            }}
+          >
+            Close
+          </button>
+        )}
         <div>
           <form onSubmit={handleSubmit}>
             <label htmlFor="productImage">Product Images</label>
