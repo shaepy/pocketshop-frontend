@@ -56,7 +56,7 @@ export const setNewQuantity = async (productId, formData) => {
     const response = await axios.patch(`${BASEURL}${productId}/`, formData);
 
     if (!response.data) {
-      throw new Error("Error creating product", response.data.error);
+      throw new Error("Error updating product quantity", response.data.error);
     }
 
     return response.data;
