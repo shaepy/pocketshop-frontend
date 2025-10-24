@@ -162,7 +162,7 @@ const ShopManage = () => {
               <p>qt: {product.quantity}</p>
               <p>category: {product.category}</p>
               <button onClick={() => toggleEditProductMode(product)}>
-                {isEditProductMode ? "Close" : "Edit"}
+                {isEditProductMode && selectedProduct?.id === product.id ? "Close" : "Edit"}
               </button>
               <button onClick={() => handleDeleteProduct(product.id)}>
                 Delete
