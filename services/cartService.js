@@ -70,7 +70,7 @@ export const deleteItemFromCart = async (cartItemId) => {
 //Clear cart content after payment and via a x button
 export const clearCart = async () => {
   try {
-    const response = await axios.delete(`${BASEURL}clear/`);;
+    const response = await axios.delete(`${BASEURL}clear/`);
 
     if (!response.data) {
       throw new Error("Cound't clear cart", response.data.error);
