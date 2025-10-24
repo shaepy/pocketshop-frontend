@@ -82,7 +82,7 @@ export const updateProduct = async (productId, formData) => {
     const response = await axios.patch(`${BASEURL}${productId}/`, formData);
 
     if (!response.data) {
-      throw new Error("Error creating product", response.data.error);
+      throw new Error("Error updating product", response.data.error);
     }
 
     return response.data;
