@@ -88,7 +88,7 @@ const Carts = () => {
         `handleCreateOrders: CREATING ORDER for paymentId: ${paymentId}`
       );
 
-      //We need to use promsie otherwsie we will have a race condition
+      //We need to use promise otherwise we will have a race condition
       await Promise.all(
         cartItems.map(async (cartItem) => {
           //Checking if the quantity in cart item is enough in product quantity
