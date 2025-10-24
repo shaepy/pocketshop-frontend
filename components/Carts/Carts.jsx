@@ -20,7 +20,6 @@ const Carts = () => {
   const { user } = useContext(UserContext);
   const [cart, setCart] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [message, setMessage] = useState("");
   const [activePaymentScreen, setActivePaymentScreen] = useState(false);
   const [deleteRequest, setDeleteRequest] = useState(initialStateDelete);
   const [updateRequest, setUpdateRequest] = useState(initialStateUpdate);
@@ -89,29 +88,34 @@ const Carts = () => {
         `handleCreateOrders: CREATING ORDER for paymentId: ${paymentId}`
       );
 
-      // forEach item in cartItems
-      cartItems.forEach(async (cartItem) => {
-        //Checking if the quantity in cart item is enough in product quantity
-        if (cartItem.quantity <= cartItem.product.quantity) {
-          //if there is enough quantity you create the order
-          const orderData = {
-            payment: paymentId,
-            product: cartItem.product.id,
-            status: "Pending",
-            quantity: cartItem.quantity,
-            subtotal: cartItem.quantity * cartItem.product.price,
-          };
-          const order = await orderApi.createOrder(orderData);
-          console.log("order created:", order);
+      //We need to use promsie otherwsie we will have a race condition
+      await Promise.all(
+        cartItems.map(async (cartItem) => {
+          //Checking if the quantity in cart item is enough in product quantity
+          if (cartItem.quantity <= cartItem.product.quantity) {
+            //if there is enough quantity you create the order
+            const orderData = {
+              payment: paymentId,
+              product: cartItem.product.id,
+              status: "Pending",
+              quantity: cartItem.quantity,
+              subtotal: cartItem.quantity * cartItem.product.price,
+            };
+            const order = await orderApi.createOrder(orderData);
+            console.log("order created:", order);
 
-          //Remove quantity from product
-          const newQuantityData = {
-            quantity: cartItem.product.quantity - cartItem.quantity,
-          };
-          await productApi.setNewQuantity(cartItem.product.id, newQuantityData);
-        }
-      });
-      
+            //Remove quantity from product
+            const newQuantityData = {
+              quantity: cartItem.product.quantity - cartItem.quantity,
+            };
+            await productApi.setNewQuantity(
+              cartItem.product.id,
+              newQuantityData
+            );
+          }
+        })
+      );
+
       //clear cart items after all orders are created - returns cleared cart
       await clearCart();
     } catch (error) {
@@ -156,7 +160,7 @@ const Carts = () => {
         )}
         <p>Total Cost Of Cart : {cart.total_cost}</p>
       </ul>
-  
+
       {/* This should take you to payment page */}
       <button
         disabled={cartItems.length <= 0 && true}
