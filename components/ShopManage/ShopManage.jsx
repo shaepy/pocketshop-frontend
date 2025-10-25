@@ -158,7 +158,7 @@ const ShopManage = () => {
         ) : (
           userShop.products.map((product) => (
             <div key={product.id}>
-              <h4>{product.title}</h4>
+              <h4 aria-label={`${product.title} (ID: ${product.id})`}>{product.title}</h4>
               <button onClick={() => linkToProductOrders(product.id)}>
                 View Orders
               </button>
