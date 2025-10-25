@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import Dashboard from "../../components/Dashboard/Dashboard";
 
 const LandingPage = () => {
   const { user } = useContext(UserContext);
@@ -9,7 +10,7 @@ const LandingPage = () => {
       {user ? (
         <>
           <h1>Welcome back, {user.username}.</h1>
-          <p>Your pocketshop is ready.</p>
+          <Dashboard />
         </>
       ) : (
         <>

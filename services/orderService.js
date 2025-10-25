@@ -28,3 +28,20 @@ export const createOrder = async (orderData) => {
     throw new Error(error);
   }
 };
+
+// UPDATE/PUT ORDER
+export const updateOrder = async (orderId, orderData) => {
+  try {
+    const response = await axios.put(`${BASEURL}${orderId}/`, orderData);
+    console.log("updatedOrder response:", response.data);
+
+    if (!response.data) {
+      throw new Error("Error updating order", response.data.error);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.log("Error", error);
+    throw new Error(error);
+  }
+};

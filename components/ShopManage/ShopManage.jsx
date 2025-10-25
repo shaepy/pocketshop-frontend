@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
+import { getUser } from "../../services/userService";
 import ProductForm from "../ProductForm/ProductForm";
 import * as shopApi from "../../services/shopService";
 import * as productApi from "../../services/productService";
-import { getUser } from "../../services/userService";
 
 const ShopManage = () => {
   const navigate = useNavigate();
@@ -41,6 +41,15 @@ const ShopManage = () => {
     setIsProductMode((prev) => !prev);
   };
 
+  // Toggle Edit Shop
+  const toggleEditMode = () => {
+    setIsEditMode((prev) => !prev);
+  };
+
+  const linkToProductOrders = (productId) => {
+    navigate(`/dashboard/product/${productId}/orders`);
+  };
+
   const handleChange = (e) => {
     setError("");
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,11 +65,6 @@ const ShopManage = () => {
     } catch (err) {
       setError(err.message);
     }
-  };
-
-  // Toggle Edit Shop
-  const toggleEditMode = () => {
-    setIsEditMode((prev) => !prev);
   };
 
   // Delete Shop (FUTURE IMPROV: Validation before deletion (ASK YES OR NO to confirm))
@@ -154,15 +158,18 @@ const ShopManage = () => {
         ) : (
           userShop.products.map((product) => (
             <div key={product.id}>
-              <h4>
-                {product.id}. {product.title}
-              </h4>
+              <h4>{product.title}</h4>
+              <button onClick={() => linkToProductOrders(product.id)}>
+                View Orders
+              </button>
               <p>description: {product.description}</p>
               <p>${product.price}</p>
               <p>qt: {product.quantity}</p>
               <p>category: {product.category}</p>
               <button onClick={() => toggleEditProductMode(product)}>
-                {isEditProductMode && selectedProduct?.id === product.id ? "Close" : "Edit"}
+                {isEditProductMode && selectedProduct?.id === product.id
+                  ? "Close"
+                  : "Edit"}
               </button>
               <button onClick={() => handleDeleteProduct(product.id)}>
                 Delete
