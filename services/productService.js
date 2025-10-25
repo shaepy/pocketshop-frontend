@@ -33,6 +33,25 @@ export const getProduct = async (productId) => {
   }
 };
 
+//GET a product by id (with orders populated)
+export const getProductOrders = async (productId) => {
+  try {
+    const response = await axios.get(`${BASEURL}${productId}/orders/`);
+
+    if (!response.data) {
+      throw new Error(
+        "Error fetching Product orders by ID",
+        response.data.error
+      );
+    }
+
+    return response.data;
+  } catch (error) {
+    console.log("Error", error);
+    throw new Error(error);
+  }
+};
+
 //POST Add product
 
 export const addProduct = async (formData) => {

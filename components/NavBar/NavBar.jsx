@@ -23,7 +23,7 @@ const NavBar = () => {
     <nav>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">{user ? "Dashboard" : "Home"}</Link>
         </li>
         <li>
           <Link to="/shops">Shops</Link>
@@ -31,15 +31,15 @@ const NavBar = () => {
         <li>
           <Link to="/products">Products</Link>
         </li>
-        <li>
-          {user && user.has_shop ? (
-            <Link to="/dashboard/shop">Manage Shop</Link>
-          ) : (
-            <Link to="/shops/new">Create Shop</Link>
-          )}
-        </li>
-        {user && user ? (
+        {user ? (
           <>
+            <li>
+              {user && user.has_shop ? (
+                <Link to="/dashboard/shop">Manage Shop</Link>
+              ) : (
+                <Link to="/shops/new">Create Shop</Link>
+              )}
+            </li>
             <li>
               <Link to="/dashboard/orders">My Orders</Link>
             </li>

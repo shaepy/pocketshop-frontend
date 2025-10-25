@@ -14,6 +14,7 @@ import Products from "../components/Products/Products";
 import ProductPage from "../components/ProductPage/ProductPage";
 import Carts from "../components/Carts/Carts";
 import ShopManage from "../components/ShopManage/ShopManage";
+import ProductOrders from "../components/ProductOrders/ProductOrders";
 import MyOrderPage from "../components/MyOrderPage/MyOrderPage";
 import "./App.css";
 
@@ -56,6 +57,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <MyOrderPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/product/:productId/orders"
+          element={
+            <ProtectedRoute>
+              <ProductOrders />
             </ProtectedRoute>
           }
         />
