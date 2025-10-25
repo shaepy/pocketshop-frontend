@@ -36,7 +36,7 @@ export const updateOrder = async (orderId, orderData) => {
     console.log("updatedOrder response:", response.data);
 
     if (!response.data) {
-      throw new Error("Error updating order", response.data.error);
+      throw new Error(`Error updating order: ${response.data.error}`);
     }
 
     return response.data;
