@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router";
-import { useNavigate } from "react-router";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import { Link } from "react-router";
 import { parseISO, format } from "date-fns";
 import * as orderApi from "../../services/orderService";
 
@@ -20,12 +17,14 @@ const MyOrderPage = () => {
     setStatusUpdate(false);
   }, [statusUpdate]);
 
-  const handleUpdateOrder = async (orderId, subtotal, quantity) => {
+  const handleUpdateOrder = async (orderId, subtotal, quantity, cancelFlag) => {
     try {
+      const status = cancelFlag ? "Cancelled" : "Delivered";
+
       const orderData = {
         subtotal: subtotal,
         quantity: quantity,
-        status: "Delivered",
+        status: status,
       };
       const updatedOrder = await orderApi.updateOrder(orderId, orderData);
       console.log("updatedOrder is:", updatedOrder);
@@ -73,13 +72,40 @@ const MyOrderPage = () => {
             <p>Quantity: {order.quantity}</p>
             <p>Total: ${order.subtotal}</p>
             <p>Status: {order.status}</p>
-            <button
-              disabled={order.status === "Delivered" ? true : false}
-              onClick={() =>
-                handleUpdateOrder(order.id, order.subtotal, order.quantity)
-              }>
-              Mark as Delivered
-            </button>
+            <div>
+              <button
+                disabled={
+                  order.status === "Delivered" ||
+                  order.status === "Pending" ||
+                  order.status === "Cancelled"
+                }
+                onClick={() =>
+                  handleUpdateOrder(
+                    order.id,
+                    order.subtotal,
+                    order.quantity,
+                    false
+                  )
+                }>
+                Mark as Delivered
+              </button>
+              <button
+                disabled={
+                  order.status === "Delivered" ||
+                  order.status === "Cancelled" ||
+                  order.status === "Shipped"
+                }
+                onClick={() =>
+                  handleUpdateOrder(
+                    order.id,
+                    order.subtotal,
+                    order.quantity,
+                    true
+                  )
+                }>
+                Cancel Order
+              </button>
+            </div>
           </div>
         ))}
       </section>

@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { Link, useParams, useNavigate } from "react-router";
-import { UserContext } from "../../contexts/UserContext";
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router";
 import * as productApi from "../../services/productService";
 import * as orderApi from "../../services/orderService";
 import { parseISO, format } from "date-fns";
@@ -61,9 +60,9 @@ const ProductOrders = () => {
               <p>Status: {order.status}</p>
               <button
                 disabled={
-                  order.status === "Shipped" || order.status === "Delivered"
-                    ? true
-                    : false
+                  order.status === "Shipped" ||
+                  order.status === "Delivered" ||
+                  order.status === "Cancelled"
                 }
                 onClick={() =>
                   handleUpdateOrder(order.id, order.subtotal, order.quantity)
