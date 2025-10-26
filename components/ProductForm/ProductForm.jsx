@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import * as productApi from "../../services/productService";
-import * as cloudinaryApi from "../../services/cloudinaryService"
+import * as cloudinaryApi from "../../services/cloudinaryService";
 import { previousWednesday } from "date-fns";
 
 const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
