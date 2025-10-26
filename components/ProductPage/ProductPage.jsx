@@ -55,8 +55,8 @@ const ProductPage = () => {
       <p>{product.category}</p>
       <p>{product.description}</p>
 
-      {(product.images || []).map((image) => (
-        <div style={{ marginBottom: "20px" }}>
+      {(product.images || []).map((image, idx) => (
+        <div key={image.id || image.url || idx} style={{ marginBottom: "20px" }}>
           {/* show the images */}
           <div style={{ marginBottom: "10px" }}>
             <img
