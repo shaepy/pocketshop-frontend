@@ -23,6 +23,8 @@ const ProductPage = () => {
     const fetchProduct = async () => {
       const foundProducts = await productApi.getProduct(productId);
       console.log("product Found by id ", foundProducts);
+      console.log("product.images:", foundProducts.images);
+
       setProduct(foundProducts);
     };
 
@@ -52,8 +54,27 @@ const ProductPage = () => {
       <h1>{product.title}</h1>
       <p>{product.category}</p>
       <p>{product.description}</p>
-      {/* this will change when we have images */}
-      <p>{product.product_image}</p>
+
+      {(product.images || []).map((image) => (
+        <div style={{ marginBottom: "20px" }}>
+          {/* show the images */}
+          <div style={{ marginBottom: "10px" }}>
+            <img
+              src={image.url}
+              alt={product.title}
+              style={{
+                width: "100%",
+                maxWidth: "500px",
+                height: "auto",
+                objectFit: "cover",
+                borderRadius: "8px",
+                border: "2px solid #ddd",
+              }}
+            />
+          </div>
+        </div>
+      ))}
+
       <p>${product.price * quantity}</p>
       {product.quantity > 0 ? (
         <p>✓ In Stock ({product.quantity} available)</p>
@@ -63,21 +84,24 @@ const ProductPage = () => {
       <button
         //disable quantity button because we cannot send negative numbers
         disabled={quantity <= 0 ? true : false}
-        onClick={() => setQuantity(quantity - 1)}>
+        onClick={() => setQuantity(quantity - 1)}
+      >
         -
       </button>
       <p>Quantity {quantity} </p>
       <button
         // disable quantity button if more than product has
         disabled={quantity >= product.quantity ? true : false}
-        onClick={() => setQuantity(quantity + 1)}>
+        onClick={() => setQuantity(quantity + 1)}
+      >
         +
       </button>
       <p>{message}</p>
       <button
         //disable add to cart if quantity is 0
         disabled={quantity === 0 ? true : false}
-        onClick={() => (user ? handleAddToCart() : navigate("/register"))}>
+        onClick={() => (user ? handleAddToCart() : navigate("/register"))}
+      >
         Add to Cart
       </button>
     </>
