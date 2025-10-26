@@ -38,36 +38,59 @@ const ShopCreate = () => {
   };
   return (
     <main>
-      <section>
-        <h1>Create a Shop</h1>
-        {error && <p>{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">Shop Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={name}
-              onChange={handleChange}
-              required
-            />
+      <section className="section">
+        <div className="container">
+          <div className="columns is-centered">
+            <div className="column is-12-tablet is-6-desktop is-5-widescreen">
+              <h1 className="title is-2 has-text-centered">Create a Shop</h1>
+              {error && (
+                <div
+                  className="notification is-danger"
+                  role="alert"
+                  aria-live="polite">
+                  {error}
+                </div>
+              )}
+              <form onSubmit={handleSubmit} className="box">
+                <div className="field">
+                  <label className="label" htmlFor="name">
+                    Shop Name
+                  </label>
+                  <input
+                    className="input"
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="bio">
+                    About Shop
+                  </label>
+                  <input
+                    className="input"
+                    type="text"
+                    id="bio"
+                    name="bio"
+                    value={bio}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="control">
+                  <button className="button is-black is-outlined">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-          <div>
-            <label htmlFor="bio">About Shop</label>
-            <input
-              type="text"
-              id="bio"
-              name="bio"
-              value={bio}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <button>Submit</button>
-          </div>
-        </form>
+        </div>
       </section>
     </main>
   );

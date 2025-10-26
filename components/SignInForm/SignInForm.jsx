@@ -38,7 +38,7 @@ const SignInForm = () => {
   return (
     <main>
       <section className="section " style={{ paddingTop: "2rem" }}>
-        <div className="container">
+        <div className="container ">
           <div className="columns is-centered">
             <div className="column is-12-tablet is-6-desktop is-5-widescreen ">
               <h1 className="title is-2 has-text-centered "><span className="sign">Sign</span> <span className="in">in</span></h1>

@@ -1,4 +1,5 @@
 /* Minimal global styles tailored for Bulma */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 html {
   /* Prevent layout shift when vertical scrollbar appears/disappears */
@@ -9,6 +10,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
 /* Make images responsive by default */
@@ -22,17 +24,35 @@ img {
   flex-wrap: nowrap;
 }
 
-.custom-navbar,.custom-signin, .custom-signup {
+/* .custom-navbar,.custom-signin, .custom-signup {
   background-color: #ffffffb0;
   border-radius: 9px;
-  box-shadow: 10px 9px 10px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 8px 10px 10px rgba(0, 0, 0, 0.1);
 
-}
+} */
 
 .sign {
-  color: #FE8548;
+  color: #fe8548;
 }
 
 .in {
-  color: #0081CC;
+  color: #0081cc;
+}
+
+.hover-box {
+  transition: transform 0.3s ease-in-out;
+}
+
+.hover-box:hover {
+  transform: translateY(-5px);
+}
+
+.shop-page-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.shop-page-product-div {
+  max-height: 500px;
 }

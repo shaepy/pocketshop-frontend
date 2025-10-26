@@ -5,6 +5,7 @@ import * as cloudinaryApi from "../../services/cloudinaryService";
 const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
   const navigate = useNavigate();
   const initialState = {
+    // useEffect to setImageFiles
     productImage: product?.productImage || "",
     title: product?.title || "",
     description: product?.description || "",
@@ -15,6 +16,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
 
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState("");
+  // Set these to productImage
   const [imageFiles, setImageFiles] = useState([]); //stores the actual File objects selected by user
   const [imagePreviews, setImagePreviews] = useState([]); //stores preview URLs to show before upload
   const [uploading, setUploading] = useState(false); //shows loading state during Cloudinary upload
@@ -115,8 +117,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
             onClick={() => {
               if (setIsEditProductMode) setIsEditProductMode(false);
               else if (setIsProductMode) setIsProductMode(false);
-            }}
-          >
+            }}>
             Close
           </button>
         )}
@@ -139,8 +140,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                   flexWrap: "wrap",
                   gap: "10px",
                   marginTop: "10px",
-                }}
-              >
+                }}>
                 {imagePreviews.map((preview, index) => (
                   <div key={index}>
                     <img
@@ -206,8 +206,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              required
-            >
+              required>
               <option value="None">-- Select an option --</option>
               <option value="PETS">Pet Supplies</option>
               <option value="ART">Art & Crafts</option>

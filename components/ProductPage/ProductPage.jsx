@@ -50,13 +50,15 @@ const ProductPage = () => {
   };
 
   return (
-    <>
+    <main>
       <h1>{product.title}</h1>
       <p>{product.category}</p>
       <p>{product.description}</p>
 
       {(product.images || []).map((image, idx) => (
-        <div key={image.id || image.url || idx} style={{ marginBottom: "20px" }}>
+        <div
+          key={image.id || image.url || idx}
+          style={{ marginBottom: "20px" }}>
           {/* show the images */}
           <div style={{ marginBottom: "10px" }}>
             <img
@@ -84,27 +86,24 @@ const ProductPage = () => {
       <button
         //disable quantity button because we cannot send negative numbers
         disabled={quantity <= 0 ? true : false}
-        onClick={() => setQuantity(quantity - 1)}
-      >
+        onClick={() => setQuantity(quantity - 1)}>
         -
       </button>
       <p>Quantity {quantity} </p>
       <button
         // disable quantity button if more than product has
         disabled={quantity >= product.quantity ? true : false}
-        onClick={() => setQuantity(quantity + 1)}
-      >
+        onClick={() => setQuantity(quantity + 1)}>
         +
       </button>
       <p>{message}</p>
       <button
         //disable add to cart if quantity is 0
         disabled={quantity === 0 ? true : false}
-        onClick={() => (user ? handleAddToCart() : navigate("/register"))}
-      >
+        onClick={() => (user ? handleAddToCart() : navigate("/register"))}>
         Add to Cart
       </button>
-    </>
+    </main>
   );
 };
 

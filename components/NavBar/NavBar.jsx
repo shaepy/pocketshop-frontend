@@ -21,7 +21,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className="navbar is-white is-rounded m-5 custom-navbar"
+      className="navbar is-white m-5"
       role="navigation"
       aria-label="main navigation"
     >

@@ -3,6 +3,13 @@ export const uploadImageToCloudinary = async (file) => {
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
+  console.log(
+    "CLOUD:",
+    import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+    "PRESET:",
+    import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+  );
+
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", uploadPreset);
@@ -15,6 +22,8 @@ export const uploadImageToCloudinary = async (file) => {
         body: formData,
       }
     );
+
+    console.log("cloundinary response is:", response);
 
     if (!response.ok) {
       throw new Error("Failed to upload image");

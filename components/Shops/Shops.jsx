@@ -15,17 +15,30 @@ const Shops = () => {
   }, []);
 
   return (
-    <>
-      <h1>All Shops</h1>
-      {shops.length} Found.
-      <ul>
-        {shops.map((shop) => (
-          <li key={shop.id}>
-            <Link to={`/shops/${shop.id}`}>{shop.name}</Link>
-          </li>
-        ))}
-      </ul>
-    </>
+    <main>
+      <section className="section">
+        <div className="container">
+          <div className="columns is-centered">
+            <div className="column is-12-tablet is-6-desktop is-5-widescreen">
+              <div className="has-text-centered">
+                <h1 className="title is-2">All Shops</h1>
+                <p>{shops.length} Found.</p>
+              </div>
+              <section className="m-3">
+                {shops.map((shop) => (
+                  <Link to={`/shops/${shop.id}`}>
+                    <div key={shop.id} className="box hover-box mt-5">
+                      <h2 className="title is-5">{shop.name}</h2>
+                      <p>{shop.bio}</p>
+                    </div>
+                  </Link>
+                ))}
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 };
 
