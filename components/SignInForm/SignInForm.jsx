@@ -37,40 +37,90 @@ const SignInForm = () => {
 
   return (
     <main>
-      <section>
-        <h1>Sign in</h1>
-        {error && <p>{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              id="email"
-              value={email}
-              name="email"
-              onChange={handleChange}
-              required
-            />
+      <section className="section " style={{ paddingTop: "2rem" }}>
+        <div className="container">
+          <div className="columns is-centered">
+            <div className="column is-12-tablet is-6-desktop is-5-widescreen ">
+              <h1 className="title is-2 has-text-centered "><span className="sign">Sign</span> <span className="in">in</span></h1>
+
+              {error && (
+                <div
+                  className="notification is-danger"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {error}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="box custom-signin">
+                <div className="field">
+                  <label className="label" htmlFor="email">
+                    Email
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="you@example.com"
+                      autoComplete="email"
+                      value={email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="password">
+                    Password
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder="••••••••"
+                      autoComplete="current-password"
+                      value={password}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="field is-grouped is-grouped-right">
+                  <div className="control">
+                    <button
+                      type="button"
+                      className="button is-light"
+                      onClick={() => navigate("/")}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  <div className="control">
+                    <button
+                      type="submit"
+                      className="button is-black is-outlined"
+                      disabled={isFormInvalid()}
+                    >
+                      Sign in
+                    </button>
+                  </div>
+                </div>
+
+                <p className="has-text-centered mt-4">
+                  Don't have an account?{" "}
+                  <Link to="/register">Sign up here.</Link>
+                </p>
+              </form>
+            </div>
           </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              name="password"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <button disabled={isFormInvalid()}>Sign in</button>
-            <button onClick={() => navigate("/")}>Cancel</button>
-          </div>
-        </form>
-        <p>
-          Don't have an account? <Link to="/register">Sign up here.</Link>
-        </p>
+        </div>
       </section>
     </main>
   );

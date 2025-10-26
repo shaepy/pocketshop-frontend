@@ -55,84 +55,175 @@ const SignUpForm = () => {
 
   return (
     <main>
-      <section>
-        <h1>Create your account</h1>
-        {error && <p>{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              id="email"
-              value={email}
-              name="email"
-              onChange={handleChange}
-              required
-            />
+      <section className="section" style={{ paddingTop: "2rem" }}>
+        <div className="container">
+          <div className="columns is-centered">
+            <div className="column is-12-tablet is-8-desktop is-6-widescreen">
+              <h1 className="title is-2 has-text-centered">
+                <span className="sign">Create yo</span><span className="in">ur account</span>
+              </h1>
+
+              {error && (
+                <div
+                  className="notification is-danger"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {error}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="box custom-signup">
+                <div className="field">
+                  <label className="label" htmlFor="email">
+                    Email
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="you@example.com"
+                      autoComplete="email"
+                      value={email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="field">
+                  <label className="label" htmlFor="username">
+                    Username
+                  </label>
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      id="username"
+                      name="username"
+                      placeholder="yourusername"
+                      autoComplete="username"
+                      value={username}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="columns">
+                  <div className="column">
+                    <div className="field">
+                      <label className="label" htmlFor="firstName">
+                        First Name
+                      </label>
+                      <div className="control">
+                        <input
+                          className="input"
+                          type="text"
+                          id="firstName"
+                          name="firstName"
+                          autoComplete="given-name"
+                          value={firstName}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="column">
+                    <div className="field">
+                      <label className="label" htmlFor="lastName">
+                        Last Name
+                      </label>
+                      <div className="control">
+                        <input
+                          className="input"
+                          type="text"
+                          id="lastName"
+                          name="lastName"
+                          autoComplete="family-name"
+                          value={lastName}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="columns">
+                  <div className="column">
+                    <div className="field">
+                      <label className="label" htmlFor="password">
+                        Password
+                      </label>
+                      <div className="control">
+                        <input
+                          className="input"
+                          type="password"
+                          id="password"
+                          name="password"
+                          placeholder="••••••••"
+                          autoComplete="new-password"
+                          value={password}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="column">
+                    <div className="field">
+                      <label className="label" htmlFor="passwordConfirmation">
+                        Confirm Password
+                      </label>
+                      <div className="control">
+                        <input
+                          className="input"
+                          type="password"
+                          id="passwordConfirmation"
+                          name="passwordConfirmation"
+                          placeholder="••••••••"
+                          autoComplete="new-password"
+                          value={passwordConfirmation}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="field is-grouped is-grouped-right">
+                  <div className="control">
+                    <button
+                      type="button"
+                      className="button is-light"
+                      onClick={() => navigate("/")}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  <div className="control">
+                    <button
+                      type="submit"
+                      className="button is-black is-outlined"
+                      disabled={isFormInvalid()}
+                    >
+                      Sign up
+                    </button>
+                  </div>
+                </div>
+
+                <p className="has-text-centered mt-4">
+                  Already have an account? <Link to="/login">Log in here.</Link>
+                </p>
+              </form>
+            </div>
           </div>
-          <div>
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              name="username"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="firstName">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              value={firstName}
-              name="firstName"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="lastName">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              value={lastName}
-              name="lastName"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              name="password"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="passwordConfirmation">Confirm Password</label>
-            <input
-              type="password"
-              id="passwordConfirmation"
-              value={passwordConfirmation}
-              name="passwordConfirmation"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
-            <button disabled={isFormInvalid()}>Sign up</button>
-            <button onClick={() => navigate("/")}>Cancel</button>
-          </div>
-        </form>
-        <p>
-          Already have an account? <Link to="/login">Log in here.</Link>
-        </p>
+        </div>
       </section>
     </main>
   );
