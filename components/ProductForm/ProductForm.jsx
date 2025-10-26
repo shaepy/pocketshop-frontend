@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import * as productApi from "../../services/productService";
-
+import * as cloudinaryApi from "../../services/cloudinaryService";
 const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
   const navigate = useNavigate();
   const initialState = {
@@ -15,33 +15,93 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
 
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState("");
+  const [imageFiles, setImageFiles] = useState([]); //stores the actual File objects selected by user
+  const [imagePreviews, setImagePreviews] = useState([]); //stores preview URLs to show before upload
+  const [uploading, setUploading] = useState(false); //shows loading state during Cloudinary upload
 
   const handleChange = (e) => {
     setError("");
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+
+    if (files.length > 0) {
+      setImageFiles(files);
+
+      // Create preview URLs for each file
+      const previews = [];
+      files.forEach((file) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          previews.push(reader.result);
+          // Only update state when all previews are ready
+          if (previews.length === files.length) {
+            setImagePreviews(previews);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      setUploading(true);
+
+      let images = [];
+
+      // Upload all selected images
+      if (imageFiles.length > 0) {
+        const uploadPromises = imageFiles.map((file) =>
+          cloudinaryApi.uploadImageToCloudinary(file)
+        );
+        images = await Promise.all(uploadPromises); //Uses Promise.all() to upload all images in parallel
+
+        // Set the first image as primary
+        if (images.length > 0) {
+          images[0].is_primary = true;
+        }
+      }
+
+      // Build the product data in the format backend expects
+      const productData = {
+        title: formData.title,
+        description: formData.description,
+        price: formData.price,
+        quantity: formData.quantity,
+        category: formData.category,
+        images: images,
+      };
+
       if (product) {
-        console.log("Updating product");
+        console.log("Updating product with data:", productData);
         const updatingProduct = await productApi.updateProduct(
           product.id,
-          formData
+          productData
         );
+
         console.log("updated product", updatingProduct);
         setFormData(initialState);
+        setImageFiles([]); //Clears image state after submission
+        setImagePreviews([]);
         if (setIsEditProductMode) setIsEditProductMode(false);
       } else {
-        console.log("Adding a product");
-        const newProduct = await productApi.addProduct(formData);
+        console.log("Adding a product with data:", productData);
+        const newProduct = await productApi.addProduct(productData);
+
         console.log("new product", newProduct);
         setFormData(initialState);
+        setImageFiles([]); //Clears image state after submission
+        setImagePreviews([]);
         if (setIsProductMode) setIsProductMode(false);
       }
     } catch (error) {
       setError(error.message);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -64,12 +124,43 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
           <form onSubmit={handleSubmit}>
             <label htmlFor="productImage">Product Images</label>
             <input
-              type="text"
+              type="file"
               id="productImage"
               name="productImage"
+              accept="image/*"
+              multiple
               value={formData.productImage}
-              onChange={handleChange}
+              onChange={handleImageChange}
             />
+            {imagePreviews.length > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                  marginTop: "10px",
+                }}
+              >
+                {imagePreviews.map((preview, index) => (
+                  <div key={index}>
+                    <img
+                      src={preview}
+                      alt={`Preview ${index + 1}`}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "cover",
+                        border:
+                          index === 0 ? "3px solid green" : "1px solid gray",
+                      }}
+                    />
+                    {index === 0 && (
+                      <p style={{ fontSize: "12px", margin: 0 }}>Primary</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
             <label htmlFor="title">Title</label>
             <input
               type="text"
@@ -129,7 +220,9 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
               <option value="SPRT">Sports & Outdoors</option>
               <option value="CUST">Custom Orders</option>
             </select>
-            <button type="submit">Submit</button>
+            <button type="submit" disabled={uploading}>
+              {uploading ? "Uploading images..." : "Submit"}
+            </button>
           </form>
         </div>
       </div>

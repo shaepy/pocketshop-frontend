@@ -20,47 +20,80 @@ const NavBar = () => {
   };
 
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">{user ? "Dashboard" : "Home"}</Link>
-        </li>
-        <li>
-          <Link to="/shops">Shops</Link>
-        </li>
-        <li>
-          <Link to="/products">Products</Link>
-        </li>
-        {user ? (
-          <>
-            <li>
-              {user && user.has_shop ? (
-                <Link to="/dashboard/shop">Manage Shop</Link>
-              ) : (
-                <Link to="/shops/new">Create Shop</Link>
-              )}
-            </li>
-            <li>
-              <Link to="/dashboard/orders">My Orders</Link>
-            </li>
-            <li>
-              <Link to="/cart">Cart 🛒</Link>
-            </li>
-            <li>
-              <button onClick={handleSignOut}>Sign out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <button onClick={linkToSignUp}>Register</button>
-            </li>
-            <li>
-              <button onClick={linkToSignIn}>Sign in</button>
-            </li>
-          </>
-        )}
-      </ul>
+    <nav
+      className="navbar is-white is-rounded m-5 custom-navbar"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div className="container">
+        <div className="navbar-brand">
+          <Link to="/" className="navbar-item" aria-label="PocketShop Home">
+            <img
+              src="/images/PocketShop-Logo.png"
+              alt="PocketShop Logo"
+              style={{ height: "40px" }}
+            />
+          </Link>
+        </div>
+        <div className="navbar-menu is-active">
+          <div className="navbar-start">
+            <Link to="/" className="navbar-item">
+              {user ? "Dashboard" : "Home"}
+            </Link>
+            <Link to="/shops" className="navbar-item">
+              Shops
+            </Link>
+            <Link to="/products" className="navbar-item">
+              Products
+            </Link>
+            {user && (
+              <>
+                {user.has_shop ? (
+                  <Link to="/dashboard/shop" className="navbar-item">
+                    Manage Shop
+                  </Link>
+                ) : (
+                  <Link to="/shops/new" className="navbar-item">
+                    Create Shop
+                  </Link>
+                )}
+                <Link to="/dashboard/orders" className="navbar-item">
+                  My Orders
+                </Link>
+                <Link to="/cart" className="navbar-item">
+                  Cart 🛒
+                </Link>
+              </>
+            )}
+          </div>
+
+          <div className="navbar-end">
+            {user ? (
+              <div className="navbar-item">
+                <div className="buttons">
+                  <button onClick={handleSignOut} className="button is-black">
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="navbar-item">
+                <div className="buttons">
+                  <button onClick={linkToSignUp} className="button is-black is-outlined">
+                    <strong>Register</strong>
+                  </button>
+                  <button
+                    onClick={linkToSignIn}
+                    className="button is-black is-outlined"
+                  >
+                    Sign in
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </nav>
   );
 };

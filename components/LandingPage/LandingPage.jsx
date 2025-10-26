@@ -6,18 +6,48 @@ const LandingPage = () => {
   const { user } = useContext(UserContext);
   console.log("LANDING PAGE USER:", user);
   return (
-    <main>
-      {user ? (
-        <>
-          <h1>Welcome back, {user.username}.</h1>
-          <Dashboard />
-        </>
-      ) : (
-        <>
-          <h1>Welcome To PocketShop</h1>
-          <p>A place for independent makers, designers and entrepreneurs</p>
-        </>
-      )}
+    <main className="hero is-fullheight-with-navbar is-white has-background-white">
+      <div className="hero-body has-text-centered">
+        <div className="container">
+          {user ? (
+            <>
+              <h1 className="title is-3 has-text-weight-semibold">
+                Welcome back, {user.username}.
+              </h1>
+              <div className="box mt-5">
+                <Dashboard />
+              </div>
+            </>
+          ) : (
+            <>
+              <h1 className="title is-1 has-text-weight-bold mb-3">
+                Welcome To PocketShop
+              </h1>
+              <p className="subtitle is-4 mb-5">
+                A place for independent makers, designers and entrepreneurs
+              </p>
+
+              <figure
+                className="image is-inline-block"
+                style={{
+                  maxWidth: "600px", 
+                  margin: "0 auto"
+                }}
+              >
+                <img
+                  src="/images/PocketShop.png"
+                  alt="PocketShop logo"
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "contain",
+                  }}
+                />
+              </figure>
+            </>
+          )}
+        </div>
+      </div>
     </main>
   );
 };
