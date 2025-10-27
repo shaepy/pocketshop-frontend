@@ -31,7 +31,7 @@ const ShopCreate = () => {
       console.log("pulling user again and setting it");
       setUser(await getUser(user.id));
 
-      navigate("/shops");
+      navigate("/dashboard/shop");
     } catch (err) {
       setError(err.message);
     }

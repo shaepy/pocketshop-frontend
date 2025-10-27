@@ -89,7 +89,6 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
         finalImages = [...finalImages, ...uploaded];
       }
 
-
       // Build the product data in the format backend expects
       const productData = {
         title: formData.title,
@@ -137,8 +136,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
           <div
             className="notification is-danger"
             role="alert"
-            aria-live="polite"
-          >
+            aria-live="polite">
             {error}
           </div>
         )}
@@ -151,8 +149,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
             onClick={() => {
               if (setIsEditProductMode) setIsEditProductMode(false);
               else if (setIsProductMode) setIsProductMode(false);
-            }}
-          >
+            }}>
             Close
           </button>
         )}
@@ -169,8 +166,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                   flexWrap: "wrap",
                   gap: "12px",
                   marginBottom: "16px",
-                }}
-              >
+                }}>
                 {existingImages.map((img) => (
                   <div key={img.public_id} style={{ textAlign: "center" }}>
                     <img
@@ -186,13 +182,11 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                     />
                     <div
                       className="buttons is-centered"
-                      style={{ marginTop: 6 }}
-                    >
+                      style={{ marginTop: 6 }}>
                       <button
                         type="button"
                         className="button is-small is-danger is-light"
-                        onClick={() => handleRemoveExisting(img.public_id)}
-                      >
+                        onClick={() => handleRemoveExisting(img.public_id)}>
                         Remove
                       </button>
                     </div>
@@ -218,7 +212,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                 <span className="file-icon">
                   <i className="fas fa-upload"></i>
                 </span>
-                <span className="file-label">Add images…</span>
+                <span className="file-label">Upload images…</span>
               </span>
             </label>
           </div>
@@ -235,8 +229,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                   flexWrap: "wrap",
                   gap: "12px",
                   marginBottom: "16px",
-                }}
-              >
+                }}>
                 {imagePreviews.map((preview, index) => (
                   <div key={index} style={{ textAlign: "center" }}>
                     <img
@@ -252,13 +245,11 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                     />
                     <div
                       className="buttons is-centered"
-                      style={{ marginTop: 6 }}
-                    >
+                      style={{ marginTop: 6 }}>
                       <button
                         type="button"
                         className="button is-small is-danger is-light"
-                        onClick={() => handleRemoveNewPreview(index)}
-                      >
+                        onClick={() => handleRemoveNewPreview(index)}>
                         Remove
                       </button>
                     </div>
@@ -336,8 +327,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  required
-                >
+                  required>
                   <option value="None">-- Select an option --</option>
                   <option value="PETS">Pet Supplies</option>
                   <option value="ART">Art & Crafts</option>
@@ -356,8 +346,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
           <button
             className="button is-black is-outlined"
             type="submit"
-            disabled={uploading}
-          >
+            disabled={uploading}>
             {uploading ? "Uploading images..." : "Submit"}
           </button>
         </form>
