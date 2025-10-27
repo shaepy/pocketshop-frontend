@@ -6,10 +6,22 @@
   right: 12px !important;
   z-index: 2;
 }
-/* Make arrows clearly visible */
+
 .slick-slider .slick-prev:before,
 .slick-slider .slick-next:before {
-  color: #000000;             /* change to #fff if you have a dark background */
-  font-size: 30px;         /* a bit larger than default */
+  color: #000000; /* change to #fff if you have a dark background */
+  font-size: 30px;
   opacity: 0.5;
+}
+
+/* Target the dots under react-slick sliders */
+.slick-dots li button:before {
+  font-size: 12px; /* default is 6px */
+  color: #999; /* inactive color */
+  opacity: 1;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #000; /* active dot color */
+  font-size: 12px; /* make active dot slightly bigger */
 }

@@ -1,0 +1,12 @@
+.number-label {
+  font-size: 0.85rem;
+  background-color: #efefef;
+  padding: 5px 8px;
+  border-radius: 5px;
+}
+
+.active-orders-div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

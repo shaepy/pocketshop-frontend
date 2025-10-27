@@ -115,7 +115,7 @@ const ProductOrders = () => {
                         </span>
                       </p>
                       <p>
-                        <i className="fa-solid fa-envelope"></i>{" "}
+                        <i className="fa-solid fa-envelope"></i>
                         <span className="ml-2">{order.buyer.email}</span>
                       </p>
                     </div>

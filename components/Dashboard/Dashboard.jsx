@@ -1,6 +1,7 @@
 import * as orderApi from "../../services/orderService";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   // useEffect for getOrdersByProduct
@@ -20,7 +21,7 @@ const Dashboard = () => {
     navigate("/dashboard/shop");
   };
 
-  // We can filter orders that have pending statuses only later
+  // We can filter to orders that have pending statuses later
   return (
     <main>
       <section className="section">
@@ -32,22 +33,24 @@ const Dashboard = () => {
               className="button is-black is-outlined mb-5">
               Go to Manage Shop
             </button>
-            {orders ? (
-              orders.map((order) => (
-                <p key={order.product.id}>
-                  {" "}
-                  <Link
-                    className="blue-link "
-                    to={`dashboard/product/${order.product.id}/orders`}>
+            <div className="active-orders-div">
+              {orders ? (
+                orders.map((order) => (
+                  <p key={order.product.id}>
                     {" "}
-                    {order.product.title}
-                  </Link>{" "}
-                  ({order.orders.length})
-                </p>
-              ))
-            ) : (
-              <p>No active orders for your shop's products.</p>
-            )}
+                    <Link
+                      className="blue-link "
+                      to={`dashboard/product/${order.product.id}/orders`}>
+                      {" "}
+                      {order.product.title}
+                    </Link>{" "}
+                    <span className="number-label">{order.orders.length}</span>
+                  </p>
+                ))
+              ) : (
+                <p>No active orders for your shop's products.</p>
+              )}
+            </div>
           </div>
           <div className="orders-for-buyer column box">
             <h2 className="title is-4">My Orders</h2>
