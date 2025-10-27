@@ -22,7 +22,7 @@ const Products = () => {
           <div className="has-text-centered">
             <h1 className="title is-2">All Products</h1>
             <div className="grid is-col-min-10 is-gap-3">
-              {products.length >= 0 ? (
+              {products.length > 0 ? (
                 products.map((product) => (
                   <Link key={product.id} to={`/products/${product.id}`}>
                     <div className="box cell hover-box">

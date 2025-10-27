@@ -5,8 +5,6 @@ import * as cloudinaryApi from "../../services/cloudinaryService";
 const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
   const navigate = useNavigate();
   const initialState = {
-    // Need a useEffect to setImageFiles
-    productImage: product?.productImage || [],
     title: product?.title || "",
     description: product?.description || "",
     price: product?.price || 0,
@@ -17,9 +15,21 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState("");
   // Set these to productImage
+  const [existingImages, setExistingImages] = useState(product?.images || []);
   const [imageFiles, setImageFiles] = useState([]); //stores the actual File objects selected by user
   const [imagePreviews, setImagePreviews] = useState([]); //stores preview URLs to show before upload
   const [uploading, setUploading] = useState(false); //shows loading state during Cloudinary upload
+
+  useEffect(() => {
+    setFormData({
+      title: product?.title || "",
+      description: product?.description || "",
+      price: product?.price || 0,
+      quantity: product?.quantity || 0,
+      category: product?.category || "None",
+    });
+    setExistingImages(product?.images || []);
+  }, [product]);
 
   const handleChange = (e) => {
     setError("");
@@ -27,46 +37,58 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
   };
 
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
+    const files = Array.from(e.target.files || []);
 
+    // Append to any already selected files
     if (files.length > 0) {
-      setImageFiles(files);
+      setImageFiles((prev) => [...prev, ...files]);
 
-      // Create preview URLs for each file
-      const previews = [];
-      files.forEach((file) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          previews.push(reader.result);
-          // Only update state when all previews are ready
-          if (previews.length === files.length) {
-            setImagePreviews(previews);
-          }
-        };
-        reader.readAsDataURL(file);
+      // Build previews for newly selected files and append
+      const readers = files.map(
+        (file) =>
+          new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(file);
+          })
+      );
+
+      Promise.all(readers).then((newPreviews) => {
+        setImagePreviews((prev) => [...prev, ...newPreviews]);
       });
     }
   };
 
+  // Remove a NEW (not yet uploaded) image by preview index
+  const handleRemoveNewPreview = (index) => {
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+    setImageFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // EXISTING (already saved) — remove by public_id
+  const handleRemoveExisting = (publicId) => {
+    setExistingImages((imgs) =>
+      imgs.filter((img) => img.public_id !== publicId)
+    );
+  };
+
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       setUploading(true);
 
-      let images = product?.images || [];
+      // Start with images the user kept
+      let finalImages = [...existingImages];
 
-      // Upload all selected images
+      // Upload any new files and append to finalImages
       if (imageFiles.length > 0) {
-        const uploadPromises = imageFiles.map((file) =>
-          cloudinaryApi.uploadImageToCloudinary(file)
+        const uploaded = await Promise.all(
+          imageFiles.map((file) => cloudinaryApi.uploadImageToCloudinary(file))
         );
-        images = await Promise.all(uploadPromises); //Uses Promise.all() to upload all images in parallel
 
-        // Set the first image as primary
-        if (images.length > 0) {
-          images[0].is_primary = true;
-        }
+        finalImages = [...finalImages, ...uploaded];
       }
+
 
       // Build the product data in the format backend expects
       const productData = {
@@ -75,7 +97,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
         price: formData.price,
         quantity: formData.quantity,
         category: formData.category,
-        images: images,
+        images: finalImages,
       };
 
       if (product) {
@@ -86,7 +108,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
         );
 
         console.log("updated product", updatingProduct);
-        setFormData(initialState);
+
         setImageFiles([]); //Clears image state after submission
         setImagePreviews([]);
         if (setIsEditProductMode) setIsEditProductMode(false);
@@ -96,6 +118,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
 
         console.log("new product", newProduct);
         setFormData(initialState);
+        setExistingImages([]);
         setImageFiles([]); //Clears image state after submission
         setImagePreviews([]);
         if (setIsProductMode) setIsProductMode(false);
@@ -114,7 +137,8 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
           <div
             className="notification is-danger"
             role="alert"
-            aria-live="polite">
+            aria-live="polite"
+          >
             {error}
           </div>
         )}
@@ -127,13 +151,58 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
             onClick={() => {
               if (setIsEditProductMode) setIsEditProductMode(false);
               else if (setIsProductMode) setIsProductMode(false);
-            }}>
+            }}
+          >
             Close
           </button>
         )}
       </div>
       <div className="container">
         <form onSubmit={handleSubmit} className="box">
+          {/* EXISTING images (editable: remove) */}
+          {existingImages.length > 0 && (
+            <>
+              <p className="label">Current images</p>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "12px",
+                  marginBottom: "16px",
+                }}
+              >
+                {existingImages.map((img) => (
+                  <div key={img.public_id} style={{ textAlign: "center" }}>
+                    <img
+                      src={img.url}
+                      alt="Product"
+                      style={{
+                        width: "110px",
+                        height: "110px",
+                        objectFit: "cover",
+                        border: "1px solid #ccc",
+                        borderRadius: "6px",
+                      }}
+                    />
+                    <div
+                      className="buttons is-centered"
+                      style={{ marginTop: 6 }}
+                    >
+                      <button
+                        type="button"
+                        className="button is-small is-danger is-light"
+                        onClick={() => handleRemoveExisting(img.public_id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* NEW image picker */}
           <div className="file">
             <label className="file-label" htmlFor="productImage">
               <input
@@ -149,37 +218,54 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                 <span className="file-icon">
                   <i className="fas fa-upload"></i>
                 </span>
-                <span className="file-label">Upload an image...</span>
+                <span className="file-label">Add images…</span>
               </span>
             </label>
           </div>
+
+          {/* NEW image previews (removable) */}
           {imagePreviews.length > 0 && (
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "10px",
-                marginTop: "10px",
-              }}>
-              {imagePreviews.map((preview, index) => (
-                <div key={index}>
-                  <img
-                    src={preview}
-                    alt={`Preview ${index + 1}`}
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      objectFit: "cover",
-                      border:
-                        index === 0 ? "3px solid green" : "1px solid gray",
-                    }}
-                  />
-                  {index === 0 && (
-                    <p style={{ fontSize: "12px", margin: 0 }}>Primary</p>
-                  )}
-                </div>
-              ))}
-            </div>
+            <>
+              <p className="label" style={{ marginTop: 12 }}>
+                New images (to be uploaded)
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "12px",
+                  marginBottom: "16px",
+                }}
+              >
+                {imagePreviews.map((preview, index) => (
+                  <div key={index} style={{ textAlign: "center" }}>
+                    <img
+                      src={preview}
+                      alt={`Preview ${index + 1}`}
+                      style={{
+                        width: "110px",
+                        height: "110px",
+                        objectFit: "cover",
+                        border: "1px solid #ccc",
+                        borderRadius: "6px",
+                      }}
+                    />
+                    <div
+                      className="buttons is-centered"
+                      style={{ marginTop: 6 }}
+                    >
+                      <button
+                        type="button"
+                        className="button is-small is-danger is-light"
+                        onClick={() => handleRemoveNewPreview(index)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
           <div className="field">
             <label className="label" htmlFor="title">
@@ -250,7 +336,8 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  required>
+                  required
+                >
                   <option value="None">-- Select an option --</option>
                   <option value="PETS">Pet Supplies</option>
                   <option value="ART">Art & Crafts</option>
@@ -269,7 +356,8 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
           <button
             className="button is-black is-outlined"
             type="submit"
-            disabled={uploading}>
+            disabled={uploading}
+          >
             {uploading ? "Uploading images..." : "Submit"}
           </button>
         </form>

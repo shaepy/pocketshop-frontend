@@ -109,7 +109,8 @@ const ShopManage = () => {
               <div>
                 <button
                   className="button is-light mr-2 mb-2"
-                  onClick={toggleEditMode}>
+                  onClick={toggleEditMode}
+                >
                   {isEditMode ? "Close Edit" : "Edit Shop"}
                 </button>
                 <button className="button is-light" onClick={handleDeleteShop}>
@@ -167,7 +168,8 @@ const ShopManage = () => {
               {isProductMode ? null : (
                 <button
                   className="button is-black is-outlined mt-2"
-                  onClick={toggleAddProductMode}>
+                  onClick={toggleAddProductMode}
+                >
                   + Add Product
                 </button>
               )}
@@ -187,23 +189,28 @@ const ShopManage = () => {
                 userShop.products.map((product) => (
                   <div
                     className="cell box hover-box mb-0 is-flex is-flex-direction-column is-justify-content-top is-align-items-center has-text-centered"
-                    key={product.id}>
+                    key={product.id}
+                  >
                     <h4
                       className="title is-5"
-                      aria-label={`${product.title} (ID: ${product.id})`}>
+                      aria-label={`${product.title} (ID: ${product.id})`}
+                    >
                       {product.title}
                     </h4>
                     <button
                       className="button is-black is-outlined mb-3"
-                      onClick={() => linkToProductOrders(product.id)}>
+                      onClick={() => linkToProductOrders(product.id)}
+                    >
                       View Orders
                     </button>
                     <div className="m-3">
-                      <img
-                        className="shop-page-image"
-                        src={product.images[0].url}
-                        alt={product.title}
-                      />
+                      {product.images?.[0]?.url ? (
+                        <img
+                          className="shop-page-image"
+                          src={product.images[0].url}
+                          alt={product.title}
+                        />
+                      ) : null}
                       <p>{product.description}</p>
                       <p>${product.price}</p>
                       <p>Quantity: {product.quantity}</p>
@@ -212,14 +219,16 @@ const ShopManage = () => {
                     <div>
                       <button
                         className="button is-light mr-2"
-                        onClick={() => toggleEditProductMode(product)}>
+                        onClick={() => toggleEditProductMode(product)}
+                      >
                         {isEditProductMode && selectedProduct?.id === product.id
                           ? "Close"
                           : "Edit"}
                       </button>
                       <button
                         className="button is-light"
-                        onClick={() => handleDeleteProduct(product.id)}>
+                        onClick={() => handleDeleteProduct(product.id)}
+                      >
                         Delete
                       </button>
                     </div>
