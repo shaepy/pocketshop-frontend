@@ -29,30 +29,44 @@ const Dashboard = () => {
       <section className="section">
         <div className="columns is-6">
           <div className="orders-for-shop column box mr-5 mb-0">
-            <h2 className="title is-4">Active Shop Orders</h2>
-            <button
-              onClick={linkToShopManage}
-              className="button is-black is-outlined mb-5">
-              Go to Manage Shop
-            </button>
-            <div className="active-orders-div">
-              {orders ? (
-                orders.map((order) => (
-                  <p key={order.product.id}>
-                    {" "}
-                    <Link
-                      className="blue-link "
-                      to={`dashboard/product/${order.product.id}/orders`}>
-                      {" "}
-                      {order.product.title}
-                    </Link>{" "}
-                    <span className="number-label">{order.orders.length}</span>
-                  </p>
-                ))
-              ) : (
-                <p>No active orders for your shop's products.</p>
-              )}
-            </div>
+            <h2 className="title is-4">
+              {user?.has_shop ? "Active Shop Orders" : "Become a Seller"}
+            </h2>
+            {user?.has_shop ? (
+              <>
+                <button
+                  onClick={linkToShopManage}
+                  className="button is-black is-outlined mb-5">
+                  Go to Manage Shop
+                </button>
+                <div className="active-orders-div">
+                  {orders ? (
+                    orders.map((order) => (
+                      <p key={order.product.id}>
+                        {" "}
+                        <Link
+                          className="blue-link "
+                          to={`dashboard/product/${order.product.id}/orders`}>
+                          {" "}
+                          {order.product.title}
+                        </Link>{" "}
+                        <span className="number-label">
+                          {order.orders.length}
+                        </span>
+                      </p>
+                    ))
+                  ) : (
+                    <p>No active orders for your shop's products.</p>
+                  )}
+                </div>
+              </>
+            ) : (
+              <button
+                onClick={() => navigate("/shops/new")}
+                className="button is-black mt-4 mb-4">
+                Create a Shop
+              </button>
+            )}
           </div>
           <div className="orders-for-buyer column box">
             <h2 className="title is-4">My Orders</h2>
