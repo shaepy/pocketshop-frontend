@@ -73,7 +73,6 @@ const ShopCreate = () => {
                   </label>
                   <textarea
                     className="textarea"
-                    type="text"
                     id="bio"
                     name="bio"
                     value={bio}
