@@ -98,7 +98,8 @@ export const deleteProduct = async (productId) => {
 
 export const updateProduct = async (productId, formData) => {
   try {
-    const response = await axios.patch(`${BASEURL}${productId}/`, formData);
+    console.log("what we send to backend", formData);
+    const response = await axios.put(`${BASEURL}${productId}/`, formData);
 
     if (!response.data) {
       throw new Error("Error updating product", response.data.error);
