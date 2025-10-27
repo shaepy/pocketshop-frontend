@@ -17,16 +17,16 @@ const Shops = () => {
   return (
     <main>
       <section className="section">
-        <div className="container">
+        <div className="container is-max-tablet">
           <div className="has-text-centered">
             <h1 className="title is-2">All Shops</h1>
           </div>
 
-          <section className="m-3 grid">
+          <div className="m-3">
             {shops.length > 0 ? (
               shops.map((shop) => (
                 <Link to={`/shops/${shop.id}`} key={shop.id}>
-                  <div className="cell box hover-box mt-5 is-flex is-flex-direction-column is-align-items-center">
+                  <div className="mt-6 has-text-centered all-shops-shop-div box hover-box m-5 is-flex is-flex-direction-column is-align-items-center">
                     <h2 className="title is-5">{shop.name}</h2>
                     <p>{shop.bio}</p>
                   </div>
@@ -35,7 +35,7 @@ const Shops = () => {
             ) : (
               <p>No shops available.</p>
             )}
-          </section>
+          </div>
         </div>
       </section>
     </main>

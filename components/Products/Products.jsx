@@ -21,17 +21,20 @@ const Products = () => {
         <div className="container">
           <div className="has-text-centered">
             <h1 className="title is-2">All Products</h1>
-            <div className="grid is-col-min-10 is-gap-3">
+            <div className="grid is-col-min-10 is-gap-5">
               {products.length >= 0 ? (
                 products.map((product) => (
                   <Link key={product.id} to={`/products/${product.id}`}>
                     <div className="box cell hover-box all-products-page-box">
-                      <h2 className="title is-5 mb-2">{product.title}</h2>
-                      <p>by {product.shop.name}</p>
                       <img
-                        className="all-products-page-img mt-3"
+                        className="all-products-page-img mb-3"
                         src={product.images[0].url}
                       />
+                      <p className="has-text-weight-semibold is-size-5">
+                        ${product.price}
+                      </p>
+                      <p className="mt-2">{product.title}</p>
+                      <p className="tiny-text">by {product.shop.name}</p>
                     </div>
                   </Link>
                 ))

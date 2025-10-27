@@ -26,10 +26,10 @@ const Dashboard = () => {
       <section className="section">
         <div className="columns is-6">
           <div className="orders-for-shop column box mr-5 mb-0">
-            <h2 className="is-size-4">Active Shop Orders</h2>
+            <h2 className="title is-4">Active Shop Orders</h2>
             <button
               onClick={linkToShopManage}
-              className="button is-black is-outlined mt-5 mb-5">
+              className="button is-black is-outlined mb-5">
               Go to Manage Shop
             </button>
             {orders ? (

@@ -1,15 +1,15 @@
 .slick-slider .slick-prev {
-  left: 8px !important;
+  left: 2px !important;
   z-index: 2;
 }
 .slick-slider .slick-next {
-  right: 8px !important;
+  right: 12px !important;
   z-index: 2;
 }
 /* Make arrows clearly visible */
 .slick-slider .slick-prev:before,
 .slick-slider .slick-next:before {
-  color: #878787;             /* change to #fff if you have a dark background */
+  color: #000000;             /* change to #fff if you have a dark background */
   font-size: 30px;         /* a bit larger than default */
-  opacity: 0.9;
+  opacity: 0.5;
 }

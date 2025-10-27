@@ -62,7 +62,7 @@ const ProductPage = () => {
 
           <div className="column m-3">
             <h2 className="title is-2">${product.price * quantity}</h2>
-            <p>
+            <p className="is-size-5">
               <Link className="blue-link" to={`/shops/${product.shop.id}`}>
                 {product.shop.name}
               </Link>

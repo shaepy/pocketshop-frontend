@@ -71,8 +71,8 @@ const ShopCreate = () => {
                   <label className="label" htmlFor="bio">
                     About Shop
                   </label>
-                  <input
-                    className="input"
+                  <textarea
+                    className="textarea"
                     type="text"
                     id="bio"
                     name="bio"
