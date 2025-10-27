@@ -87,7 +87,6 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
         );
 
         finalImages = [...finalImages, ...uploaded];
-      
       }
 
 
