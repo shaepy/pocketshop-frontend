@@ -117,7 +117,7 @@ const ProductPage = () => {
               //disable add to cart if quantity is 0
               disabled={quantity === 0 ? true : false}
               onClick={() => (user ? handleAddToCart() : navigate("/login"))}>
-              <i class="fa-solid fa-cart-plus"></i>
+              <i className="fa-solid fa-cart-plus"></i>
               Add to Cart
             </button>
           </div>
