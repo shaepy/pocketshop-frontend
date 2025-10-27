@@ -1,11 +1,13 @@
 import * as orderApi from "../../services/orderService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import "./Dashboard.css";
+import { UserContext } from "../../contexts/UserContext";
 
 const Dashboard = () => {
   // useEffect for getOrdersByProduct
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {

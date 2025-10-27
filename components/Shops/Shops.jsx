@@ -33,7 +33,13 @@ const Shops = () => {
                 </Link>
               ))
             ) : (
-              <p>No shops available.</p>
+              <div
+                className="is-flex is-justify-content-center is-align-items-center has-text-centered"
+              >
+                <p className="subtitle is-6">
+                  No shops available.
+                </p>
+              </div>
             )}
           </div>
         </div>
