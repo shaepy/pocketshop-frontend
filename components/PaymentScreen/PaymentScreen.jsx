@@ -73,7 +73,7 @@ const PaymentScreen = ({ setActivePaymentScreen, handleCreateOrders }) => {
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         <header className="modal-card-head">
           <p className="modal-card-title">
-            Add Payment <i class="fa-solid fa-credit-card"></i>
+            Add Payment <i className="fa-solid fa-credit-card"></i>
           </p>
           <button
             className="delete"
