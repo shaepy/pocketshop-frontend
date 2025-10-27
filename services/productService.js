@@ -98,7 +98,6 @@ export const deleteProduct = async (productId) => {
 
 export const updateProduct = async (productId, formData) => {
   try {
-    console.log("what we send to backend", formData);
     const response = await axios.put(`${BASEURL}${productId}/`, formData);
 
     if (!response.data) {
