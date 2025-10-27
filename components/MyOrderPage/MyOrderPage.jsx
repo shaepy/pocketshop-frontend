@@ -66,25 +66,38 @@ const MyOrderPage = () => {
                   <p className="column tiny-text">ORDER #{order.id}</p>
                 </div>
 
-                <h2 className="is-size-4 mt-4 mb-1">
-                  <Link to={`/products/${order.product.id}`}>
-                    {order.product.title}
-                  </Link>{" "}
-                  x {order.quantity}
-                </h2>
-                <p className="mb-4">
-                  From{" "}
-                  <Link to={`/shops/${order.product.shop.id}`}>
-                    {order.product.shop.name}
-                  </Link>
-                </p>
-                <div className="is-flex is-flex-direction-row mb-4 is-align-items-center">
-                  <p className="mr-3">Status</p>
-                  <span className="order-status-label">
-                    {order.status.toUpperCase()}
-                  </span>
+                <div className="columns is-vcentered mt-2">
+                  <div className="column is-one-fifth">
+                    <img
+                      className="order-page-image"
+                      src={order.product.images[0].url}
+                    />
+                  </div>
+                  <div className="column">
+                    <h2 className="is-size-4 mt-4 mb-1">
+                      <Link to={`/products/${order.product.id}`}>
+                        {order.product.title}
+                      </Link>{" "}
+                      x {order.quantity}
+                    </h2>
+                    <p className="mb-4">
+                      From{" "}
+                      <Link to={`/shops/${order.product.shop.id}`}>
+                        {order.product.shop.name}
+                      </Link>
+                    </p>
+                  </div>
+                  <div className="column">
+                    <div className="is-flex is-flex-direction-row is-align-items-center">
+                      <p className="mr-3">Status</p>
+                      <span className="order-status-label">
+                        {order.status.toUpperCase()}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div>
+
+                <div className="mt-4">
                   <button
                     className="button is-black is-outlined mr-3"
                     disabled={

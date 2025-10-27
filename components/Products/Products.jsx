@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import * as productApi from "../../services/productService";
+import "./Products.css";
 
 const Products = () => {
   const [products, setProducts] = useState([]);

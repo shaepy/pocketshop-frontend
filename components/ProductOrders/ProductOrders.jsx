@@ -65,12 +65,21 @@ const ProductOrders = () => {
 
                   <div className="columns">
                     <div className="column">
-                      <h2 className="is-size-4 mt-4 mb-1">
-                        <Link to={`/products/${order.product.id}`}>
-                          {order.product.title}
-                        </Link>
-                      </h2>
-                      <p>Quantity: {order.quantity}</p>
+
+                      <div className="columns is-vcentered">
+                        <div className="column is-one-quarter">
+                          <img className="order-page-image" src={order.product.images[0].url} />
+                        </div>
+                        <div className="column">
+                          <h2 className="is-size-4 mt-4 mb-1">
+                            <Link to={`/products/${order.product.id}`}>
+                              {order.product.title}
+                            </Link>
+                          </h2>
+                          <p>Quantity: {order.quantity}</p>
+                        </div>
+                      </div>
+
                       <div className="is-flex is-flex-direction-row mb-5 mt-5 is-align-items-center">
                         <p className="mr-3">Status</p>
                         <span className="order-status-label">
@@ -95,7 +104,7 @@ const ProductOrders = () => {
                       </button>
                     </div>
                     {/* BUYER INFO */}
-                    <div className="column mt-5">
+                    <div className="column mt-5 is-one-third">
                       <h2 className="is-size-5 mb-3">
                         <strong>Contact Buyer</strong>
                       </h2>

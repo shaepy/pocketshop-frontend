@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router";
 import * as shopApi from "../../services/shopService";
+import "./ShopPage.css";
 
 const ShopPage = () => {
   const { shopId } = useParams();

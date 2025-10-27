@@ -95,10 +95,7 @@ const ProductPage = () => {
             </div>
 
             {message && (
-              <div
-                className="notification is-danger"
-                role="alert"
-                aria-live="polite">
+              <div className="notification p-3" role="alert" aria-live="polite">
                 {message}
               </div>
             )}

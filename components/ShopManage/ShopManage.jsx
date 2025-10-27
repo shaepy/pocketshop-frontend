@@ -5,6 +5,7 @@ import { getUser } from "../../services/userService";
 import ProductForm from "../ProductForm/ProductForm";
 import * as shopApi from "../../services/shopService";
 import * as productApi from "../../services/productService";
+import "./ShopManage.css";
 
 const ShopManage = () => {
   const navigate = useNavigate();
@@ -208,8 +209,10 @@ const ShopManage = () => {
                         src={product.images[0].url}
                         alt={product.title}
                       />
-                      <p className="is-size-5">${product.price}</p>
-                      <div className="mt-3 mb-3 is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
+                      <p className="is-size-5 has-text-weight-semibold mt-2">
+                        ${product.price}
+                      </p>
+                      <div className="mt-2 mb-2 is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
                         {" "}
                         <p className="category-tiny-text mr-2">CATEGORY</p>
                         <p className="small-label">{product.category}</p>
