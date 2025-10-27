@@ -30,7 +30,7 @@
 }
 
 .tiny-text {
-  font-size: .95rem;
+  font-size: 0.95rem;
 }
 
 .order-status-label {
@@ -38,4 +38,10 @@
   background-color: #efefef;
   padding: 6px 8px;
   border-radius: 5px;
+}
+
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
 }
