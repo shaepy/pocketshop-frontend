@@ -22,7 +22,7 @@ const ShopPage = () => {
       <section className="section">
         <div className="container">
           <h1 className="title is-2 has-text-centered">{shop.name}</h1>
-          <div className="columns is-12-tablet is-6-desktop is-5-widescreen">
+          <div className="columns is-8">
             <div className="column is-one-quarter">
               <div>
                 <h2 className="title is-3">About</h2>
@@ -41,8 +41,8 @@ const ShopPage = () => {
                   // This should link to the product page
                   <Link to={`/products/${product.id}`} key={product.id}>
                     <div className="box hover-box cell shop-page-product-div is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
-                        <h3 className="title is-4 mb-2">{product.title}</h3>
-                        <p>${product.price}</p>
+                      <h3 className="title is-4 mb-2">{product.title}</h3>
+                      <p>${product.price}</p>
                       <img
                         src={product.images[0].url}
                         className="shop-page-image"

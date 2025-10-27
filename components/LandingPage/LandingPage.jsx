@@ -14,9 +14,7 @@ const LandingPage = () => {
               <h1 className="title is-3 has-text-weight-semibold">
                 Welcome back, {user.username}.
               </h1>
-              <div className="box mt-5">
-                <Dashboard />
-              </div>
+              <Dashboard />
             </>
           ) : (
             <>
@@ -30,10 +28,9 @@ const LandingPage = () => {
               <figure
                 className="image is-inline-block"
                 style={{
-                  maxWidth: "600px", 
-                  margin: "0 auto"
-                }}
-              >
+                  maxWidth: "600px",
+                  margin: "0 auto",
+                }}>
                 <img
                   src="/images/PocketShop.png"
                   alt="PocketShop logo"

@@ -1,0 +1,21 @@
+/* Credit card logos used on the payment screen */
+.credit-card-logos {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem; /* space between logos */
+  margin: 0.5rem 0 1rem 0;
+}
+.credit-card-logos img {
+  width: 48px;
+  height: auto;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.small-input {
+  max-width: 100px;
+}
+
+.long-input {
+  max-width: 520px;
+}

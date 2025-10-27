@@ -5,8 +5,8 @@ import * as cloudinaryApi from "../../services/cloudinaryService";
 const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
   const navigate = useNavigate();
   const initialState = {
-    // useEffect to setImageFiles
-    productImage: product?.productImage || "",
+    // Need a useEffect to setImageFiles
+    productImage: product?.productImage || [],
     title: product?.title || "",
     description: product?.description || "",
     price: product?.price || 0,
@@ -108,12 +108,22 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
   };
 
   return (
-    <>
-      <div>
-        {error && <p>{error}</p>}
-        <h1>{product ? "Edit Product" : "Create New Product"}</h1>
+    <div className="product-form-div container is-max-tablet">
+      <div className="mb-5">
+        {error && (
+          <div
+            className="notification is-danger"
+            role="alert"
+            aria-live="polite">
+            {error}
+          </div>
+        )}
+        <h1 className="title is-3">
+          {product ? "Edit Product" : "Add New Product"}
+        </h1>
         {(setIsEditProductMode || setIsProductMode) && (
           <button
+            className="button is-light"
             onClick={() => {
               if (setIsEditProductMode) setIsEditProductMode(false);
               else if (setIsProductMode) setIsProductMode(false);
@@ -121,48 +131,63 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
             Close
           </button>
         )}
-        <div>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="productImage">Product Images</label>
+      </div>
+      <div className="container">
+        <form onSubmit={handleSubmit} className="box">
+          <div className="file">
+            <label className="file-label" htmlFor="productImage">
+              <input
+                className="file-input"
+                type="file"
+                id="productImage"
+                name="productImage"
+                accept="image/*"
+                multiple
+                value={formData.productImage}
+                onChange={handleImageChange}
+              />
+              <span className="file-cta">
+                <span className="file-icon">
+                  <i className="fas fa-upload"></i>
+                </span>
+                <span className="file-label">Upload an image...</span>
+              </span>
+            </label>
+          </div>
+          {imagePreviews.length > 0 && (
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
+                marginTop: "10px",
+              }}>
+              {imagePreviews.map((preview, index) => (
+                <div key={index}>
+                  <img
+                    src={preview}
+                    alt={`Preview ${index + 1}`}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                      border:
+                        index === 0 ? "3px solid green" : "1px solid gray",
+                    }}
+                  />
+                  {index === 0 && (
+                    <p style={{ fontSize: "12px", margin: 0 }}>Primary</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="field">
+            <label className="label" htmlFor="title">
+              Title
+            </label>
             <input
-              type="file"
-              id="productImage"
-              name="productImage"
-              accept="image/*"
-              multiple
-              value={formData.productImage}
-              onChange={handleImageChange}
-            />
-            {imagePreviews.length > 0 && (
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "10px",
-                  marginTop: "10px",
-                }}>
-                {imagePreviews.map((preview, index) => (
-                  <div key={index}>
-                    <img
-                      src={preview}
-                      alt={`Preview ${index + 1}`}
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                        border:
-                          index === 0 ? "3px solid green" : "1px solid gray",
-                      }}
-                    />
-                    {index === 0 && (
-                      <p style={{ fontSize: "12px", margin: 0 }}>Primary</p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-            <label htmlFor="title">Title</label>
-            <input
+              className="input"
               type="text"
               id="title"
               name="title"
@@ -170,62 +195,87 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
               onChange={handleChange}
               required
             />
-            <label htmlFor="description">description</label>
-            <input
-              type="description"
+          </div>
+          <div className="field">
+            <label className="label" htmlFor="description">
+              Description
+            </label>
+            <textarea
+              className="textarea"
               id="description"
               name="description"
               value={formData.description}
               onChange={handleChange}
               required
             />
-            <label htmlFor="price">Price</label>
-            <input
-              type="number"
-              id="price"
-              name="price"
-              min="0"
-              step="0.01"
-              value={formData.price}
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="quantity">quantity</label>
-            <input
-              type="number"
-              id="quantity"
-              name="quantity"
-              min="0"
-              value={formData.quantity}
-              onChange={handleChange}
-              required
-            />
-            <label htmlFor="category">category</label>
-            <select
-              id="category"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required>
-              <option value="None">-- Select an option --</option>
-              <option value="PETS">Pet Supplies</option>
-              <option value="ART">Art & Crafts</option>
-              <option value="VINT">Vintage</option>
-              <option value="FASH">Fashion</option>
-              <option value="HOME">Home & Living</option>
-              <option value="BEAU">Beauty & Personal Care</option>
-              <option value="ELEC">Electronics & Gadgets</option>
-              <option value="DIGI">Digital Goods</option>
-              <option value="SPRT">Sports & Outdoors</option>
-              <option value="CUST">Custom Orders</option>
-            </select>
-            <button type="submit" disabled={uploading}>
-              {uploading ? "Uploading images..." : "Submit"}
-            </button>
-          </form>
-        </div>
+          </div>
+          <div className="columns">
+            <div className="column">
+              <label className="label" htmlFor="price">
+                Price
+              </label>
+              <input
+                className="input"
+                type="number"
+                id="price"
+                name="price"
+                min="0"
+                step="0.01"
+                value={formData.price}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="column">
+              <label className="label" htmlFor="quantity">
+                quantity
+              </label>
+              <input
+                className="input"
+                type="number"
+                id="quantity"
+                name="quantity"
+                min="0"
+                value={formData.quantity}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="column">
+              <label className="label" htmlFor="category">
+                Category
+              </label>
+              <div className="select">
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  required>
+                  <option value="None">-- Select an option --</option>
+                  <option value="PETS">Pet Supplies</option>
+                  <option value="ART">Art & Crafts</option>
+                  <option value="VINT">Vintage</option>
+                  <option value="FASH">Fashion</option>
+                  <option value="HOME">Home & Living</option>
+                  <option value="BEAU">Beauty & Personal Care</option>
+                  <option value="ELEC">Electronics & Gadgets</option>
+                  <option value="DIGI">Digital Goods</option>
+                  <option value="SPRT">Sports & Outdoors</option>
+                  <option value="CUST">Custom Orders</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button
+            className="button is-black is-outlined"
+            type="submit"
+            disabled={uploading}>
+            {uploading ? "Uploading images..." : "Submit"}
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

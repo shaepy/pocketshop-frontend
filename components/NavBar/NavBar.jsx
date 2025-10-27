@@ -23,8 +23,7 @@ const NavBar = () => {
     <nav
       className="navbar is-white m-5"
       role="navigation"
-      aria-label="main navigation"
-    >
+      aria-label="main navigation">
       <div className="container">
         <div className="navbar-brand">
           <Link to="/" className="navbar-item" aria-label="PocketShop Home">
@@ -61,7 +60,7 @@ const NavBar = () => {
                   My Orders
                 </Link>
                 <Link to="/cart" className="navbar-item">
-                  Cart 🛒
+                  <i className="fa-solid fa-cart-shopping"></i>
                 </Link>
               </>
             )}
@@ -79,13 +78,14 @@ const NavBar = () => {
             ) : (
               <div className="navbar-item">
                 <div className="buttons">
-                  <button onClick={linkToSignUp} className="button is-black is-outlined">
+                  <button
+                    onClick={linkToSignUp}
+                    className="button is-black is-outlined">
                     <strong>Register</strong>
                   </button>
                   <button
                     onClick={linkToSignIn}
-                    className="button is-black is-outlined"
-                  >
+                    className="button is-black is-outlined">
                     Sign in
                   </button>
                 </div>

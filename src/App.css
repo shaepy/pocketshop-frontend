@@ -5,3 +5,43 @@
   padding: 0;
   text-align: initial;
 }
+
+.shop-page-image {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.all-products-page-img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.product-page-large-image {
+  max-height: 500px;
+  max-width: 600px;
+  object-fit: contain;
+}
+
+.order-details-div {
+  background-color: #efefef;
+  border-radius: 10px;
+}
+
+.tiny-text {
+  font-size: 0.95rem;
+}
+
+.order-status-label {
+  font-size: 0.8rem;
+  background-color: #efefef;
+  padding: 6px 8px;
+  border-radius: 5px;
+}
+
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}

@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext, act } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { UserContext } from "../../contexts/UserContext";
 import keysToSnakeTopLevel from "../../utilities/convertToSnake";
 import * as cartApi from "../../services/cartService";
 import * as orderApi from "../../services/orderService";
@@ -17,7 +16,6 @@ const Carts = () => {
     cartItemId: 0,
     quantity: 0,
   };
-  const { user } = useContext(UserContext);
   const [cart, setCart] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [activePaymentScreen, setActivePaymentScreen] = useState(false);
@@ -137,45 +135,55 @@ const Carts = () => {
   if (!cart) return <p>Loading your cart...</p>;
 
   return (
-    <>
-      <h1> Cart</h1>
-      <ul>
-        <button
-          disabled={cartItems.length <= 0 && true}
-          onClick={() => clearCart()}
-        >
-          Clear cart
-        </button>
-        {cartItems.length > 0 ? (
-          cartItems.map((item) => (
-            <CartItems
-              key={item.id}
-              item={item}
-              handleDeleteItem={handleDeleteItem}
-              handleQuantity={handleQuantity}
+    <main>
+      <section className="section">
+        <div className="container">
+          <h1 className="title is-2">My Cart</h1>
+
+          <div className="columns is-8">
+            <div className="column">
+              {cartItems.length > 0 ? (
+                cartItems.map((item) => (
+                  <CartItems
+                    key={item.id}
+                    item={item}
+                    handleDeleteItem={handleDeleteItem}
+                    handleQuantity={handleQuantity}
+                  />
+                ))
+              ) : (
+                <h2>No Items in Cart</h2>
+              )}
+            </div>
+
+            <div className="column is-one-third">
+              <button
+                className="button is-light"
+                disabled={cartItems.length <= 0 && true}
+                onClick={() => clearCart()}>
+                Clear Cart
+              </button>
+              <p className="is-size-3 mt-5 mb-5">
+                Total: <strong> ${cart.total_cost}</strong>
+              </p>
+              <button
+                className="button is-black is-outlined"
+                disabled={cartItems.length <= 0 && true}
+                onClick={toggleActivePaymentScreen}>
+                Proceed to checkout
+              </button>
+            </div>
+          </div>
+
+          {activePaymentScreen && (
+            <PaymentScreen
+              setActivePaymentScreen={setActivePaymentScreen}
+              handleCreateOrders={handleCreateOrders}
             />
-          ))
-        ) : (
-          <h2>No Items in Cart</h2>
-        )}
-        <p>Total Cost Of Cart : {cart.total_cost}</p>
-      </ul>
-
-      {/* This should take you to payment page */}
-      <button
-        disabled={cartItems.length <= 0 && true}
-        onClick={toggleActivePaymentScreen}
-      >
-        {activePaymentScreen ? "Cancel" : "Proceed to checkout"}
-      </button>
-
-      {activePaymentScreen && (
-        <PaymentScreen
-          setActivePaymentScreen={setActivePaymentScreen}
-          handleCreateOrders={handleCreateOrders}
-        />
-      )}
-    </>
+          )}
+        </div>
+      </section>
+    </main>
   );
 };
 
