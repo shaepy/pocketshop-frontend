@@ -86,12 +86,10 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
           imageFiles.map((file) => cloudinaryApi.uploadImageToCloudinary(file))
         );
 
-        console.log("uploaded", uploaded);
         finalImages = [...finalImages, ...uploaded];
       
       }
 
-      console.log("final images", finalImages);
 
       // Build the product data in the format backend expects
       const productData = {
