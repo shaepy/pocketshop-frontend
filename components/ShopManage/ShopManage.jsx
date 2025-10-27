@@ -218,7 +218,6 @@ const ShopManage = () => {
                         ${product.price}
                       </p>
                       <div className="mt-2 mb-2 is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
-                        {" "}
                         <p className="category-tiny-text mr-2">CATEGORY</p>
                         <p className="small-label">{product.category}</p>
                       </div>
