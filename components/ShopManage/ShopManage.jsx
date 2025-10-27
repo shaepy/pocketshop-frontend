@@ -109,7 +109,8 @@ const ShopManage = () => {
               <div>
                 <button
                   className="button is-light mr-2 mb-2"
-                  onClick={toggleEditMode}>
+                  onClick={toggleEditMode}
+                >
                   {isEditMode ? "Close Edit" : "Edit Shop"}
                 </button>
                 <button className="button is-light" onClick={handleDeleteShop}>
@@ -164,11 +165,14 @@ const ShopManage = () => {
           <section>
             <div className="mb-6">
               <h2 className="title is-3">Manage Products</h2>
-              <button
-                className="button is-black is-outlined mt-2"
-                onClick={toggleAddProductMode}>
-                {isProductMode ? "Close" : "+ Add Product"}
-              </button>
+              {isProductMode ? null : (
+                <button
+                  className="button is-black is-outlined mt-2"
+                  onClick={toggleAddProductMode}
+                >
+                  {isProductMode ? null : "+ Add Product"}
+                </button>
+              )}
             </div>
             <div className="grid mr-4 ml-4 is-col-min-12 is-gap-5">
               {isProductMode ? (
@@ -183,21 +187,27 @@ const ShopManage = () => {
                 />
               ) : (
                 userShop.products.map((product) => (
-                  <div className="cell box hover-box mb-0" key={product.id}>
+                  <div
+                    className="cell box hover-box mb-0 is-flex is-flex-direction-column is-justify-content-center is-align-items-center has-text-centered"
+                    key={product.id}
+                  >
                     <h4
                       className="title is-5"
-                      aria-label={`${product.title} (ID: ${product.id})`}>
+                      aria-label={`${product.title} (ID: ${product.id})`}
+                    >
                       {product.title}
                     </h4>
                     <button
                       className="button is-black is-outlined mb-3"
-                      onClick={() => linkToProductOrders(product.id)}>
+                      onClick={() => linkToProductOrders(product.id)}
+                    >
                       View Orders
                     </button>
                     <div className="m-3">
                       <img
                         className="shop-page-image"
                         src={product.images[0].url}
+                        alt={product.title}
                       />
                       <p>{product.description}</p>
                       <p>${product.price}</p>
@@ -207,14 +217,16 @@ const ShopManage = () => {
                     <div>
                       <button
                         className="button is-light mr-2"
-                        onClick={() => toggleEditProductMode(product)}>
+                        onClick={() => toggleEditProductMode(product)}
+                      >
                         {isEditProductMode && selectedProduct?.id === product.id
                           ? "Close"
                           : "Edit"}
                       </button>
                       <button
                         className="button is-light"
-                        onClick={() => handleDeleteProduct(product.id)}>
+                        onClick={() => handleDeleteProduct(product.id)}
+                      >
                         Delete
                       </button>
                     </div>

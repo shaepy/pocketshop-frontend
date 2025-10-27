@@ -14,14 +14,14 @@ const CartItems = ({ item, handleDeleteItem, handleQuantity }) => {
         <button
           className="button is-light"
           onClick={() => handleQuantity(false, item.quantity, item.id)}>
-          <i class="fa-solid fa-minus"></i>
+          <i className="fa-solid fa-minus"></i>
         </button>
         {item.quantity}
         <button
           className="button is-light"
           disabled={item.quantity >= item.product.quantity}
           onClick={() => handleQuantity(true, item.quantity, item.id)}>
-          <i class="fa-solid fa-plus"></i>
+          <i className="fa-solid fa-plus"></i>
         </button>
         <button
           className="button is-light"
