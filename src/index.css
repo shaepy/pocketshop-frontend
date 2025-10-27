@@ -1,5 +1,6 @@
 /* Minimal global styles tailored for Bulma */
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 html {
   /* Prevent layout shift when vertical scrollbar appears/disappears */
@@ -53,6 +54,14 @@ img {
   object-fit: contain;
 }
 
-.shop-page-product-div {
+.all-products-page-img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.product-page-large-image {
   max-height: 500px;
+  max-width: 600px;
+  object-fit: contain;
 }

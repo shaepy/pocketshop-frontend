@@ -101,82 +101,129 @@ const ShopManage = () => {
   if (!userShop) return <p>Loading your shop...</p>;
   return (
     <main>
-      <section>
-        <h1>Manage Shop</h1>
-        <div>
-          <button onClick={toggleEditMode}>
-            {isEditMode ? "Close Edit" : "Edit Shop"}
-          </button>
-          <button onClick={handleDeleteShop}>Delete Shop</button>
-        </div>
-        {isEditMode ? (
-          <div>
-            {error && <p>{error}</p>}
-            <form onSubmit={handleSubmit}>
-              <label>Shop Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <label>About Shop</label>
-              <input
-                type="text"
-                id="bio"
-                name="bio"
-                value={formData.bio}
-                onChange={handleChange}
-                required
-              />
-              <button type="submit">Update</button>
-            </form>
+      <section className="section">
+        <div className="container">
+          <div className="columns is-centered mb-6">
+            <div className="column is-one-fifth">
+              <h1 className="title mt-4 is-3">Manage Shop</h1>
+              <div>
+                <button
+                  className="button is-light mr-2"
+                  onClick={toggleEditMode}>
+                  {isEditMode ? "Close Edit" : "Edit Shop"}
+                </button>
+                <button className="button is-light" onClick={handleDeleteShop}>
+                  Delete Shop
+                </button>
+              </div>
+            </div>
+            {isEditMode ? (
+              <div className="column">
+                {error && <p>{error}</p>}
+                <form onSubmit={handleSubmit}>
+                  <div className="field">
+                    <label className="label" htmlFor="name">
+                      Shop Name
+                    </label>
+                    <input
+                      className="input"
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="field">
+                    <label className="label" htmlFor="bio">
+                      About Shop
+                    </label>
+                    <textarea
+                      className="textarea"
+                      id="bio"
+                      name="bio"
+                      value={formData.bio}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <button className="button is-black is-outlined" type="submit">
+                    Update
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <div className="mt-3 column">
+                <h2 className="title is-2">{userShop.name}</h2>
+                <h3>{userShop.bio}</h3>
+              </div>
+            )}
           </div>
-        ) : (
-          <div>
-            <h2>{userShop.name}</h2>
-            <h3>About Shop: {userShop.bio}</h3>
-          </div>
-        )}
-      </section>
 
-      <section>
-        <p>{userShop.products.length} products found.</p>
-        <button onClick={toggleAddProductMode}>
-          {isProductMode ? "Close" : "+ Add Product"}
-        </button>
-
-        {isProductMode ? (
-          <ProductForm product={null} setIsProductMode={setIsProductMode} />
-        ) : isEditProductMode ? (
-          <ProductForm
-            product={selectedProduct}
-            setIsEditProductMode={setIsEditProductMode}
-          />
-        ) : (
-          userShop.products.map((product) => (
-            <div key={product.id}>
-              <h4 aria-label={`${product.title} (ID: ${product.id})`}>{product.title}</h4>
-              <button onClick={() => linkToProductOrders(product.id)}>
-                View Orders
-              </button>
-              <p>description: {product.description}</p>
-              <p>${product.price}</p>
-              <p>qt: {product.quantity}</p>
-              <p>category: {product.category}</p>
-              <button onClick={() => toggleEditProductMode(product)}>
-                {isEditProductMode && selectedProduct?.id === product.id
-                  ? "Close"
-                  : "Edit"}
-              </button>
-              <button onClick={() => handleDeleteProduct(product.id)}>
-                Delete
+          <section>
+            <div className="mb-6">
+              <h2 className="title is-3">Manage Products</h2>
+              <button
+                className="button is-black is-outlined mt-2"
+                onClick={toggleAddProductMode}>
+                {isProductMode ? "Close" : "+ Add Product"}
               </button>
             </div>
-          ))
-        )}
+            <div className="grid mr-4 ml-4 is-col-min-12 is-gap-4">
+              {isProductMode ? (
+                <ProductForm
+                  product={null}
+                  setIsProductMode={setIsProductMode}
+                />
+              ) : isEditProductMode ? (
+                <ProductForm
+                  product={selectedProduct}
+                  setIsEditProductMode={setIsEditProductMode}
+                />
+              ) : (
+                userShop.products.map((product) => (
+                  <div className="cell box hover-box" key={product.id}>
+                    <h4
+                      className="title is-5"
+                      aria-label={`${product.title} (ID: ${product.id})`}>
+                      {product.title}
+                    </h4>
+                    <button
+                      className="button is-black is-outlined mb-3"
+                      onClick={() => linkToProductOrders(product.id)}>
+                      View Orders
+                    </button>
+                    <div className="m-3">
+                      <img
+                        className="shop-page-image"
+                        src={product.images[0].url}
+                      />
+                      <p>{product.description}</p>
+                      <p>${product.price}</p>
+                      <p>Quantity: {product.quantity}</p>
+                      <p>Category: {product.category}</p>
+                    </div>
+                    <div>
+                      <button
+                        className="button is-light mr-2"
+                        onClick={() => toggleEditProductMode(product)}>
+                        {isEditProductMode && selectedProduct?.id === product.id
+                          ? "Close"
+                          : "Edit"}
+                      </button>
+                      <button
+                        className="button is-light"
+                        onClick={() => handleDeleteProduct(product.id)}>
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+        </div>
       </section>
     </main>
   );

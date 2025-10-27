@@ -22,17 +22,20 @@ const Shops = () => {
             <div className="column is-12-tablet is-6-desktop is-5-widescreen">
               <div className="has-text-centered">
                 <h1 className="title is-2">All Shops</h1>
-                <p>{shops.length} Found.</p>
               </div>
               <section className="m-3">
-                {shops.map((shop) => (
-                  <Link to={`/shops/${shop.id}`}>
-                    <div key={shop.id} className="box hover-box mt-5">
-                      <h2 className="title is-5">{shop.name}</h2>
-                      <p>{shop.bio}</p>
-                    </div>
-                  </Link>
-                ))}
+                {shops.length > 0 ? (
+                  shops.map((shop) => (
+                    <Link to={`/shops/${shop.id}`} key={shop.id}>
+                      <div className="box hover-box mt-5 is-flex is-flex-direction-column is-align-items-center">
+                        <h2 className="title is-5">{shop.name}</h2>
+                        <p>{shop.bio}</p>
+                      </div>
+                    </Link>
+                  ))
+                ) : (
+                  <p>No shops available.</p>
+                )}
               </section>
             </div>
           </div>
