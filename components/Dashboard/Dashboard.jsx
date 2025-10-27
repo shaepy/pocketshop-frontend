@@ -28,7 +28,7 @@ const Dashboard = () => {
       <section className="section">
         <div className="columns is-6">
           <div className="orders-for-shop column box mr-5 mb-0">
-            <h2 className="is-size-4">{user?.has_shop ? "Active Shop Orders" : "No Active Shop Orders"}</h2>
+            <h2 className="is-size-4">{user?.has_shop ? "Active Shop Orders" : "Shop Not Created"}</h2>
             {user?.has_shop ? (
               <button
                 onClick={linkToShopManage}
