@@ -87,26 +87,8 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
         );
 
         console.log("uploaded", uploaded);
-        // Keep only the fields your backend needs (map secure_url -> url)
-        const cleanedUploaded = uploaded.map((img) => ({
-          url: img.secure_url || img.url || "",
-          public_id: img.public_id,
-        }));
-
-        const cleanedExisting = finalImages.map(
-          ({ url, secure_url, public_id }) => ({
-            url: url || secure_url || "",
-            public_id,
-          })
-        );
-
-        finalImages = [...cleanedExisting, ...cleanedUploaded];
-      } else {
-        // Clean existing if they have extra fields
-        finalImages = finalImages.map(({ url, secure_url, public_id }) => ({
-          url: url || secure_url || "",
-          public_id,
-        }));
+        finalImages = [...finalImages, ...uploaded];
+      
       }
 
       console.log("final images", finalImages);
