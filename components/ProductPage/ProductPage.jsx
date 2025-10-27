@@ -100,7 +100,7 @@ const ProductPage = () => {
                 //disable quantity button because we cannot send negative numbers
                 disabled={quantity <= 0 ? true : false}
                 onClick={() => setQuantity(quantity - 1)}>
-                -
+                <i class="fa-solid fa-minus"></i>
               </button>
               <p> {quantity} </p>
               <button
@@ -108,7 +108,7 @@ const ProductPage = () => {
                 // disable quantity button if more than product has
                 disabled={quantity >= product.quantity ? true : false}
                 onClick={() => setQuantity(quantity + 1)}>
-                +
+                <i class="fa-solid fa-plus"></i>
               </button>
             </div>
             <p>{message}</p>
@@ -117,6 +117,7 @@ const ProductPage = () => {
               //disable add to cart if quantity is 0
               disabled={quantity === 0 ? true : false}
               onClick={() => (user ? handleAddToCart() : navigate("/login"))}>
+              <i class="fa-solid fa-cart-plus"></i>
               Add to Cart
             </button>
           </div>

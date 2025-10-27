@@ -12,6 +12,17 @@ export const getUserOrders = async () => {
   }
 };
 
+// api/orders/shop/products/
+// GET ORDERS FOR PRODUCTS (BY USER SHOP) -- Only returns products that have existing orders
+export const getOrdersByProduct = async () => {
+  try {
+    const response = await axios.get(`${BASEURL}shop/products/`);
+    return response.data;
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
 // CREATE/POST ORDER
 export const createOrder = async (orderData) => {
   try {

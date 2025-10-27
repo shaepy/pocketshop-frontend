@@ -139,34 +139,41 @@ const Carts = () => {
       <section className="section">
         <div className="container">
           <h1 className="title is-2">My Cart</h1>
-          <ul>
-            <button
-              className="button is-light"
-              disabled={cartItems.length <= 0 && true}
-              onClick={() => clearCart()}>
-              Clear Cart
-            </button>
-            {cartItems.length > 0 ? (
-              cartItems.map((item) => (
-                <CartItems
-                  key={item.id}
-                  item={item}
-                  handleDeleteItem={handleDeleteItem}
-                  handleQuantity={handleQuantity}
-                />
-              ))
-            ) : (
-              <h2>No Items in Cart</h2>
-            )}
-            <p>Total Cost Of Cart : {cart.total_cost}</p>
-          </ul>
 
-          {/* This should take you to payment page */}
-          <button
-            disabled={cartItems.length <= 0 && true}
-            onClick={toggleActivePaymentScreen}>
-            {activePaymentScreen ? "Cancel" : "Proceed to checkout"}
-          </button>
+          <div className="columns is-8">
+            <div className="column">
+              {cartItems.length > 0 ? (
+                cartItems.map((item) => (
+                  <CartItems
+                    key={item.id}
+                    item={item}
+                    handleDeleteItem={handleDeleteItem}
+                    handleQuantity={handleQuantity}
+                  />
+                ))
+              ) : (
+                <h2>No Items in Cart</h2>
+              )}
+            </div>
+
+            <div className="column is-one-third">
+              <button
+                className="button is-light"
+                disabled={cartItems.length <= 0 && true}
+                onClick={() => clearCart()}>
+                Clear Cart
+              </button>
+              <p className="is-size-3 mt-5 mb-5">
+                Total: <strong> ${cart.total_cost}</strong>
+              </p>
+              <button
+                className="button is-black is-outlined"
+                disabled={cartItems.length <= 0 && true}
+                onClick={toggleActivePaymentScreen}>
+                Proceed to checkout
+              </button>
+            </div>
+          </div>
 
           {activePaymentScreen && (
             <PaymentScreen

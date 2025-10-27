@@ -108,7 +108,7 @@ const ShopManage = () => {
               <h1 className="title mt-4 is-3">Manage Shop</h1>
               <div>
                 <button
-                  className="button is-light mr-2"
+                  className="button is-light mr-2 mb-2"
                   onClick={toggleEditMode}>
                   {isEditMode ? "Close Edit" : "Edit Shop"}
                 </button>
@@ -170,7 +170,7 @@ const ShopManage = () => {
                 {isProductMode ? "Close" : "+ Add Product"}
               </button>
             </div>
-            <div className="grid mr-4 ml-4 is-col-min-12 is-gap-4">
+            <div className="grid mr-4 ml-4 is-col-min-12 is-gap-5">
               {isProductMode ? (
                 <ProductForm
                   product={null}
@@ -183,7 +183,7 @@ const ShopManage = () => {
                 />
               ) : (
                 userShop.products.map((product) => (
-                  <div className="cell box hover-box" key={product.id}>
+                  <div className="cell box hover-box mb-0" key={product.id}>
                     <h4
                       className="title is-5"
                       aria-label={`${product.title} (ID: ${product.id})`}>

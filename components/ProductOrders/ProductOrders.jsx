@@ -38,47 +38,83 @@ const ProductOrders = () => {
 
   return (
     <main>
-      <h1>Order Details for {product.title}</h1>
-      <section>
-        {product.orders.map((order) => (
-          <div key={order.id}>
-            <div>
-              <h2>Order #{order.id}</h2>
-              <p>
-                Date:{" "}
-                {order.created_at
-                  ? format(parseISO(order.created_at), "MMM d, yyyy h:mm a")
-                  : "—"}
-              </p>
-              <p>
-                <Link to={`/products/${order.product.id}`}>
-                  {order.product.title}
-                </Link>
-              </p>
-              <p>Quantity: {order.quantity}</p>
-              <p>Total: ${order.subtotal}</p>
-              <p>Status: {order.status}</p>
-              <button
-                disabled={
-                  order.status === "Shipped" ||
-                  order.status === "Delivered" ||
-                  order.status === "Cancelled"
-                }
-                onClick={() =>
-                  handleUpdateOrder(order.id, order.subtotal, order.quantity)
-                }>
-                Mark as Shipped
-              </button>
-            </div>
-            <div>
-              <h2>Buyer - {order.buyer.username}</h2>
-              <p>
-                Name: {order.buyer.first_name} {order.buyer.last_name}
-              </p>
-              <p>Email: {order.buyer.email}</p>
-            </div>
-          </div>
-        ))}
+      <section className="section">
+        <div className="container is-max-desktop">
+          <p className="mb-6">
+            <Link to={"/dashboard/shop"}>
+              <i className="fa-solid fa-arrow-left"></i> Back to Manage Shop
+            </Link>
+          </p>
+          <h1 className="title is-2 mb-5">Orders for {product.title}</h1>
+
+          {/* Per order */}
+          <section>
+            {product.orders.map((order) => (
+              <div key={order.id} className="box hover-box">
+                <div className="columns order-details-div">
+                  {/* THE HEADER */}
+                  <p className="column tiny-text">
+                    ORDER PLACED{" "}
+                    {order.created_at
+                      ? format(parseISO(order.created_at), "MMM d, yyyy")
+                      : "—"}
+                  </p>
+                  <p className="column tiny-text">TOTAL ${order.subtotal}</p>
+                  <p className="column tiny-text">ORDER #{order.id}</p>
+                </div>
+
+                <div className="columns">
+                  <div className="column">
+                    <h2 className="is-size-4 mt-4 mb-1">
+                      <Link to={`/products/${order.product.id}`}>
+                        {order.product.title}
+                      </Link>
+                    </h2>
+                    <p>Quantity: {order.quantity}</p>
+                    <div className="is-flex is-flex-direction-row mb-5 mt-5 is-align-items-center">
+                      <p className="mr-3">Status</p>
+                      <span className="order-status-label">
+                        {order.status.toUpperCase()}
+                      </span>
+                    </div>
+                    <button
+                      className="button is-black is-outlined"
+                      disabled={
+                        order.status === "Shipped" ||
+                        order.status === "Delivered" ||
+                        order.status === "Cancelled"
+                      }
+                      onClick={() =>
+                        handleUpdateOrder(
+                          order.id,
+                          order.subtotal,
+                          order.quantity
+                        )
+                      }>
+                      Mark as Shipped
+                    </button>
+                  </div>
+                  {/* BUYER INFO */}
+                  <div className="column mt-5">
+                    <h2 className="is-size-5 mb-3">
+                      <strong>Contact Buyer</strong>
+                    </h2>
+                    <p>
+                      <i className="fa-solid fa-user"></i>
+                      <span className="ml-2">
+                        {order.buyer.first_name} {order.buyer.last_name}
+                      </span>
+                    </p>
+                    <p>
+                      <i className="fa-solid fa-envelope"></i>{" "}
+                      <span className="ml-2">{order.buyer.email}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </section>
+        </div>
       </section>
     </main>
   );

@@ -2,28 +2,42 @@ import { Link } from "react-router";
 
 const CartItems = ({ item, handleDeleteItem, handleQuantity }) => {
   return (
-    <>
-      <li key={item.id}>
-        Title :{" "}
-        <Link to={`/products/${item.product.id}`}>{item.product.title}</Link> /
-        {/*showing stock available*/}
-        <p>{item.product.quantity - item.quantity} remaining in stock</p>
-        Quantity :
+    <div key={item.id} className="box is-max-tablet cart-item">
+      <h3 className="is-size-5">
+        <Link to={`/products/${item.product.id}`}>{item.product.title}</Link>
+      </h3>
+      <img src={item.product.images[0].url} className="shop-page-image mt-3 mb-3" />
+      <p>Price: ${item.product.price}</p>
+
+      <div className="is-flex is-flex-direction-row is-align-items-center is-gap-2 mt-3 mb-3">
+        <p>Quantity</p>
         <button
-          disabled={item.quantity >= item.product.quantity}
-          onClick={() => handleQuantity(true, item.quantity, item.id)}
-        >
-          +
+          className="button is-light"
+          onClick={() => handleQuantity(false, item.quantity, item.id)}>
+          <i class="fa-solid fa-minus"></i>
         </button>
         {item.quantity}
-        <button onClick={() => handleQuantity(false, item.quantity, item.id)}>
-          -
+        <button
+          className="button is-light"
+          disabled={item.quantity >= item.product.quantity}
+          onClick={() => handleQuantity(true, item.quantity, item.id)}>
+          <i class="fa-solid fa-plus"></i>
         </button>
-        / Price per item: {item.product.price} / Total :
-        {item.product.price * item.quantity}
-        <button onClick={() => handleDeleteItem(item.id)}>Delete Item</button>
-      </li>
-    </>
+        <button
+          className="button is-light"
+          onClick={() => handleDeleteItem(item.id)}>
+          <i class="fa-solid fa-trash"></i>
+          Remove
+        </button>
+      </div>
+
+      <div className="has-text-right">
+        <p className="is-size-4">
+          Subtotal: <strong>${item.product.price * item.quantity}</strong>
+        </p>
+        <p>{item.product.quantity - item.quantity} remaining in stock</p>
+      </div>
+    </div>
   );
 };
 
