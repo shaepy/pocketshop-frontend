@@ -53,7 +53,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
       e.preventDefault();
       setUploading(true);
 
-      let images = product.images || [];
+      let images = product?.images || [];
 
       // Upload all selected images
       if (imageFiles.length > 0) {
