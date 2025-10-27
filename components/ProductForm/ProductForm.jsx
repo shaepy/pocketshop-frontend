@@ -108,7 +108,6 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
         }));
       }
 
-      console.log("final images", finalImages);
 
       // Build the product data in the format backend expects
       const productData = {
