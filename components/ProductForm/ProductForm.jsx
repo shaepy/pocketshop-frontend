@@ -86,7 +86,6 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
           imageFiles.map((file) => cloudinaryApi.uploadImageToCloudinary(file))
         );
 
-        console.log("uploaded", uploaded);
         // Keep only the fields your backend needs (map secure_url -> url)
         const cleanedUploaded = uploaded.map((img) => ({
           url: img.secure_url || img.url || "",
