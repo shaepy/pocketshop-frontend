@@ -26,7 +26,7 @@ const CartItems = ({ item, handleDeleteItem, handleQuantity }) => {
         <button
           className="button is-light"
           onClick={() => handleDeleteItem(item.id)}>
-          <i class="fa-solid fa-trash"></i>
+          <i className="fa-solid fa-trash"></i>
           Remove
         </button>
       </div>
