@@ -7,11 +7,13 @@ const LandingPage = () => {
   console.log("LANDING PAGE USER:", user);
   return (
     <main className="hero is-fullheight-with-navbar is-white has-background-white">
-      <div className="hero-body has-text-centered">
+      <div className="has-text-centered">
         <div className="container">
           {user ? (
             <>
-              <h1 className="title is-3 has-text-weight-semibold">
+              <h1
+                className="mt-6 title is-2"
+                style={{ color: "#FE8548" }}>
                 Welcome back, {user.username}.
               </h1>
               <Dashboard />

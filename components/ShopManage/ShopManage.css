@@ -1,0 +1,21 @@
+.manage-product-image {
+  height: 150px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: #efefef 1px solid;
+}
+
+.small-label {
+  font-size: 0.8rem;
+  background-color: #0081cc;
+  opacity: 90%;
+  padding: 4px 8px;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.category-tiny-text {
+  font-size: 0.8rem;
+}

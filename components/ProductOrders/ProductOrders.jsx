@@ -47,73 +47,85 @@ const ProductOrders = () => {
           </p>
           <h1 className="title is-2 mb-5">Orders for {product.title}</h1>
 
-          {/* Per order */}
-          <section>
-            {product.orders.map((order) => (
-              <div key={order.id} className="box hover-box">
-                <div className="columns order-details-div">
-                  {/* THE HEADER */}
-                  <p className="column tiny-text">
-                    ORDER PLACED{" "}
-                    {order.created_at
-                      ? format(parseISO(order.created_at), "MMM d, yyyy")
-                      : "—"}
-                  </p>
-                  <p className="column tiny-text">TOTAL ${order.subtotal}</p>
-                  <p className="column tiny-text">ORDER #{order.id}</p>
-                </div>
+          {product.orders.length > 0 ? (
+            <section>
+              {product.orders.map((order) => (
+                <div key={order.id} className="box hover-box">
+                  <div className="columns order-details-div">
+                    {/* THE HEADER */}
+                    <p className="column tiny-text">
+                      ORDER PLACED{" "}
+                      {order.created_at
+                        ? format(parseISO(order.created_at), "MMM d, yyyy")
+                        : "—"}
+                    </p>
+                    <p className="column tiny-text">TOTAL ${order.subtotal}</p>
+                    <p className="column tiny-text">ORDER #{order.id}</p>
+                  </div>
 
-                <div className="columns">
-                  <div className="column">
-                    <h2 className="is-size-4 mt-4 mb-1">
-                      <Link to={`/products/${order.product.id}`}>
-                        {order.product.title}
-                      </Link>
-                    </h2>
-                    <p>Quantity: {order.quantity}</p>
-                    <div className="is-flex is-flex-direction-row mb-5 mt-5 is-align-items-center">
-                      <p className="mr-3">Status</p>
-                      <span className="order-status-label">
-                        {order.status.toUpperCase()}
-                      </span>
+                  <div className="columns">
+                    <div className="column">
+
+                      <div className="columns is-vcentered">
+                        <div className="column is-one-quarter">
+                          <img className="order-page-image" src={order.product.images[0].url} />
+                        </div>
+                        <div className="column">
+                          <h2 className="is-size-4 mt-4 mb-1">
+                            <Link to={`/products/${order.product.id}`}>
+                              {order.product.title}
+                            </Link>
+                          </h2>
+                          <p>Quantity: {order.quantity}</p>
+                        </div>
+                      </div>
+
+                      <div className="is-flex is-flex-direction-row mb-5 mt-5 is-align-items-center">
+                        <p className="mr-3">Status</p>
+                        <span className="order-status-label">
+                          {order.status.toUpperCase()}
+                        </span>
+                      </div>
+                      <button
+                        className="button is-black is-outlined"
+                        disabled={
+                          order.status === "Shipped" ||
+                          order.status === "Delivered" ||
+                          order.status === "Cancelled"
+                        }
+                        onClick={() =>
+                          handleUpdateOrder(
+                            order.id,
+                            order.subtotal,
+                            order.quantity
+                          )
+                        }>
+                        Mark as Shipped
+                      </button>
                     </div>
-                    <button
-                      className="button is-black is-outlined"
-                      disabled={
-                        order.status === "Shipped" ||
-                        order.status === "Delivered" ||
-                        order.status === "Cancelled"
-                      }
-                      onClick={() =>
-                        handleUpdateOrder(
-                          order.id,
-                          order.subtotal,
-                          order.quantity
-                        )
-                      }>
-                      Mark as Shipped
-                    </button>
-                  </div>
-                  {/* BUYER INFO */}
-                  <div className="column mt-5">
-                    <h2 className="is-size-5 mb-3">
-                      <strong>Contact Buyer</strong>
-                    </h2>
-                    <p>
-                      <i className="fa-solid fa-user"></i>
-                      <span className="ml-2">
-                        {order.buyer.first_name} {order.buyer.last_name}
-                      </span>
-                    </p>
-                    <p>
-                      <i className="fa-solid fa-envelope"></i>{" "}
-                      <span className="ml-2">{order.buyer.email}</span>
-                    </p>
+                    {/* BUYER INFO */}
+                    <div className="column mt-5 is-one-third">
+                      <h2 className="is-size-5 mb-3">
+                        <strong>Contact Buyer</strong>
+                      </h2>
+                      <p>
+                        <i className="fa-solid fa-user"></i>
+                        <span className="ml-2">
+                          {order.buyer.first_name} {order.buyer.last_name}
+                        </span>
+                      </p>
+                      <p>
+                        <i className="fa-solid fa-envelope"></i>
+                        <span className="ml-2">{order.buyer.email}</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </section>
+              ))}
+            </section>
+          ) : (
+            <p>No orders for this product yet.</p>
+          )}
         </div>
       </section>
     </main>

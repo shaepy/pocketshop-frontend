@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import * as productApi from "../../services/productService";
 import * as cartApi from "../../services/cartService";
+import ProductImageSlider from "./ProductImageSlider/ProductImageSlider";
 
 const ProductPage = () => {
   const initialState = {
@@ -32,8 +33,6 @@ const ProductPage = () => {
     fetchProduct();
   }, [productId]);
 
-  if (!product) return <p>Loading product...</p>;
-
   const handleAddToCart = async () => {
     //Create form data
     formData.product = product.id;
@@ -50,40 +49,23 @@ const ProductPage = () => {
     }
   };
 
+  if (!product) return <p>Loading product...</p>;
+
   return (
     <main>
       <section className="section">
         <div className="container columns is-vcentered">
           <div className="column has-text-centered">
             <h1 className="title is-2">{product.title}</h1>
-            {(product.images || []).map((image, idx) => (
-              <div
-                key={image.id || image.url || idx}
-                style={{ marginBottom: "20px" }}>
-                {/* show the images */}
-                <div style={{ marginBottom: "10px" }}>
-                  <img
-                    className="product-page-large-image"
-                    src={image.url}
-                    alt={product.title}
-                    style={{
-                      width: "100%",
-                      maxWidth: "500px",
-                      height: "auto",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                      border: "2px solid #ddd",
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
+            <ProductImageSlider images={product.images || []} />
           </div>
 
           <div className="column m-3">
             <h2 className="title is-2">${product.price * quantity}</h2>
-            <p>
-              <Link to={`/shops/${product.shop.id}`}>{product.shop.name}</Link>
+            <p className="is-size-5">
+              <Link className="blue-link" to={`/shops/${product.shop.id}`}>
+                {product.shop.name}
+              </Link>
             </p>
             <p className="mt-3 mb-5">{product.description}</p>
 
@@ -111,7 +93,13 @@ const ProductPage = () => {
                 <i className="fa-solid fa-plus"></i>
               </button>
             </div>
-            <p>{message}</p>
+
+            {message && (
+              <div className="notification p-3" role="alert" aria-live="polite">
+                {message}
+              </div>
+            )}
+
             <button
               className="button is-black is-outlined mt-2"
               //disable add to cart if quantity is 0

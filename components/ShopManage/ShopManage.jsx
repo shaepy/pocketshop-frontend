@@ -5,6 +5,7 @@ import { getUser } from "../../services/userService";
 import ProductForm from "../ProductForm/ProductForm";
 import * as shopApi from "../../services/shopService";
 import * as productApi from "../../services/productService";
+import "./ShopManage.css";
 
 const ShopManage = () => {
   const navigate = useNavigate();
@@ -48,6 +49,10 @@ const ShopManage = () => {
 
   const linkToProductOrders = (productId) => {
     navigate(`/dashboard/product/${productId}/orders`);
+  };
+
+  const linkToShopPage = (productId) => {
+    navigate(`/products/${productId}`);
   };
 
   const handleChange = (e) => {
@@ -104,7 +109,7 @@ const ShopManage = () => {
       <section className="section">
         <div className="container">
           <div className="columns is-centered mb-6">
-            <div className="column is-one-fifth">
+            <div className="column is-one-quarter">
               <h1 className="title mt-4 is-3">Manage Shop</h1>
               <div>
                 <button
@@ -204,17 +209,18 @@ const ShopManage = () => {
                       View Orders
                     </button>
                     <div className="m-3">
-                      {product.images?.[0]?.url ? (
-                        <img
-                          className="shop-page-image"
-                          src={product.images[0].url}
-                          alt={product.title}
-                        />
-                      ) : null}
-                      <p>{product.description}</p>
-                      <p>${product.price}</p>
-                      <p>Quantity: {product.quantity}</p>
-                      <p>Category: {product.category}</p>
+                      <img
+                        className="manage-product-image"
+                        src={product.images[0].url}
+                        alt={product.title}
+                      />
+                      <p className="is-size-5 has-text-weight-semibold mt-2">
+                        ${product.price}
+                      </p>
+                      <div className="mt-2 mb-2 is-flex is-flex-direction-row is-align-items-center is-justify-content-center">
+                        <p className="category-tiny-text mr-2">CATEGORY</p>
+                        <p className="small-label">{product.category}</p>
+                      </div>
                     </div>
                     <div>
                       <button
@@ -230,6 +236,13 @@ const ShopManage = () => {
                         onClick={() => handleDeleteProduct(product.id)}
                       >
                         Delete
+                      </button>
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        onClick={() => linkToShopPage(product.id)}
+                        className="button is-small is-black">
+                        Go to Shop Page
                       </button>
                     </div>
                   </div>
