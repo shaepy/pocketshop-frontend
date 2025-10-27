@@ -50,6 +50,10 @@ const ShopManage = () => {
     navigate(`/dashboard/product/${productId}/orders`);
   };
 
+  const linkToShopPage = (productId) => {
+    navigate(`/products/${productId}`);
+  };
+
   const handleChange = (e) => {
     setError("");
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -221,6 +225,13 @@ const ShopManage = () => {
                         className="button is-light"
                         onClick={() => handleDeleteProduct(product.id)}>
                         Delete
+                      </button>
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        onClick={() => linkToShopPage(product.id)}
+                        className="button is-small is-black">
+                        Go to Shop Page
                       </button>
                     </div>
                   </div>

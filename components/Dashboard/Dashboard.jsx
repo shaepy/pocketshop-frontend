@@ -29,19 +29,25 @@ const Dashboard = () => {
             <h2 className="is-size-4">Active Shop Orders</h2>
             <button
               onClick={linkToShopManage}
-              className="button is-black is-outlined mt-4 mb-4">
+              className="button is-black is-outlined mt-5 mb-5">
               Go to Manage Shop
             </button>
-            {orders ? orders.map((order) => (
-              <p key={order.product.id}>
-                {" "}
-                <Link to={`dashboard/product/${order.product.id}/orders`}>
+            {orders ? (
+              orders.map((order) => (
+                <p key={order.product.id}>
                   {" "}
-                  {order.product.title}
-                </Link>{" "}
-                ({order.orders.length})
-              </p>
-            )): <p>No active orders for your shop's products.</p>}
+                  <Link
+                    className="blue-link "
+                    to={`dashboard/product/${order.product.id}/orders`}>
+                    {" "}
+                    {order.product.title}
+                  </Link>{" "}
+                  ({order.orders.length})
+                </p>
+              ))
+            ) : (
+              <p>No active orders for your shop's products.</p>
+            )}
           </div>
           <div className="orders-for-buyer column box">
             <h2 className="title is-4">My Orders</h2>

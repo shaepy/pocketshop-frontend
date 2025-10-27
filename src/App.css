@@ -7,9 +7,19 @@
 }
 
 .shop-page-image {
-  width: 200px;
   height: 200px;
-  object-fit: contain;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  border: #efefef 1px solid;
+}
+
+.shop-page-product-div {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .all-products-page-img {
@@ -30,8 +40,8 @@
 
 .product-page-large-image {
   max-height: 500px;
-  max-width: 600px;
-  object-fit: contain;
+  width: 100%;
+  object-fit: cover;
 }
 
 .order-details-div {
@@ -54,4 +64,9 @@
   width: 100px;
   height: 100px;
   object-fit: contain;
+}
+
+a.blue-link {
+  color: #0081cc;
+  font-weight: 600;
 }

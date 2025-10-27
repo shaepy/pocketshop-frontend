@@ -11,7 +11,9 @@ const LandingPage = () => {
         <div className="container">
           {user ? (
             <>
-              <h1 className="mt-6 title is-3 has-text-weight-semibold">
+              <h1
+                className="mt-6 title is-2"
+                style={{ color: "#FE8548" }}>
                 Welcome back, {user.username}.
               </h1>
               <Dashboard />
