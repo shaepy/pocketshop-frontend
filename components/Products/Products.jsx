@@ -27,15 +27,14 @@ const Products = () => {
                 products.map((product) => (
                   <Link key={product.id} to={`/products/${product.id}`}>
                     <div className="box cell hover-box all-products-page-box">
-                      {product.images?.[0]?.url ? (
-                        <img
-                          className="all-products-page-img mb-3"
-                          src={product.images[0].url}
-                        />
-                      ) : (
-                        <i className="mb-4 fa-solid fa-image"></i>
-                      )}
-
+                      <img
+                        className="all-products-page-img mb-3"
+                        src={
+                          product.images?.[0]?.url
+                            ? product.images[0].url
+                            : "/images/no-image.jpg"
+                        }
+                      />
                       <p className="has-text-weight-semibold is-size-5">
                         ${product.price}
                       </p>

@@ -204,23 +204,15 @@ const ShopManage = () => {
                       View Orders
                     </button>
                     <div className="m-3">
-                      {product.images?.[0]?.url ? (
-                        <img
-                          className="manage-product-image"
-                          src={
-                            product.images?.[0]?.url ? (
-                              <img
-                                className="shop-page-image"
-                                src={product.images[0].url}
-                                alt={product.title}
-                              />
-                            ) : null
-                          }
-                          alt={product.title}
-                        />
-                      ) : (
-                        <i className="mb-4 fa-solid fa-image"></i>
-                      )}
+                      <img
+                        className="manage-product-image"
+                        src={
+                          product.images?.[0]?.url
+                            ? product.images[0].url
+                            : "/images/no-image.jpg"
+                        }
+                        alt={product.title}
+                      />
                       <p className="is-size-5 has-text-weight-semibold mt-2">
                         ${product.price}
                       </p>
