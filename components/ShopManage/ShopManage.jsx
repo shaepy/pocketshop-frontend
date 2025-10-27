@@ -170,7 +170,7 @@ const ShopManage = () => {
                   className="button is-black is-outlined mt-2"
                   onClick={toggleAddProductMode}
                 >
-                  {isProductMode ? null : "+ Add Product"}
+                  + Add Product
                 </button>
               )}
             </div>
