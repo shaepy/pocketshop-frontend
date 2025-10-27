@@ -32,7 +32,7 @@ const Dashboard = () => {
               className="button is-black is-outlined mt-4 mb-4">
               Go to Manage Shop
             </button>
-            {orders.map((order) => (
+            {orders ? orders.map((order) => (
               <p key={order.product.id}>
                 {" "}
                 <Link to={`dashboard/product/${order.product.id}/orders`}>
@@ -41,7 +41,7 @@ const Dashboard = () => {
                 </Link>{" "}
                 ({order.orders.length})
               </p>
-            ))}
+            )): <p>No active orders for your shop's products.</p>}
           </div>
           <div className="orders-for-buyer column box">
             <h2 className="title is-4">My Orders</h2>

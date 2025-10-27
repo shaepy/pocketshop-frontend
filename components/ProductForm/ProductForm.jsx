@@ -13,7 +13,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
     quantity: product?.quantity || 0,
     category: product?.category || "None",
   };
-
+  console.log("product in ProductForm:", product);
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState("");
   // Set these to productImage
@@ -53,7 +53,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
       e.preventDefault();
       setUploading(true);
 
-      let images = [];
+      let images = product?.images || [];
 
       // Upload all selected images
       if (imageFiles.length > 0) {
@@ -143,7 +143,6 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
                 name="productImage"
                 accept="image/*"
                 multiple
-                value={formData.productImage}
                 onChange={handleImageChange}
               />
               <span className="file-cta">
