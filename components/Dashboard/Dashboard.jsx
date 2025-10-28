@@ -51,7 +51,7 @@ const Dashboard = () => {
                   Go to Manage Shop
                 </button>
                 <div className="active-orders-div">
-                  {shopOrders.length > 0 ? (
+                  {shopOrders && shopOrders.length > 0 ? (
                     shopOrders.map((order) => (
                       <p key={order.product.id}>
                         {" "}
