@@ -207,9 +207,7 @@ const ShopManage = () => {
                       <img
                         className="manage-product-image"
                         src={
-                          product.images?.[0]?.url
-                            ? product.images[0].url
-                            : "/images/no-image.jpg"
+                          product.images?.[0]?.url ?? "/images/no-image.jpg"
                         }
                         alt={product.title}
                       />
