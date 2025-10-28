@@ -3,10 +3,16 @@ import { Link } from "react-router";
 const CartItems = ({ item, handleDeleteItem, handleQuantity }) => {
   return (
     <div key={item.id} className="box is-max-tablet cart-item">
-      <h3 className="is-size-5">
-        <Link to={`/products/${item.product.id}`}>{item.product.title}</Link>
+      <h3 className="is-size-5 mb-1">
+        <Link className="blue-link" to={`/products/${item.product.id}`}>
+          {item.product.title}
+        </Link>
       </h3>
-      <img src={item.product.images[0].url} className="cart-item-image mt-3 mb-3" />
+      <p>{item.product.shop.name}</p>
+      <img
+        src={item.product.images[0].url}
+        className="cart-item-image mt-2 mb-3"
+      />
       <p>Price: ${item.product.price}</p>
 
       <div className="is-flex is-flex-direction-row is-align-items-center is-gap-2 mt-3 mb-3">

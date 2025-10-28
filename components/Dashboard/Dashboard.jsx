@@ -43,12 +43,11 @@ const Dashboard = () => {
             <h2 className="title is-4 mb-4">
               {user?.has_shop ? "Active Shop Orders" : "Become a Seller"}
             </h2>
-            <p className="mb-3">Share your creations and start your shop today.</p>
             {user?.has_shop ? (
               <>
                 <button
                   onClick={linkToShopManage}
-                  className="button is-black is-outlined mb-5">
+                  className="button is-black is-outlined mb-5 mt-3">
                   Go to Manage Shop
                 </button>
                 <div className="active-orders-div">
@@ -68,16 +67,21 @@ const Dashboard = () => {
                       </p>
                     ))
                   ) : (
-                    <p>No active orders for your shop's products.</p>
+                    <p>No orders yet. Check back soon for your first sale!</p>
                   )}
                 </div>
               </>
             ) : (
-              <button
-                onClick={() => navigate("/shops/new")}
-                className="button is-black mt-2 mb-4">
-                Create a Shop
-              </button>
+              <>
+                <p className="mb-3">
+                  Start your shop and share your creations.
+                </p>
+                <button
+                  onClick={() => navigate("/shops/new")}
+                  className="button is-black mt-2 mb-4">
+                  Create a Shop
+                </button>
+              </>
             )}
           </div>
           <div className="orders-for-buyer p-5 box">

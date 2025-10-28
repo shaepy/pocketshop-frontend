@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router";
 import * as productApi from "../../services/productService";
 import * as orderApi from "../../services/orderService";
 import { parseISO, format } from "date-fns";
-import "./ProductOrders.css";
 
 const ProductOrders = () => {
   const { productId } = useParams();
@@ -130,7 +129,7 @@ const ProductOrders = () => {
               ))}
             </section>
           ) : (
-            <p>No orders for this product yet.</p>
+            <p>This product hasn’t received any orders yet.</p>
           )}
         </div>
       </section>
