@@ -30,9 +30,7 @@ const Products = () => {
                       <img
                         className="all-products-page-img mb-3"
                         src={
-                          product.images?.[0]?.url
-                            ? product.images[0].url
-                            : "/images/no-image.jpg"
+                          product.images?.[0]?.url ?? "/images/no-image.jpg"
                         }
                       />
                       <p className="has-text-weight-semibold is-size-5">
