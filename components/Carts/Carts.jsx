@@ -152,7 +152,7 @@ const Carts = () => {
                   />
                 ))
               ) : (
-                <h2>No Items in Cart</h2>
+                <h2>Your cart’s waiting for its first adventure.</h2>
               )}
             </div>
 

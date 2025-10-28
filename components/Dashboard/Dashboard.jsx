@@ -5,16 +5,19 @@ import "./Dashboard.css";
 import { UserContext } from "../../contexts/UserContext";
 
 const Dashboard = () => {
-  // useEffect for getOrdersByProduct
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const [orders, setOrders] = useState([]);
+  const [shopOrders, setShopOrders] = useState([]);
+  const [userOrders, setUserOrders] = useState([]);
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const foundOrders = await orderApi.getOrdersByProduct();
-      console.log("orders for products for this user's shop:", foundOrders);
-      setOrders(foundOrders);
+      const foundShopOrders = await orderApi.getOrdersByProduct();
+      const foundUserOrders = await orderApi.getUserOrders();
+      setShopOrders(foundShopOrders);
+      setUserOrders(foundUserOrders);
+      console.log("shop orders found:", foundShopOrders);
+      console.log("user orders found:", foundUserOrders);
     };
     fetchOrders();
   }, []);
@@ -23,25 +26,33 @@ const Dashboard = () => {
     navigate("/dashboard/shop");
   };
 
+  const linkToMyOrderPage = () => {
+    navigate("/dashboard/orders");
+  };
+
+  const linkToAllProducts = () => {
+    navigate("/products");
+  };
+
   // We can filter to orders that have pending statuses later
   return (
     <main>
       <section className="section">
-        <div className="columns is-6">
-          <div className="orders-for-shop column box mr-5 mb-0">
-            <h2 className="title is-4">
+        <div className="container is-max-tablet">
+          <div className="orders-for-shop box p-5 mb-6">
+            <h2 className="title is-4 mb-4">
               {user?.has_shop ? "Active Shop Orders" : "Become a Seller"}
             </h2>
             {user?.has_shop ? (
               <>
                 <button
                   onClick={linkToShopManage}
-                  className="button is-black is-outlined mb-5">
+                  className="button is-black is-outlined mb-5 mt-3">
                   Go to Manage Shop
                 </button>
                 <div className="active-orders-div">
-                  {orders ? (
-                    orders.map((order) => (
+                  {shopOrders && shopOrders.length > 0 ? (
+                    shopOrders.map((order) => (
                       <p key={order.product.id}>
                         {" "}
                         <Link
@@ -56,21 +67,42 @@ const Dashboard = () => {
                       </p>
                     ))
                   ) : (
-                    <p>No active orders for your shop's products.</p>
+                    <p>No orders yet. Check back soon for your first sale!</p>
                   )}
                 </div>
               </>
             ) : (
-              <button
-                onClick={() => navigate("/shops/new")}
-                className="button is-black mt-4 mb-4">
-                Create a Shop
-              </button>
+              <>
+                <p className="mb-3">
+                  Start your shop and share your creations.
+                </p>
+                <button
+                  onClick={() => navigate("/shops/new")}
+                  className="button is-black mt-2 mb-4">
+                  Create a Shop
+                </button>
+              </>
             )}
           </div>
-          <div className="orders-for-buyer column box">
+          <div className="orders-for-buyer p-5 box">
             <h2 className="title is-4">My Orders</h2>
-            <p>Placeholder for active orders made by this user</p>
+            <div>
+              {userOrders && userOrders.length > 0 ? (
+                <>
+                  <button
+                    className="button is-black is-outlined mb-5"
+                    onClick={linkToMyOrderPage}>
+                    Go to My Orders
+                  </button>
+                </>
+              ) : (
+                <button
+                  className="button is-black is-outlined mt-2 mb-4"
+                  onClick={linkToAllProducts}>
+                  Explore and Buy
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </section>

@@ -4,26 +4,24 @@ import Dashboard from "../../components/Dashboard/Dashboard";
 
 const LandingPage = () => {
   const { user } = useContext(UserContext);
-  console.log("LANDING PAGE USER:", user);
+
   return (
     <main className="hero is-fullheight-with-navbar is-white has-background-white">
       <div className="has-text-centered">
         <div className="container">
           {user ? (
             <>
-              <h1
-                className="mt-6 title is-2"
-                style={{ color: "#FE8548" }}>
+              <h1 className="mt-6 title is-2" style={{ color: "#FE8548" }}>
                 Welcome back, {user.username}.
               </h1>
               <Dashboard />
             </>
           ) : (
             <>
-              <h1 className="title is-1 has-text-weight-bold mb-3">
+              <h1 className="title is-1 has-text-weight-bold mt-6 mb-3">
                 Welcome To PocketShop
               </h1>
-              <p className="subtitle is-4 mb-5">
+              <p className="subtitle is-5 mb-5">
                 A place for independent makers, designers and entrepreneurs
               </p>
 

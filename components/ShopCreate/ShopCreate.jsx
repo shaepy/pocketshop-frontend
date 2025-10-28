@@ -31,7 +31,7 @@ const ShopCreate = () => {
       console.log("pulling user again and setting it");
       setUser(await getUser(user.id));
 
-      navigate("/shops");
+      navigate("/dashboard/shop");
     } catch (err) {
       setError(err.message);
     }
@@ -41,8 +41,9 @@ const ShopCreate = () => {
       <section className="section">
         <div className="container">
           <div className="columns is-centered">
-            <div className="column is-12-tablet is-6-desktop is-5-widescreen">
-              <h1 className="title is-2 has-text-centered">Create a Shop</h1>
+            <div className="column is-12-tablet is-6-desktop is-5-widescreen has-text-centered">
+              <h1 className="title is-2">Create a Shop</h1>
+              <p className="subtitle is-5 mt-5 mb-6">Turn your creativity into your own shop today.</p>
               {error && (
                 <div
                   className="notification is-danger"

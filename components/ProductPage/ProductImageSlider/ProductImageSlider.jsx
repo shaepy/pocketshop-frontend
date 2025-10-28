@@ -5,7 +5,7 @@ import "./ProductImageSlider.css";
 
 const ProductImageSlider = ({ images }) => {
   const settings = {
-    dots: true, // shows dots under images
+    dots: true,
     infinite: true, // loops infinitely
     speed: 500,
     slidesToShow: 1, // one image at a time
