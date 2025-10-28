@@ -14,7 +14,6 @@
   opacity: 0.5;
 }
 
-/* Target the dots under react-slick sliders */
 .slick-dots li button:before {
   font-size: 12px; /* default is 6px */
   color: #999; /* inactive color */

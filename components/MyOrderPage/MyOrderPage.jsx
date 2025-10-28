@@ -75,14 +75,18 @@ const MyOrderPage = () => {
                   </div>
                   <div className="column">
                     <h2 className="is-size-4 mt-4 mb-1">
-                      <Link to={`/products/${order.product.id}`}>
+                      <Link
+                        style={{ color: "#0081cc" }}
+                        to={`/products/${order.product.id}`}>
                         {order.product.title}
                       </Link>{" "}
-                      x {order.quantity}
                     </h2>
+                    <p>Quantity x {order.quantity}</p>
                     <p className="mb-4">
                       From{" "}
-                      <Link to={`/shops/${order.product.shop.id}`}>
+                      <Link
+                        style={{ color: "#0081cc" }}
+                        to={`/shops/${order.product.shop.id}`}>
                         {order.product.shop.name}
                       </Link>
                     </p>

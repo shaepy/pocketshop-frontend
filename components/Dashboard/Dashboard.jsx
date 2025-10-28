@@ -5,22 +5,29 @@ import "./Dashboard.css";
 import { UserContext } from "../../contexts/UserContext";
 
 const Dashboard = () => {
-  // useEffect for getOrdersByProduct
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const [orders, setOrders] = useState([]);
+  const [shopOrders, setShopOrders] = useState([]);
+  const [userOrders, setUserOrders] = useState([]);
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const foundOrders = await orderApi.getOrdersByProduct();
-      console.log("orders for products for this user's shop:", foundOrders);
-      setOrders(foundOrders);
+      const foundShopOrders = await orderApi.getOrdersByProduct();
+      const foundUserOrders = await orderApi.getUserOrders();
+      setShopOrders(foundShopOrders);
+      setUserOrders(foundUserOrders);
+      console.log("shop orders found:", foundShopOrders);
+      console.log("user orders found:", foundUserOrders);
     };
     fetchOrders();
   }, []);
 
   const linkToShopManage = () => {
     navigate("/dashboard/shop");
+  };
+
+  const linkToMyOrderPage = () => {
+    navigate("/dashboard/orders");
   };
 
   // We can filter to orders that have pending statuses later
@@ -40,8 +47,8 @@ const Dashboard = () => {
                   Go to Manage Shop
                 </button>
                 <div className="active-orders-div">
-                  {orders.length > 0 ? (
-                    orders.map((order) => (
+                  {shopOrders.length > 0 ? (
+                    shopOrders.map((order) => (
                       <p key={order.product.id}>
                         {" "}
                         <Link
@@ -70,7 +77,22 @@ const Dashboard = () => {
           </div>
           <div className="orders-for-buyer column box">
             <h2 className="title is-4">My Orders</h2>
-            <p>Placeholder for active orders made by this user</p>
+            <div>
+              {userOrders && userOrders.length > 0 ? (
+                <>
+                  <button
+                    className="button is-black is-outlined mb-5"
+                    onClick={linkToMyOrderPage}>
+                    Go to My Orders
+                  </button>
+                  {userOrders.map((order) => (
+                    <p key={order.id}>{order.product.title}</p>
+                  ))}
+                </>
+              ) : (
+                <p>No orders yet.</p>
+              )}
+            </div>
           </div>
         </div>
       </section>

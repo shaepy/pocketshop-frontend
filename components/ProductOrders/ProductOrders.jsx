@@ -41,7 +41,7 @@ const ProductOrders = () => {
       <section className="section">
         <div className="container is-max-desktop">
           <p className="mb-6">
-            <Link to={"/dashboard/shop"}>
+            <Link to={"/dashboard/shop"} style={{ color: "#0081cc" }}>
               <i className="fa-solid fa-arrow-left"></i> Back to Manage Shop
             </Link>
           </p>
@@ -65,14 +65,18 @@ const ProductOrders = () => {
 
                   <div className="columns">
                     <div className="column">
-
                       <div className="columns is-vcentered">
                         <div className="column is-one-quarter">
-                          <img className="order-page-image" src={order.product.images[0].url} />
+                          <img
+                            className="order-page-image"
+                            src={order.product.images[0].url}
+                          />
                         </div>
                         <div className="column">
                           <h2 className="is-size-4 mt-4 mb-1">
-                            <Link to={`/products/${order.product.id}`}>
+                            <Link
+                              style={{ color: "#0081cc" }}
+                              to={`/products/${order.product.id}`}>
                               {order.product.title}
                             </Link>
                           </h2>
@@ -80,7 +84,7 @@ const ProductOrders = () => {
                         </div>
                       </div>
 
-                      <div className="is-flex is-flex-direction-row mb-5 mt-5 is-align-items-center">
+                      <div className="is-flex is-flex-direction-row mb-5 mt-3 is-align-items-center">
                         <p className="mr-3">Status</p>
                         <span className="order-status-label">
                           {order.status.toUpperCase()}

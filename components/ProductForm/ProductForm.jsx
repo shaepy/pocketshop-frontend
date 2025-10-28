@@ -134,7 +134,7 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
       <div className="mb-5">
         {error && (
           <div
-            className="notification is-danger"
+            className="notification is-danger p-3"
             role="alert"
             aria-live="polite">
             {error}
