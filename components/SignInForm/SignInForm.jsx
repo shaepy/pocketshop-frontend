@@ -41,14 +41,16 @@ const SignInForm = () => {
         <div className="container ">
           <div className="columns is-centered">
             <div className="column is-12-tablet is-6-desktop is-5-widescreen ">
-              <h1 className="title is-2 has-text-centered "><span className="sign">Sign</span> <span className="in">in</span></h1>
+              <h1 className="title is-2 has-text-centered ">
+                <span className="sign">Sign</span>{" "}
+                <span className="in">in</span>
+              </h1>
 
               {error && (
                 <div
-                  className="notification is-danger"
+                  className="notification is-danger is-light"
                   role="alert"
-                  aria-live="polite"
-                >
+                  aria-live="polite">
                   {error}
                 </div>
               )}
@@ -97,8 +99,7 @@ const SignInForm = () => {
                     <button
                       type="button"
                       className="button is-light"
-                      onClick={() => navigate("/")}
-                    >
+                      onClick={() => navigate("/")}>
                       Cancel
                     </button>
                   </div>
@@ -106,8 +107,7 @@ const SignInForm = () => {
                     <button
                       type="submit"
                       className="button is-black is-outlined"
-                      disabled={isFormInvalid()}
-                    >
+                      disabled={isFormInvalid()}>
                       Sign in
                     </button>
                   </div>

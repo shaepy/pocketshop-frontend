@@ -92,7 +92,16 @@ const PaymentScreen = ({ setActivePaymentScreen, handleCreateOrders }) => {
               <img src="/images/cc/aexpress.png" alt="American Express" />
             </div>
 
-            {error && <p>{error}</p>}
+            {error && (
+              <div
+                style={{ maxWidth: 265 }}
+                className="notification is-danger is-light p-2"
+                role="alert"
+                aria-live="polite">
+                {error}
+              </div>
+            )}
+
             <div className="field">
               <label className="label" htmlFor="name">
                 Cardholder name
