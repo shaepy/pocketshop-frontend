@@ -30,12 +30,16 @@ const Dashboard = () => {
     navigate("/dashboard/orders");
   };
 
+  const linkToAllProducts = () => {
+    navigate("/products");
+  };
+
   // We can filter to orders that have pending statuses later
   return (
     <main>
       <section className="section">
-        <div className="columns is-6">
-          <div className="orders-for-shop column box mr-5 mb-0">
+        <div className="container is-max-tablet">
+          <div className="orders-for-shop box p-5 mb-6">
             <h2 className="title is-4">
               {user?.has_shop ? "Active Shop Orders" : "Become a Seller"}
             </h2>
@@ -70,12 +74,12 @@ const Dashboard = () => {
             ) : (
               <button
                 onClick={() => navigate("/shops/new")}
-                className="button is-black mt-4 mb-4">
+                className="button is-black mt-2 mb-4">
                 Create a Shop
               </button>
             )}
           </div>
-          <div className="orders-for-buyer column box">
+          <div className="orders-for-buyer p-5 box">
             <h2 className="title is-4">My Orders</h2>
             <div>
               {userOrders && userOrders.length > 0 ? (
@@ -85,12 +89,13 @@ const Dashboard = () => {
                     onClick={linkToMyOrderPage}>
                     Go to My Orders
                   </button>
-                  {userOrders.map((order) => (
-                    <p key={order.id}>{order.product.title}</p>
-                  ))}
                 </>
               ) : (
-                <p>No orders yet.</p>
+                <button
+                  className="button is-black is-outlined mt-2 mb-4"
+                  onClick={linkToAllProducts}>
+                  Explore and Buy
+                </button>
               )}
             </div>
           </div>

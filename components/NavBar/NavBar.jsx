@@ -1,8 +1,9 @@
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router";
-import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
 const NavBar = () => {
+  const [menuActive, setMenuActive] = useState(false);
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 
@@ -33,8 +34,22 @@ const NavBar = () => {
               style={{ height: "40px" }}
             />
           </Link>
+          <a
+            role="button"
+            className={`navbar-burger is-black ${
+              menuActive ? "is-active" : ""
+            }`}
+            aria-label="menu"
+            aria-expanded={menuActive}
+            onClick={() => setMenuActive((s) => !s)}>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
         </div>
-        <div className="navbar-menu is-active">
+
+        <div className={`navbar-menu ${menuActive ? "is-active" : ""}`}>
           <div className="navbar-start">
             <Link to="/" className="navbar-item">
               {user ? "Dashboard" : "Home"}
