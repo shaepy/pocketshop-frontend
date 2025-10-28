@@ -21,7 +21,7 @@ const Products = () => {
       <section className="section">
         <div className="container">
           <div className="has-text-centered">
-            <h1 className="title is-2">All Products</h1>
+            <h1 className="title is-2 mb-6">All Products</h1>
             <div className="grid is-col-min-10 is-gap-5">
               {products && products.length >= 0 ? (
                 products.map((product) => (

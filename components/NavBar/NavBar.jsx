@@ -22,7 +22,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className="navbar is-white mt-2"
+      className="navbar is-white mt-1"
       role="navigation"
       aria-label="main navigation">
       <div className="container">

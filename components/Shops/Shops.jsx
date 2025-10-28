@@ -27,7 +27,7 @@ const Shops = () => {
               shops.map((shop) => (
                 <Link to={`/shops/${shop.id}`} key={shop.id}>
                   <div className="mt-6 has-text-centered all-shops-shop-div box hover-box m-5 is-flex is-flex-direction-column is-align-items-center">
-                    <h2 className="title is-5">{shop.name}</h2>
+                    <h2 className="title is-5 mb-3">{shop.name}</h2>
                     <p>{shop.bio}</p>
                   </div>
                 </Link>

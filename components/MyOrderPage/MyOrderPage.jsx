@@ -40,7 +40,13 @@ const MyOrderPage = () => {
         <section className="section">
           <div className="container">
             <h1 className="title is-2">My Orders</h1>
-            <p>No orders yet.</p>
+            <p>
+              Your order history is empty. Treat yourself to something{" "}
+              <Link className="blue-link" to={"/products"}>
+                new
+              </Link>
+              .
+            </p>
           </div>
         </section>
       </main>
@@ -76,7 +82,8 @@ const MyOrderPage = () => {
                   <div className="column">
                     <h2 className="is-size-4 mt-4 mb-1">
                       <Link
-                        style={{ color: "#0081cc" }}
+                        className="blue-link"
+                        style={{ fontWeight: 500 }}
                         to={`/products/${order.product.id}`}>
                         {order.product.title}
                       </Link>{" "}
@@ -85,7 +92,7 @@ const MyOrderPage = () => {
                     <p className="mb-4">
                       From{" "}
                       <Link
-                        style={{ color: "#0081cc" }}
+                        className="blue-link"
                         to={`/shops/${order.product.shop.id}`}>
                         {order.product.shop.name}
                       </Link>
@@ -101,7 +108,7 @@ const MyOrderPage = () => {
                   </div>
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-1">
                   <button
                     className="button is-black is-outlined mr-3"
                     disabled={

@@ -40,9 +40,10 @@ const Dashboard = () => {
       <section className="section">
         <div className="container is-max-tablet">
           <div className="orders-for-shop box p-5 mb-6">
-            <h2 className="title is-4">
+            <h2 className="title is-4 mb-4">
               {user?.has_shop ? "Active Shop Orders" : "Become a Seller"}
             </h2>
+            <p className="mb-3">Share your creations and start your shop today.</p>
             {user?.has_shop ? (
               <>
                 <button

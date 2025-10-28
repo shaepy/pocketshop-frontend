@@ -8,7 +8,12 @@
 
 a.blue-link {
   color: #0081cc;
-  font-weight: 600;
+  font-weight: 400;
+  transition: color 0.3s ease-in-out;
+}
+
+a.blue-link:hover {
+  color: #fe8548;
 }
 
 .product-page-large-image {

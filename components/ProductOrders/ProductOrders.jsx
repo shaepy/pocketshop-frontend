@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import * as productApi from "../../services/productService";
 import * as orderApi from "../../services/orderService";
 import { parseISO, format } from "date-fns";
+import "./ProductOrders.css";
 
 const ProductOrders = () => {
   const { productId } = useParams();
@@ -41,7 +42,7 @@ const ProductOrders = () => {
       <section className="section">
         <div className="container is-max-desktop">
           <p className="mb-6">
-            <Link to={"/dashboard/shop"} style={{ color: "#0081cc" }}>
+            <Link to={"/dashboard/shop"} className="blue-link">
               <i className="fa-solid fa-arrow-left"></i> Back to Manage Shop
             </Link>
           </p>
@@ -75,7 +76,8 @@ const ProductOrders = () => {
                         <div className="column">
                           <h2 className="is-size-4 mt-4 mb-1">
                             <Link
-                              style={{ color: "#0081cc" }}
+                              className="blue-link"
+                              style={{ fontWeight: 500 }}
                               to={`/products/${order.product.id}`}>
                               {order.product.title}
                             </Link>
