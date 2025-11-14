@@ -10,7 +10,6 @@ const MyOrderPage = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       const foundOrders = await orderApi.getUserOrders();
-      console.log("orders for this buyer:", foundOrders);
       setOrders(foundOrders);
     };
     fetchOrders();
@@ -26,8 +25,7 @@ const MyOrderPage = () => {
         quantity: quantity,
         status: status,
       };
-      const updatedOrder = await orderApi.updateOrder(orderId, orderData);
-      console.log("updatedOrder is:", updatedOrder);
+      await orderApi.updateOrder(orderId, orderData);
       setStatusUpdate(true);
     } catch (error) {
       console.log("Error:", error);

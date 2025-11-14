@@ -9,7 +9,6 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       const foundProducts = await productApi.getProducts();
-      console.log("products Found", foundProducts);
       setProducts(foundProducts);
     };
 

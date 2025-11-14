@@ -38,7 +38,6 @@ export const getShop = async (shopId) => {
 export const createShop = async (formData) => {
   try {
     const response = await axios.post(`${BASEURL}`, formData);
-    console.log("from shopApi.createShop:", response.data);
 
     if (!response.data) {
       throw new Error("Error creating the shop", response.data.error);
@@ -71,7 +70,6 @@ export const getUserShop = async () => {
 export const updateShop = async (formData) => {
   try {
     const response = await axios.put(`${BASEURL}owner/`, formData);
-    console.log("from shopService.updateShop:", response);
 
     if (!response.data) {
       throw new Error("Error fetching user's shop", response.data.error);

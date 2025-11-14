@@ -11,7 +11,6 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
     quantity: product?.quantity || 0,
     category: product?.category || "None",
   };
-  console.log("product in ProductForm:", product);
   const [formData, setFormData] = useState(initialState);
   const [error, setError] = useState("");
   // Set these to productImage
@@ -100,22 +99,16 @@ const ProductForm = ({ product, setIsProductMode, setIsEditProductMode }) => {
       };
 
       if (product) {
-        console.log("Updating product with data:", productData);
-        const updatingProduct = await productApi.updateProduct(
+        await productApi.updateProduct(
           product.id,
           productData
         );
-
-        console.log("updated product", updatingProduct);
 
         setImageFiles([]); //Clears image state after submission
         setImagePreviews([]);
         if (setIsEditProductMode) setIsEditProductMode(false);
       } else {
-        console.log("Adding a product with data:", productData);
-        const newProduct = await productApi.addProduct(productData);
-
-        console.log("new product", newProduct);
+        await productApi.addProduct(productData);
         setFormData(initialState);
         setExistingImages([]);
         setImageFiles([]); //Clears image state after submission

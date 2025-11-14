@@ -4,7 +4,6 @@ const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/api/auth/user/`;
 const getUser = async (userId) => {
   try {
     const response = await axios.get(`${BASE_URL}${userId}`);
-    console.log("from userService.getUser:", response.data);
 
     if (!response.data) {
       throw new Error("Error fetching a user", response.data.error);

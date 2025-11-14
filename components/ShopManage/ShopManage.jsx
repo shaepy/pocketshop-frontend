@@ -19,7 +19,6 @@ const ShopManage = () => {
   useEffect(() => {
     const fetchUserShop = async () => {
       const userShopFound = await shopApi.getUserShop();
-      console.log("userShop found:", userShopFound);
       setUserShop(userShopFound);
       setFormData({
         name: userShopFound.name ?? "",
@@ -27,7 +26,6 @@ const ShopManage = () => {
       });
     };
     fetchUserShop();
-    console.log("isEditMode is currently:", isEditMode);
     // ST - added isProductMode to refresh useEffect
   }, [isEditMode, isProductMode, isEditProductMode]);
 
@@ -63,9 +61,7 @@ const ShopManage = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log("UPDATING THE SHOP NOW...");
       const updatedShop = await shopApi.updateShop(formData);
-      console.log("updatedShop:", updatedShop);
       setIsEditMode(false);
     } catch (err) {
       setError(err.message);
@@ -75,9 +71,6 @@ const ShopManage = () => {
   // Delete Shop (FUTURE IMPROV: Validation before deletion (ASK YES OR NO to confirm))
   const handleDeleteShop = async () => {
     const deletedShop = await shopApi.deleteShop();
-    console.log("deletedShop:", deletedShop);
-
-    console.log("pulling user again and setting it");
     setUser(await getUser(user.id));
 
     // temporarily moving them elsewhere

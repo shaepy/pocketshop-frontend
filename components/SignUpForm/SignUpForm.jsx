@@ -33,7 +33,6 @@ const SignUpForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("formData is:", formData);
       const newUser = await signUp(formData);
       setUser(newUser);
       navigate("/");

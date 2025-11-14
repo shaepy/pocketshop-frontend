@@ -6,7 +6,6 @@ export const createPayment = async (formData) => {
   try {
     const payload = keysToSnakeTopLevel(formData);
     const response = await axios.post(`${BASEURL}/checkout/`, payload);
-    console.log("response is:", response);
 
     if (!response.data) {
       throw new Error("Error validating payment", response.data.error);

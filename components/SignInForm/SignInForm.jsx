@@ -23,7 +23,6 @@ const SignInForm = () => {
     evt.preventDefault();
     try {
       const signedInUser = await signIn(formData);
-      console.log("signedInUser:", signedInUser);
       setUser(signedInUser);
       navigate("/");
     } catch (error) {

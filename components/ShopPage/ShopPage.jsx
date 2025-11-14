@@ -10,7 +10,6 @@ const ShopPage = () => {
   useEffect(() => {
     const fetchShop = async () => {
       const foundShop = await shopApi.getShop(shopId);
-      console.log("shop found:", foundShop);
       setShop(foundShop);
     };
     fetchShop();
@@ -41,7 +40,7 @@ const ShopPage = () => {
                   shop.products.map((product) => (
                     // This should link to the product page
                     <Link to={`/products/${product.id}`} key={product.id}>
-                      <div className="box hover-box cell shop-page-product-div is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
+                      <div className="box has-text-centered hover-box cell shop-page-product-div is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
                         <h3 className="title is-4 mb-3">{product.title}</h3>
                         <p className="mb-3 is-size-5">${product.price}</p>
                         <img

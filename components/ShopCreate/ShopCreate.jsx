@@ -24,11 +24,7 @@ const ShopCreate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("submitting a new shop", formData);
-      const newShop = await shopApi.createShop(formData);
-      console.log("newShop:", newShop);
-
-      console.log("pulling user again and setting it");
+      await shopApi.createShop(formData);
       setUser(await getUser(user.id));
 
       navigate("/dashboard/shop");

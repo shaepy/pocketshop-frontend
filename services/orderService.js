@@ -27,7 +27,6 @@ export const getOrdersByProduct = async () => {
 export const createOrder = async (orderData) => {
   try {
     const response = await axios.post(`${BASEURL}`, orderData);
-    console.log("createOrder returned:", response.data);
 
     if (!response.data) {
       throw new Error("Error creating order", response.data.error);
@@ -44,7 +43,6 @@ export const createOrder = async (orderData) => {
 export const updateOrder = async (orderId, orderData) => {
   try {
     const response = await axios.put(`${BASEURL}${orderId}/`, orderData);
-    console.log("updatedOrder response:", response.data);
 
     if (!response.data) {
       throw new Error(`Error updating order: ${response.data.error}`);

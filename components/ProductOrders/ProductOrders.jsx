@@ -12,7 +12,6 @@ const ProductOrders = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const foundProductOrders = await productApi.getProductOrders(productId);
-      console.log("product and orders found by id ", foundProductOrders);
       setProduct(foundProductOrders);
     };
     fetchProduct();
@@ -26,8 +25,7 @@ const ProductOrders = () => {
         quantity: quantity,
         status: "Shipped",
       };
-      const updatedOrder = await orderApi.updateOrder(orderId, orderData);
-      console.log("updatedOrder is:", updatedOrder);
+      await orderApi.updateOrder(orderId, orderData);
       setStatusUpdate(true);
     } catch (error) {
       console.log("Error:", error);

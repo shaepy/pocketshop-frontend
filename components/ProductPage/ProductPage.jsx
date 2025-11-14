@@ -24,9 +24,6 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const foundProducts = await productApi.getProduct(productId);
-      console.log("product Found by id ", foundProducts);
-      console.log("product.images:", foundProducts.images);
-
       setProduct(foundProducts);
     };
 
@@ -38,9 +35,7 @@ const ProductPage = () => {
     formData.product = product.id;
     formData.quantity = quantity;
     try {
-      //console.log("submitting a new cart item", formData);
-      const newCartItem = await cartApi.addProductToCart(formData);
-      console.log("newCartItem :", newCartItem);
+      await cartApi.addProductToCart(formData);
       setMessage("Added to your cart.");
       setFormData(initialState);
       setQuantity(1);

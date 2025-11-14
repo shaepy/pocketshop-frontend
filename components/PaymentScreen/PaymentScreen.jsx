@@ -26,22 +26,16 @@ const PaymentScreen = ({ setActivePaymentScreen, handleCreateOrders }) => {
       e.preventDefault();
       if (loading) return; // prevent double submit
       setLoading(true);
-      console.log("Trying to add a payment...");
 
       const paymentData = {
         expMonth: formData.expMonth,
         expYear: formData.expYear,
       };
-      console.log("paymentData:", paymentData);
-
       const validPayment = await paymentApi.createPayment(paymentData);
-      console.log("payment created?:", validPayment);
 
       if (validPayment) {
         // Pass payment.id from validPayment to handleCreateOrder()
-        const orders = await handleCreateOrders(validPayment.id);
-        console.log("order created?:", orders);
-
+        await handleCreateOrders(validPayment.id);
         // artificial buffering / loading delay so user sees processing
         await new Promise((res) => setTimeout(res, 2000));
 
@@ -54,7 +48,6 @@ const PaymentScreen = ({ setActivePaymentScreen, handleCreateOrders }) => {
         setLoading(false);
       }
     } catch (error) {
-      console.log("Payment failed. Error:", error.message);
       setError("Payment failed. Please try again.");
       setLoading(false);
     }

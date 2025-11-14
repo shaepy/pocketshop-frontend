@@ -23,8 +23,6 @@ export const uploadImageToCloudinary = async (file) => {
       }
     );
 
-    console.log("cloundinary response is:", response);
-
     if (!response.ok) {
       throw new Error("Failed to upload image");
     }

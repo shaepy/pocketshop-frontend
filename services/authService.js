@@ -9,7 +9,6 @@ export const signUp = async (formData) => {
   try {
     const payload = keysToSnakeTopLevel(formData);
     const response = await axios.post(`${BASEURL}register/`, payload);
-    console.log("from authService.signUp:", response.data);
 
     if (!response.data) {
       throw new Error("Error creating new user", response.data.error);
@@ -32,7 +31,6 @@ export const signIn = async (formData) => {
   try {
     const response = await axios.post(`${BASEURL}login/`, formData);
     const data = response.data;
-    console.log("from authService.signIn:", data);
 
     if (!data) {
       throw new Error("Error logging user in", response.data.error);
