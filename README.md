@@ -1,5 +1,7 @@
 # PocketShop
 
+### Deployment Link: https://pocketshop-app.netlify.app/
+
 | Project Members | Profile |
 |-----------------|------------------|
 | Shae Tran | https://github.com/shaepy |
